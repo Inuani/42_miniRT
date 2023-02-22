@@ -22,6 +22,12 @@ FSANI = -fsanitize=address -g3
 SRC =	main.c \
 		handle_window.c \
 		handle_keys.c \
+		rays.c \
+		render.c \
+		trgb.c \
+		vec_utils.c \
+		init_objs.c \
+
 
 OBJ := $(SRC:%.c=%.o)
 
