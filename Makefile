@@ -2,11 +2,10 @@ NAME = miniRT
 
 CC = gcc
 
-RM = rm -f
+RM = rm -rf
 
 # Directories
 OBJ_DIR = objs/
-
 SRC_DIR = src/
 
 # Libraries
@@ -15,7 +14,7 @@ LIBFT  = -I.libs/libft/
 # includes
 INC = -I.includes/
 
-LIBFLAGS = -Llibft -lft -L. -lmlx -framework OpenGL -framework AppKit
+LIBFLAGS = -Llibs/libft -lft -Llibs/mlx -lmlx -framework OpenGL -framework AppKit
 
 CFLAGS = -Wall -Wextra -Werror
 FSANI = -fsanitize=address -g3
@@ -30,9 +29,9 @@ OBJS = $(addprefix $(OBJ_DIR), $(OBJ))
 all: $(NAME)
 
 $(NAME): $(SRCS) $(OBJ_DIR) $(OBJS)
-	$(MAKE) -C libft
-	${MAKE} -C mlx
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFLAGS)
+	$(MAKE) -C libs/libft
+	${MAKE} -C libs/mlx
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFLAGS) -o $(NAME)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	$(CC) $(CFLAGS) $(INC) $(LIBFT) $< -c -o $@
@@ -46,12 +45,13 @@ debug:
 clean:
 	$(RM) $(OBJS)
 	$(RM) $(OBJ_DIR)
-	$(MAKE) clean -C libft
-	${MAKE} clean -C mlx
+	$(MAKE) clean -C libs/libft
+	${MAKE} clean -C libs/mlx
 
 fclean:
 	$(RM) $(NAME)
-	$(MAKE) fclean -C libft
+	$(MAKE) fclean -C libs/libft
+	${MAKE} clean -C libs/mlx
 
 re: fclean all
 

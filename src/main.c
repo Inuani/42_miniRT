@@ -6,7 +6,7 @@
 /*   By: egauthey <egauthey@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:24:22 by egauthey          #+#    #+#             */
-/*   Updated: 2023/02/22 11:26:59 by egauthey         ###   ########.fr       */
+/*   Updated: 2023/02/22 15:05:11 by egauthey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int	main(int ac, char **av)
 {
-	
+	(void) ac;
+	(void) av;
+	printf("yes\n");
 	return (0);
 }
 
