@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:13:13 by egauthey          #+#    #+#             */
-/*   Updated: 2023/02/22 20:22:44 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/02/22 20:47:19 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,12 @@ t_vec	vec_unit(t_vec vec);
 
 
 
+// void		close_win(void);
+int		close_win(void);
+
+//handle keys
+// void	event_handler(int key, t_data *data);
+int	event_handler(int key, t_data *data);
 
 
 #endif

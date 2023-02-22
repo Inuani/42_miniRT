@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:32:41 by lskraber          #+#    #+#             */
-/*   Updated: 2023/02/22 17:06:27 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/02/22 20:46:50 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 int	close_win(void)
 {
 	exit(0);
+	return (0);
 }
 
 void	init_window(t_data *data)

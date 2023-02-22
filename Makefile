@@ -2,14 +2,15 @@ NAME = miniRT
 
 CC = gcc
 
-RM = rm -rf
+RM = rm -f
 
 # Directories
 OBJ_DIR = objs/
 SRC_DIR = src/
 
 # Libraries
-LIBFT  = -I.libs/libft/
+LIBFT  = libs/libft
+MLX = libs/mlx
 
 # includes
 INC = -I.includes/
@@ -42,7 +43,7 @@ $(NAME): $(SRCS) $(OBJ_DIR) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFLAGS) -o $(NAME)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	$(CC) $(CFLAGS) $(INC) $(LIBFT) $< -c -o $@
+	$(CC) $(CFLAGS) $(INC) -I.$(LIBFT) $< -c -o $@
 
 $(OBJ_DIR):
 	@mkdir $(OBJ_DIR)
@@ -52,14 +53,16 @@ debug:
 
 clean:
 	$(RM) $(OBJS)
-	$(RM) $(OBJ_DIR)
-	$(MAKE) clean -C libs/libft
-	${MAKE} clean -C libs/mlx
+	rm -rf $(OBJ_DIR)
+	$(MAKE) clean -C $(MLX) 
+	${MAKE} clean -C $(LIBFT)
 
 fclean:
 	$(RM) $(NAME)
-	$(MAKE) fclean -C libs/libft
-	${MAKE} clean -C libs/mlx
+	$(RM) $(OBJS)
+	rm -rf $(OBJ_DIR)
+	$(MAKE) fclean -C $(LIBFT)
+	${MAKE} clean -C $(MLX)
 
 re: fclean all
 
