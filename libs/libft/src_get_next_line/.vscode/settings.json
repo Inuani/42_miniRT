@@ -1,0 +1,8 @@
+{
+	"files.associations": {
+		"unistd.h": "c",
+		"istream": "c",
+		"stdlib.h": "c",
+		"uio.h": "c"
+	}
+}
