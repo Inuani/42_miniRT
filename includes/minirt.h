@@ -6,7 +6,7 @@
 /*   By: egauthey <egauthey@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:13:13 by egauthey          #+#    #+#             */
-/*   Updated: 2023/02/22 15:49:22 by egauthey         ###   ########.fr       */
+/*   Updated: 2023/02/22 16:07:25 by egauthey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "../libs/mlx/mlx.h"
 
 
-# include <fcntl.h> // functions for working with file descriptors, opening and manipulating file
+# include <fcntl.h> // functions for working with file descriptors, opening and manipulating files
 # include <math.h>
 
 # define HEIGHT 1080
@@ -40,11 +40,9 @@ typedef struct s_data
 
 //handle window && image
 void	init_window(t_data *data);
-// void		close_win(void);
 int		close_win(void);
 
 //handle keys
-// void	event_handler(int key, t_data *data);
 int	event_handler(int key, t_data *data);
 
 
