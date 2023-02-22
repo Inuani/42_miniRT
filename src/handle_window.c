@@ -6,15 +6,16 @@
 /*   By: egauthey <egauthey@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:32:41 by lskraber          #+#    #+#             */
-/*   Updated: 2023/02/22 15:36:20 by egauthey         ###   ########.fr       */
+/*   Updated: 2023/02/22 15:48:51 by egauthey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minirt.h"
 
-void	close_win(void)
+int	close_win(void)
 {
 	exit(0);
+	return (0);
 }
 
 void	init_window(t_data *data)

@@ -6,7 +6,7 @@
 /*   By: egauthey <egauthey@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:13:13 by egauthey          #+#    #+#             */
-/*   Updated: 2023/02/22 15:37:27 by egauthey         ###   ########.fr       */
+/*   Updated: 2023/02/22 15:49:22 by egauthey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,16 @@ typedef struct s_data
 	void		*mlx;
 	void		*win;
 	t_img		img;
-
-
 }				t_data;
 
 //handle window && image
 void	init_window(t_data *data);
-void		close_win(void);
+// void		close_win(void);
+int		close_win(void);
 
 //handle keys
-void	event_handler(int key, t_data *data);
+// void	event_handler(int key, t_data *data);
+int	event_handler(int key, t_data *data);
+
 
 #endif
