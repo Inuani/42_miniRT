@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   handle_keys.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/22 11:24:22 by egauthey          #+#    #+#             */
-/*   Updated: 2023/02/22 15:10:04 by lskraber         ###   ########.fr       */
+/*   Created: 2023/02/22 15:05:42 by lskraber          #+#    #+#             */
+/*   Updated: 2023/02/22 15:10:06 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/minirt.h"
+#include "includes/minirt.h"
 
-int	main(int ac, char **av)
+int	event_handler(int key, t_data *data)
 {
-	t_data	data;
-
-	init_window(&data);
-	
-	mlx_hook(data.win, 17, 1L << 2, close_win(), &data);
-	mlx_key_hook(data.win, event_handler, &data);
-	mlx_loop(data.mlx);
-	return (0);
+	if (key == 53)
+		exit(0);
 }
-

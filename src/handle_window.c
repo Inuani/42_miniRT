@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   handle_window.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/22 11:24:22 by egauthey          #+#    #+#             */
-/*   Updated: 2023/02/22 15:10:04 by lskraber         ###   ########.fr       */
+/*   Created: 2023/02/22 14:32:41 by lskraber          #+#    #+#             */
+/*   Updated: 2023/02/22 15:10:05 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/minirt.h"
+#include "includes/minirt.h"
 
-int	main(int ac, char **av)
+int	close_win(void)
 {
-	t_data	data;
-
-	init_window(&data);
-	
-	mlx_hook(data.win, 17, 1L << 2, close_win(), &data);
-	mlx_key_hook(data.win, event_handler, &data);
-	mlx_loop(data.mlx);
-	return (0);
+	exit(0);
 }
 
+void	init_window(t_data *data)
+{
+	data->mlx = mlx_init();
+	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "MiniRT");
+	data->img.img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bits_per_pixel,
+			&data->img.line_length, &data->img.endian);
+}
