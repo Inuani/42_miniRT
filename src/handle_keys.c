@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   handle_keys.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egauthey <egauthey@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/22 11:24:22 by egauthey          #+#    #+#             */
-/*   Updated: 2023/02/22 15:30:12 by egauthey         ###   ########.fr       */
+/*   Created: 2023/02/22 15:05:42 by lskraber          #+#    #+#             */
+/*   Updated: 2023/02/22 15:10:06 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/minirt.h"
+#include "includes/minirt.h"
 
-int	main(int ac, char **av)
+int	event_handler(int key, t_data *data)
 {
-	(void) ac;
-	(void) av;
-	printf("yes\n");
-	return (0);
+	if (key == 53)
+		exit(0);
 }
-
