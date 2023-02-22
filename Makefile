@@ -20,6 +20,8 @@ CFLAGS = -Wall -Wextra -Werror
 FSANI = -fsanitize=address -g3
 
 SRC =	main.c \
+		handle_window.c \
+		handle_keys.c \
 
 OBJ := $(SRC:%.c=%.o)
 

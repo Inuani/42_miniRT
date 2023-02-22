@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   handle_window.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
+/*   By: egauthey <egauthey@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 14:32:41 by lskraber          #+#    #+#             */
-/*   Updated: 2023/02/22 15:10:05 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/02/22 15:36:20 by egauthey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minirt.h"
+#include "../includes/minirt.h"
 
-int	close_win(void)
+void	close_win(void)
 {
 	exit(0);
 }

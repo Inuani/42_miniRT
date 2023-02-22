@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
+/*   By: egauthey <egauthey@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:13:13 by egauthey          #+#    #+#             */
-/*   Updated: 2023/02/22 15:10:07 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/02/22 15:37:27 by egauthey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ typedef struct s_data
 
 //handle window && image
 void	init_window(t_data *data);
-int		close_win(void);
+void		close_win(void);
 
 //handle keys
-int	event_handler(int key, t_data *data);
+void	event_handler(int key, t_data *data);
 
 #endif
