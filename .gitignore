@@ -4,3 +4,4 @@ libs/libft/libft.a
 libs/mlx/*
 miniRT
 LICENSE
+.DS_Store
