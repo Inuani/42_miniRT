@@ -35,8 +35,7 @@ void	initialise_viewport(t_data *d)
 	vp.vp_y.z = 0;
 
 	t_vec C = vec_add(cam->coords, cam->orientation); // will have to normalise
-	t_vec temp = vec_scale(0.5,vp.vp_x);
-	t_vec left = vec_subs(C, temp);
+	t_vec left = vec_subs(vec_add(cam->coords, cam->orientation), vec_scale(0.5,vp.vp_x));
 
 	vp.llc = vec_subs(left, vec_scale(0.5, vp.vp_y));
 
