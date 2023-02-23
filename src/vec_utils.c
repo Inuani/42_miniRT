@@ -60,7 +60,7 @@ float	vec_len(t_vec vec)
 	return (sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z));
 }
 
-t_vec	vec_normalisation(t_vec vec)
+t_vec	vec_unit(t_vec vec)
 {
 	t_vec	result;
 	float	len;

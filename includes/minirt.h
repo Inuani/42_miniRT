@@ -87,7 +87,7 @@ t_vec	vec_mult(t_vec *vec1, t_vec *vec2);
 t_vec	vec_scale(float nbr, t_vec *vec2);
 float	vec_dot(t_vec vec1, t_vec vec2);
 t_vec	vec_cross(t_vec vec1, t_vec vec2);
-float	vec_norm(t_vec vec);
+float	vec_len(t_vec vec);
 t_vec	vec_unit(t_vec vec);
 
 
