@@ -1,7 +1,7 @@
 
 #include "../includes/minirt.h"
 
-t_ray	create_ray(t_cam *cam)
+t_ray	create_ray(t_cam *cam, t_viewport *vp, float u, float v)
 {
 	t_ray	ray;
 
@@ -9,9 +9,11 @@ t_ray	create_ray(t_cam *cam)
 	ray.origin.y = cam->coords.y;
 	ray.origin.z = cam->coords.z;
 
-	ray.direction.x = cam->orientation.x;
-	ray.direction.y = cam->orientation.y;
-	ray.direction.z = cam->orientation.z;
+	t_vec a = vec_add(vp->llc, vec_scale(u, vp->vp_x));
+	t_vec b = vec_add(a, vec_scale(v, vp->vp_y));
+	t_vec d = vec_subs(vec_add(a, b), ray.origin);
+
+	ray.direction = d;
 	return (ray);
 }
 

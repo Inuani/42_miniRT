@@ -38,11 +38,20 @@ typedef struct s_vec
 	float	z;
 }				t_vec;
 
+typedef struct s_viewport
+{
+	float	viewp_hgt;
+	float	viewp_wdt;
+	t_vec	llc;
+	t_vec	vp_x;
+	t_vec	vp_y;
+}				t_viewport;
+
 typedef struct s_cam
 {
 	t_vec	coords;
 	t_vec	orientation;
-	int	fov;
+	float	fov;
 }				t_cam;
 
 typedef struct s_ray {
@@ -52,9 +61,10 @@ typedef struct s_ray {
 
 typedef struct s_data
 {
-	void	*mlx;
-	void	*win;
-	t_img	img;
+	void		*mlx;
+	void		*win;
+	t_img		img;
+	t_viewport	vp;
 	void	**objs;
 }				t_data;
 
@@ -78,17 +88,18 @@ int		create_trgb(int t, int r, int g, int b);
 
 //ray
 int		ray_color();
-t_ray	create_ray(t_cam *cam);
+t_ray	create_ray(t_cam *cam, t_viewport *vp, float u, float v);
 
 //vector utils
-t_vec	vec_add(t_vec *vec1, t_vec *vec2);
-t_vec	vec_subs(t_vec *vec1, t_vec *vec2);
-t_vec	vec_mult(t_vec *vec1, t_vec *vec2);
-t_vec	vec_scale(float nbr, t_vec *vec2);
-float	vec_dot(t_vec *vec1, t_vec *vec2);
-t_vec	vec_cross(t_vec *vec1, t_vec *vec2);
-float	vec_len(t_vec *vec);
-t_vec	vec_unit(t_vec *vec);
+t_vec	vec_div(t_vec vec1, t_vec vec2);
+t_vec	vec_add(t_vec vec1, t_vec vec2);
+t_vec	vec_subs(t_vec vec1, t_vec vec2);
+t_vec	vec_mult(t_vec vec1, t_vec vec2);
+t_vec	vec_scale(float nbr, t_vec vec2);
+float	vec_dot(t_vec vec1, t_vec vec2);
+t_vec	vec_cross(t_vec vec1, t_vec vec2);
+float	vec_len(t_vec vec);
+t_vec	vec_unit(t_vec vec);
 
 // void		close_win(void);
 int		close_win(void);
@@ -98,3 +109,14 @@ int	event_handler(int key, t_data *data);
 
 
 #endif
+
+// //vector utils with pointeur
+// t_vec	vec_div(t_vec *vec1, t_vec *vec2);
+// t_vec	vec_add(t_vec *vec1, t_vec *vec2);
+// t_vec	vec_subs(t_vec *vec1, t_vec *vec2);
+// t_vec	vec_mult(t_vec *vec1, t_vec *vec2);
+// t_vec	vec_scale(float nbr, t_vec *vec2);
+// float	vec_dot(t_vec *vec1, t_vec *vec2);
+// t_vec	vec_cross(t_vec *vec1, t_vec *vec2);
+// float	vec_len(t_vec *vec);
+// t_vec	vec_unit(t_vec *vec);

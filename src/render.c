@@ -16,10 +16,11 @@ void render(t_data *data)
 		{
 			u = (double)(i) / (double)(WIDTH - 1);
 			v = (double)(i) / (double)(HEIGHT - 1);
-			t_ray ray = create_ray((t_cam*)data->objs[1]);
+			t_ray ray = create_ray((t_cam*)data->objs[1], &data->vp, u, v);
+			(void)ray;
 			my_mlx_pixel_put(&(data->img), i, j, ray_color(&ray));
 		}
-		i = 0;
+		i = -1;
 	}
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
 }
