@@ -3,3 +3,4 @@ libs/libft/*.o
 libs/libft/libft.a
 libs/mlx/*
 miniRT
+LICENSE
