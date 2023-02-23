@@ -32,6 +32,7 @@ t_vec	vec_mult(t_vec *vec1, t_vec *vec2)
 t_vec	vec_scale(float nbr, t_vec *vec2)
 {
 	t_vec result;
+
 	result.x = nbr * vec2->x;
 	result.y = nbr * vec2->y;
 	result.z = nbr * vec2->z;
@@ -46,21 +47,23 @@ float	vec_dot(t_vec vec1, t_vec vec2)
 t_vec	vec_cross(t_vec vec1, t_vec vec2)
 {
 	t_vec result;
+
 	result.x = vec1.y * vec2.z - vec1.z * vec2.y;
 	result.y = vec1.z * vec2.x - vec1.x * vec2.z;
 	result.z = vec1.x * vec2.y - vec1.y * vec2.x;
 	return (result);
 }
 
-float	vec_norm(t_vec vec)
+float	vec_len(t_vec vec)
 {
 	return (sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z));
 }
 
-t_vec	vec_unit(t_vec vec)
+t_vec	vec_normalisation(t_vec vec)
 {
-	t_vec result;
-	float res = vec_norm(vec);
+	t_vec	result;
+	float	res = vec_len(vec);
+
 	result.x = vec.x / res;
 	result.y = vec.y / res;
 	result.z = vec.z / res;
