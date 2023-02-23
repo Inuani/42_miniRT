@@ -5,6 +5,7 @@
 t_vec	vec_add(t_vec *vec1, t_vec *vec2)
 {
 	t_vec	result;
+
 	result.x = vec1->x + vec2->x;
 	result.y = vec1->y + vec2->y;
 	result.z = vec1->z + vec2->z;
@@ -62,10 +63,11 @@ float	vec_len(t_vec vec)
 t_vec	vec_normalisation(t_vec vec)
 {
 	t_vec	result;
-	float	res = vec_len(vec);
-
-	result.x = vec.x / res;
-	result.y = vec.y / res;
-	result.z = vec.z / res;
+	float	len;
+	
+	len = vec_len(vec);
+	result.x = vec.x / len;
+	result.y = vec.y / len;
+	result.z = vec.z / len;
 	return (result);
 }
