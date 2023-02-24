@@ -28,6 +28,7 @@ SRC =	main.c \
 		trgb.c \
 		vec_utils.c \
 		init_objs.c \
+		sphere.c	\
 
 
 OBJ := $(SRC:%.c=%.o)

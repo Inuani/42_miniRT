@@ -1,57 +1,63 @@
 
 #include "../includes/minirt.h"
 
-void	new_cam(t_data *data, t_vec *coords, t_vec *orientation, int fov)
+void	new_cam(t_data *data, t_vec coords, t_vec orientation, int fov)
 {
-	t_cam cam;
+	t_cam	*cam = malloc(sizeof(t_cam));
 
-	cam.coords.x = coords->x;
-	cam.coords.y = coords->y;
-	cam.coords.z = coords->z;
+	cam->coords.x = coords.x;
+	cam->coords.y = coords.y;
+	cam->coords.z = coords.z;
 
-	cam.orientation.x = orientation->x;
-	cam.orientation.y = orientation->y;
-	cam.orientation.z = orientation->z;
+	cam->orientation.x = orientation.x;
+	cam->orientation.y = orientation.y;
+	cam->orientation.z = orientation.z;
 
-	cam.fov = fov;
+	cam->up = (t_vec) {0, 1, 0}; //camera's up vector is perpendicular to the camera's orientation vector. This will ensure that the camera is oriented correctly.
 
-	data->objs[1] = &cam;
+	cam->right = vec_cross(orientation, cam->up);
+	cam->right = vec_unit(cam->right);
+
+	cam->fov = fov;
+
+	data->objs[1] = cam;
 }
 
-void	initialise_viewport(t_data *d)
+void	initialise_viewport(t_data *data) // will have to normalise cam->orientation
 {
-	t_cam *cam = (t_cam*)d->objs[1];
-	t_viewport vp;
+	t_cam *cam;
 
-	vp.viewp_wdt = tan(cam->fov / 2) * 2;
-	vp.viewp_hgt = vp.viewp_wdt * (HEIGHT / WIDTH);
+	cam = (t_cam*)data->objs[1];
 
-	vp.vp_x.x = vp.viewp_wdt;
-	vp.vp_x.y = 0;
-	vp.vp_x.z = 0;
+	data->vp = malloc(sizeof(t_viewport) + 1);
 
-	vp.vp_y.y = vp.viewp_hgt;
-	vp.vp_y.x = 0;
-	vp.vp_y.z = 0;
+	data->vp->aspect_ratio = 16.0 / 9.0;
+	data->vp->viewp_hgt = tan(cam->fov / 2 * M_PI / 180.0) * 2;
+	data->vp->viewp_wdt = data->vp->viewp_hgt * (data->vp->aspect_ratio);
 
-	t_vec C = vec_add(cam->coords, cam->orientation); // will have to normalise
-	t_vec left = vec_subs(vec_add(cam->coords, cam->orientation), vec_scale(0.5,vp.vp_x));
+	data->vp->focal_len = 1;
 
-	vp.llc = vec_subs(left, vec_scale(0.5, vp.vp_y));
-
-	d->vp = vp;
+	/*t_vec a = vec_subs(cam->coords, vec_scale(0.5, d->vp->vp_x));
+	t_vec b = vec_subs(a, vec_scale(0.5, d->vp->vp_x));
+	t_vec c = vec_subs(b, cam->orientation);*/
+	//data->vp->llc = c;
 }
 
 void	initialise_objs(t_data *data, int num)
 {
-	//temp until parsing;
-	t_vec temp = {.x = -50.0, .y = 0, .z = 20};
-	t_vec temp1 = {.x = 0, .y = 1, .z = 0};
+	t_vec temp_coords = {.x = 0, .y = 0, .z = 0};
+	t_vec temp_direction = {.x = 0, .y = 0, .z = 1};
+
+	t_vec temp_center = {0, 0, 7};
+	float diameter = 13;
+	t_vec s_colors = {255, 102, 102};
 
 	data->objs = malloc((num + 1) * sizeof(void *));
 
-	new_cam(data, &temp, &temp1, 180);
+	new_cam(data, temp_coords, temp_direction, 170);
+	data->objs[2] = create_sphere(temp_center, diameter, s_colors);
 	data->objs[num] = NULL;
 	initialise_viewport(data);
+
 }
 

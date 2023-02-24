@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egauthey <egauthey@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:13:13 by egauthey          #+#    #+#             */
-/*   Updated: 2023/02/22 20:54:30 by egauthey         ###   ########.fr       */
+/*   Updated: 2023/02/24 17:11:51 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "../libs/libft/libft.h"
 # include "../libs/mlx/mlx.h"
 
-
+# include "stdio.h" //temporarily
 # include <fcntl.h> // functions for working with file descriptors, opening and manipulating files
 # include <math.h>
 
@@ -38,25 +38,32 @@ typedef struct s_vec
 	float	z;
 }				t_vec;
 
+typedef struct s_sphere {
+	t_vec	center;
+	float	radius;
+	t_vec	colors;
+}				t_sphere;
+
 typedef struct s_viewport
 {
 	float	viewp_hgt;
 	float	viewp_wdt;
-	t_vec	llc;
-	t_vec	vp_x;
-	t_vec	vp_y;
+	float	focal_len;
+	float	aspect_ratio;
 }				t_viewport;
 
 typedef struct s_cam
 {
 	t_vec	coords;
 	t_vec	orientation;
+	t_vec	up;
+	t_vec	right;
 	float	fov;
 }				t_cam;
 
 typedef struct s_ray {
-	t_vec	origin;
 	t_vec	direction;
+	t_vec	ray;
 }				t_ray;
 
 typedef struct s_data
@@ -64,13 +71,18 @@ typedef struct s_data
 	void		*mlx;
 	void		*win;
 	t_img		img;
-	t_viewport	vp;
+	t_viewport	*vp;
 	void	**objs;
 }				t_data;
 
+void	printf_vec(t_vec vec);
 
 //init objs
 void	initialise_objs(t_data *data, int num);
+
+//sphere
+float		sphere_hits(void **objs, t_ray *ray);
+t_sphere	*create_sphere(t_vec center, float diameter, t_vec colors);
 
 //render frames
 void	render(t_data *data);

@@ -6,11 +6,19 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:24:22 by egauthey          #+#    #+#             */
-/*   Updated: 2023/02/22 20:49:30 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/02/24 18:30:45 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../includes/minirt.h"
+
+void	printf_vec(t_vec vec)
+{
+	printf("x : %f\n", vec.x);
+	printf("y : %f\n", vec.y);
+	printf("z : %f\n", vec.z);
+	printf("\n");
+}
 
 int	main(int ac, char **av)
 {
@@ -18,10 +26,10 @@ int	main(int ac, char **av)
 	(void)av;
 	
 	t_data	data;
-
-	initialise_objs(&data, 3);
-	init_window(&data);
 	
+	initialise_objs(&data, 5);
+	init_window(&data);
+
 	render(&data);
 	mlx_hook(data.win, 17, 1L << 2, close_win, &data);
 	mlx_key_hook(data.win, event_handler, &data);
@@ -29,3 +37,5 @@ int	main(int ac, char **av)
 	return (0);
 }
 
+
+//TODO implement depth buffer;

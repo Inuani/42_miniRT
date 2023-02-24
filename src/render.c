@@ -3,21 +3,21 @@
 
 void render(t_data *data)
 {
-	int	i;
-	int	j;
-	int	u;
-	int v;
+	int		i;
+	int		j;
+	float	u;
+	float	v;
 
 	i = -1;
-	j = -1;
-	while (++j < HEIGHT)
+	j = HEIGHT - 1;
+	while (j-- > 0)
 	{
 		while (++i < WIDTH)
 		{
-			u = (double)(i) / (double)(WIDTH - 1);
-			v = (double)(i) / (double)(HEIGHT - 1);
-			t_ray ray = create_ray((t_cam*)data->objs[1], &data->vp, u, v);
-			my_mlx_pixel_put(&(data->img), i, j, ray_color(&ray));
+			u = (float)(i) / (float)(WIDTH - 1);
+			v = (float)(j) / (float)(HEIGHT - 1);
+			t_ray ray = create_ray((t_cam*)data->objs[1], data->vp, u, v);
+			my_mlx_pixel_put(&(data->img), i, j, ray_color(&ray, data));
 		}
 		i = -1;
 	}

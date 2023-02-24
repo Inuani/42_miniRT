@@ -1,0 +1,49 @@
+
+#include "../includes/minirt.h"
+
+t_sphere	*create_sphere(t_vec center, float diameter, t_vec colors)
+{
+	t_sphere	*sphere;
+	
+	sphere = malloc(sizeof(t_sphere) + 1);
+
+	sphere->center.x = center.x;
+	sphere->center.y = center.y;
+	sphere->center.z = center.z;
+
+	sphere->radius = diameter / 2.0;
+
+	sphere->colors.x = colors.x;
+	sphere->colors.y = colors.y;
+	sphere->colors.z = colors.z;
+
+	return (sphere);
+}
+
+float	sphere_hits(void **objs, t_ray *ray)
+{
+	t_sphere	*sphere;
+	t_cam		*cam;
+	t_vec		v;
+	float		det;
+
+	sphere = (t_sphere*)objs[2];
+	cam = (t_cam*)objs[1];
+
+	v = vec_subs(cam->coords, sphere->center);
+
+	float a = vec_dot(ray->direction, ray->direction); //can simplify
+	float half_b = vec_dot(v, ray->direction);
+	float c = vec_dot(v, v) - (sphere->radius * sphere->radius); //can simplify
+	det = half_b*half_b - a*c;
+
+	if (det < 0)
+		return (-1.0);
+	float t1 = (-half_b - sqrt(det)) / a;
+	float t2 = (-half_b + sqrt(det)) / a;
+	return -t1;
+	if (t1 > 0.0 && (t2 < 0.0 || t1 < t2))
+		return (t1);
+	printf("t1: %f\n", t1);
+	return (t2);
+}
