@@ -24,9 +24,10 @@ int	main(int ac, char **av)
 {
 	(void)ac;
 	(void)av;
-	
+
 	t_data	data;
-	
+
+	// mrt_parsing(av);
 	initialise_objs(&data, 5);
 	init_window(&data);
 
@@ -38,4 +39,4 @@ int	main(int ac, char **av)
 }
 
 
-//TODO implement depth buffer;
+// TO DO implement depth buffer;

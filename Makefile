@@ -7,6 +7,7 @@ RM = rm -f
 # Directories
 OBJ_DIR = objs/
 SRC_DIR = src/
+PARS_DIR = parsing/
 
 # Libraries
 LIBFT  = libs/libft
@@ -20,6 +21,10 @@ LIBFLAGS = -Llibs/libft -lft -Llibs/mlx -lmlx -framework OpenGL -framework AppKi
 CFLAGS = -Wall -Wextra -Werror
 FSANI = -fsanitize=address -g3
 
+PARS_SRC = $(addprefix $(PARS_DIR),	mrt_parsing.c \
+									errors.c \
+									)
+
 SRC =	main.c \
 		handle_window.c \
 		handle_keys.c \
@@ -28,27 +33,30 @@ SRC =	main.c \
 		trgb.c \
 		vec_utils.c \
 		init_objs.c \
-		sphere.c	\
-		rand.c
-
+		sphere.c \
+		rand.c \
+#		mrt_parsing.c \
+#		errors.c \
 
 OBJ := $(SRC:%.c=%.o)
+PARS_OBJ := $(PARS_SRC:%.c=%.o)
 
-SRCS = $(addprefix $(SRC_DIR), $(SRC))
-OBJS = $(addprefix $(OBJ_DIR), $(OBJ))
+SRCS = $(addprefix $(SRC_DIR), $(SRC) $(PARS_SRC))
+OBJS = $(addprefix $(OBJ_DIR), $(OBJ) $(PARS_OBJ))
 
 all: $(NAME)
 
 $(NAME): $(SRCS) $(OBJ_DIR) $(OBJS)
-	$(MAKE) -C libs/libft
-	${MAKE} -C libs/mlx
+	$(MAKE) -C $(LIBFT)
+	${MAKE} -C $(MLX)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFLAGS) -o $(NAME)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	$(CC) $(CFLAGS) $(INC) -I.$(LIBFT) $< -c -o $@
+	$(CC) $(CFLAGS) -I.$(LIBFT) $(INC)  $< -c -o $@
 
 $(OBJ_DIR):
 	@mkdir $(OBJ_DIR)
+	@mkdir $(OBJ_DIR)/$(PARS_DIR)
 
 debug:
 	$(CC) $(CFLAGS)
