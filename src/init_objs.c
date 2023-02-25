@@ -14,8 +14,11 @@ void	new_cam(t_data *data, t_vec coords, t_vec orientation, int fov)
 	cam->orientation.y = orientation.y;
 	cam->orientation.z = orientation.z;
 
-	cam->up = (t_vec) {0, 1, 0}; //camera's up vector is perpendicular to the camera's orientation vector. This will ensure that the camera is oriented correctly.
-
+	if (!orientation.x && !orientation.z)
+		cam->up = vec_cross(cam->orientation, (t_vec) {0, 0, 1});
+	else
+		cam->up = (t_vec) {0, 1, 0}; //camera's up vector is perpendicular to the camera's orientation vector. This will ensure that the camera is oriented correctly.
+	
 	cam->right = vec_cross(orientation, cam->up);
 	cam->right = vec_unit(cam->right);
 
@@ -34,7 +37,7 @@ void	initialise_viewport(t_data *data) // will have to normalise cam->orientatio
 
 	data->vp->aspect_ratio = 16.0 / 9.0;
 	data->vp->viewp_wdt = tan(cam->fov / 2 * M_PI / 180.0) * 2;
-	data->vp->viewp_hgt = data->vp->viewp_wdt * (data->vp->aspect_ratio);
+	data->vp->viewp_hgt = data->vp->viewp_wdt / (data->vp->aspect_ratio);
 
 	data->vp->focal_len = 1;
 
@@ -49,15 +52,16 @@ void	initialise_viewport(t_data *data) // will have to normalise cam->orientatio
 void	initialise_objs(t_data *data, int num)
 {
 	t_vec temp_coords = {.x = 0, .y = 0, .z = 0};
-	t_vec temp_direction = {.x = 0, .y = 0, .z = 1};
+	t_vec temp_direction = {.x = 0.25, .y = 0.5, .z = 0.25};
+	temp_direction = vec_unit(temp_direction);
 
-	t_vec temp_center = {0, 0, 7};
-	float diameter = 13;
+	t_vec temp_center = {5, 10, 5};
+	float diameter = 5;
 	t_vec s_colors = {255, 102, 102};
 
 	data->objs = malloc((num + 1) * sizeof(void *));
 
-	new_cam(data, temp_coords, temp_direction, 179);
+	new_cam(data, temp_coords, temp_direction, 90);
 	data->objs[2] = create_sphere(temp_center, diameter, s_colors);
 	data->objs[num] = NULL;
 	initialise_viewport(data);

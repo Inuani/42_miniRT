@@ -8,13 +8,13 @@ t_ray	create_ray(t_cam *cam, t_viewport *vp, float u, float v)
 	ray.depth = 0.5;
 
 	ray.direction = (t_vec) {
-		(u - 0.5) * vp->viewp_hgt,
-		(v - 0.5) * vp->viewp_wdt,
+		-1 *(u - 0.5) * vp->viewp_wdt,
+		-1 * (v - 0.5) * vp->viewp_hgt,
 		vp->focal_len// * (-1)
 	};
 
-	(void) cam;
-/*
+	(void)cam;
+
 	ray.direction = vec_unit(ray.direction);
 
 	ray.ray = (t_vec) {
@@ -23,7 +23,9 @@ t_ray	create_ray(t_cam *cam, t_viewport *vp, float u, float v)
 		ray.direction.x * cam->right.z + ray.direction.y * cam->up.z + ray.direction.z * cam->orientation.z
 	};
 
-	ray.ray = vec_unit(ray.ray);*/
+	ray.ray = vec_unit(ray.ray);
+
+	ray.direction = ray.ray;
 
 	return (ray);
 }

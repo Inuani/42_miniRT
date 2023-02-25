@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:13:13 by egauthey          #+#    #+#             */
-/*   Updated: 2023/02/25 13:49:44 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/02/25 19:27:04 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,3 +147,20 @@ int	event_handler(int key, t_data *data);
 // t_vec	vec_cross(t_vec *vec1, t_vec *vec2);
 // float	vec_len(t_vec *vec);
 // t_vec	vec_unit(t_vec *vec);
+
+
+/*TODO LIST:
+
+	BUG: CHANGER LA CAMERA DE DIRECTION; - kinda fixed
+
+	PARSING :D
+	FUNC HP PLUS PROCHE DE CAMERA / LUMIERES;
+	AUTRES OBJETS : PLAN / CYLINDRE;
+	LIGHTS :D
+
+	DEPLACEMENTS;
+
+	(threads, antialising, reflection etc...)
+
+
+*/
