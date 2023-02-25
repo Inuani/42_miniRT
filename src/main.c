@@ -27,14 +27,14 @@ int	main(int ac, char **av)
 
 	t_data	data;
 
-	// mrt_parsing(av);
+	mrt_parsing(av);
 	initialise_objs(&data, 5);
-	init_window(&data);
+	// init_window(&data);
 
-	render(&data);
-	mlx_hook(data.win, 17, 1L << 2, close_win, &data);
-	mlx_key_hook(data.win, event_handler, &data);
-	mlx_loop(data.mlx);
+	// render(&data);
+	// mlx_hook(data.win, 17, 1L << 2, close_win, &data);
+	// mlx_key_hook(data.win, event_handler, &data);
+	// mlx_loop(data.mlx);
 	return (0);
 }
 

@@ -13,6 +13,6 @@ int	mrt_parsing(char **av);
 
 int	mrt_error(char *msg, int error);
 
-# define ERR_OPEN "Open error :"
+# define ERR_OPEN "Open error "
 
 #endif
