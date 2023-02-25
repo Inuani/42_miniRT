@@ -41,9 +41,34 @@ float	sphere_hits(void **objs, t_ray *ray)
 		return (-1.0);
 	float t1 = (-half_b - sqrt(det)) / a;
 	float t2 = (-half_b + sqrt(det)) / a;
-	return -t1;
-	if (t1 > 0.0 && (t2 < 0.0 || t1 < t2))
+	if (t1 > 0.0 && (t2 < 0.0 || t1 < t2)) //change in function of camera
 		return (t1);
-	printf("t1: %f\n", t1);
 	return (t2);
+}
+
+t_vec front(t_ray *ray)
+{
+	int	front;
+	front = vec_dot(ray->direction, ray->normal) < 0;
+	return (front ? ray->normal : vec_scale(-1, ray->normal));
+}
+
+int	it_hit_sphere(t_data *data, t_ray *ray, t_sphere *sphere)
+{
+	float	root;
+	t_cam	*cam;
+
+	cam = (t_cam*)data->objs[1];
+	root = sphere_hits(data->objs, ray);
+	if (root < 0)
+		return 0;
+	//ray->depth *= 0.5;
+	//if (ray->depth < )
+	ray->point_at = vec_add(cam->coords, vec_scale(root, ray->direction));
+	ray->normal = vec_scale(1/sphere->radius, vec_subs(ray->point_at, sphere->center));
+	ray->normal = front(ray);
+
+	//vec_unit(ray->normal); //useless?
+
+	return (1);
 }

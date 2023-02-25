@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:13:13 by egauthey          #+#    #+#             */
-/*   Updated: 2023/02/24 17:11:51 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/02/25 13:49:44 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@
 # include "stdio.h" //temporarily
 # include <fcntl.h> // functions for working with file descriptors, opening and manipulating files
 # include <math.h>
+# include <pthread.h>
 
+//nbr of threads, 24?
+
+# define THREADS 24
 # define HEIGHT 1080
 # define WIDTH 1920
 
@@ -50,6 +54,7 @@ typedef struct s_viewport
 	float	viewp_wdt;
 	float	focal_len;
 	float	aspect_ratio;
+	float	samplespp;
 }				t_viewport;
 
 typedef struct s_cam
@@ -64,6 +69,10 @@ typedef struct s_cam
 typedef struct s_ray {
 	t_vec	direction;
 	t_vec	ray;
+	t_vec	normal;
+	t_vec	point_at;
+	int		front;
+	float	depth;
 }				t_ray;
 
 typedef struct s_data
@@ -73,14 +82,20 @@ typedef struct s_data
 	t_img		img;
 	t_viewport	*vp;
 	void	**objs;
+	pthread_t	id[THREADS];
 }				t_data;
 
 void	printf_vec(t_vec vec);
+
+//rand
+int		fast_rand(int seed);
+float	rand_double(int seed);
 
 //init objs
 void	initialise_objs(t_data *data, int num);
 
 //sphere
+int			it_hit_sphere(t_data *data, t_ray *ray, t_sphere *sphere);
 float		sphere_hits(void **objs, t_ray *ray);
 t_sphere	*create_sphere(t_vec center, float diameter, t_vec colors);
 

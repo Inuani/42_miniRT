@@ -9,6 +9,7 @@ void	new_cam(t_data *data, t_vec coords, t_vec orientation, int fov)
 	cam->coords.y = coords.y;
 	cam->coords.z = coords.z;
 
+
 	cam->orientation.x = orientation.x;
 	cam->orientation.y = orientation.y;
 	cam->orientation.z = orientation.z;
@@ -32,10 +33,12 @@ void	initialise_viewport(t_data *data) // will have to normalise cam->orientatio
 	data->vp = malloc(sizeof(t_viewport) + 1);
 
 	data->vp->aspect_ratio = 16.0 / 9.0;
-	data->vp->viewp_hgt = tan(cam->fov / 2 * M_PI / 180.0) * 2;
-	data->vp->viewp_wdt = data->vp->viewp_hgt * (data->vp->aspect_ratio);
+	data->vp->viewp_wdt = tan(cam->fov / 2 * M_PI / 180.0) * 2;
+	data->vp->viewp_hgt = data->vp->viewp_wdt * (data->vp->aspect_ratio);
 
 	data->vp->focal_len = 1;
+
+	data->vp->samplespp = 100;
 
 	/*t_vec a = vec_subs(cam->coords, vec_scale(0.5, d->vp->vp_x));
 	t_vec b = vec_subs(a, vec_scale(0.5, d->vp->vp_x));
@@ -54,7 +57,7 @@ void	initialise_objs(t_data *data, int num)
 
 	data->objs = malloc((num + 1) * sizeof(void *));
 
-	new_cam(data, temp_coords, temp_direction, 170);
+	new_cam(data, temp_coords, temp_direction, 179);
 	data->objs[2] = create_sphere(temp_center, diameter, s_colors);
 	data->objs[num] = NULL;
 	initialise_viewport(data);

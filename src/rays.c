@@ -3,22 +3,19 @@
 
 t_ray	create_ray(t_cam *cam, t_viewport *vp, float u, float v)
 {
-	t_ray	ray;// = malloc(sizeof(t_ray) + 1); //necessary??
+	t_ray	ray;
 
-	//printf("vp wdt : %f\n", (u - 0.5) * vp->viewp_wdt);
+	ray.depth = 0.5;
 
 	ray.direction = (t_vec) {
-		(u - 0.5) * vp->viewp_wdt,
-		(v - 0.5) * vp->viewp_hgt,
-		vp->focal_len * (-1)
+		(u - 0.5) * vp->viewp_hgt,
+		(v - 0.5) * vp->viewp_wdt,
+		vp->focal_len// * (-1)
 	};
 
-
-	
+	(void) cam;
+/*
 	ray.direction = vec_unit(ray.direction);
-
-	//printf_vec(cam->orientation);
-	//printf("what interests me: %f\n", ray.direction.z * cam->orientation.z);
 
 	ray.ray = (t_vec) {
 		ray.direction.x * cam->right.x + ray.direction.y * cam->up.x + ray.direction.z * cam->orientation.x,
@@ -26,17 +23,18 @@ t_ray	create_ray(t_cam *cam, t_viewport *vp, float u, float v)
 		ray.direction.x * cam->right.z + ray.direction.y * cam->up.z + ray.direction.z * cam->orientation.z
 	};
 
-	ray.ray = vec_unit(ray.ray);
-
-	//printf_vec(ray.ray);
+	ray.ray = vec_unit(ray.ray);*/
 
 	return (ray);
 }
 
 int ray_color(t_ray *ray, t_data *data)
 {
-	float t = sphere_hits(data->objs, ray);
-	if (t > 0.0)
-		return (create_trgb(0, 255, 255, 255));
-	return (create_trgb(0, 0, 0, 0));
+	t_sphere	*sphere;
+	t_vec		tmp_color = {0, 0, 0};
+
+	sphere = (t_sphere*)data->objs[2];
+	if (it_hit_sphere(data, ray, sphere))
+		tmp_color = vec_scale(0.5, vec_add(ray->normal, sphere->colors)); //0.5 correspond a la lumiere ambiante
+	return create_trgb(0, tmp_color.x,  tmp_color.y,  tmp_color.z);
 }
