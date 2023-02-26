@@ -1,7 +1,6 @@
 #include "../../includes/minirt.h"
 
 
-
 void	parse_line(char *line)
 {
 	int	i;
@@ -11,8 +10,8 @@ void	parse_line(char *line)
 	{
 		if (line[i] && is_space(line[i]))
 			skip_space(line, &i);
-		// if (line[i] && !ft_strncmp(line + i, "A", 1))
-			// ambiant_light
+		if (line[i] && !ft_strncmp(line + i, "A", 1))
+			ambiant_light
 	}
 	printf("%s\n", line);
 }
@@ -33,6 +32,7 @@ int	mrt_parsing(char **av)
 		line = get_next_line(fd);
 		parse_line(line);
 	}
+	free(line);
 	close(fd);
 	return (0);
 }

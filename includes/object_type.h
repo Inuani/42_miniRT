@@ -1,22 +1,22 @@
 #ifndef OBJECT_TYPE_H
 # define OBJECT_TYPE_H
 
-typedef enum {
+typedef enum object_type {
 	LIGHT,
 	SPHERE,
 	PLANE,
 	CYLINDER
-}		Type;
+}	t_type;
 
-typedef struct s_objects {
-	Type type;
+typedef struct s_object {
+	t_type				type;
 	union {
-		t_light		light;
-		t_sphere	sphere;
-		t_cylinder	cylinder;
-		t_plane		plane;
-	} data;
-	struct s_objects *next;
-}		t_objects;
+		struct s_light		light;
+		struct s_sphere		sphere;
+		struct s_plane		plane;
+		struct s_cylinder	cylinder;
+	}	u_data;
+	struct s_objects	*next;
+}				t_object;
 
 #endif
