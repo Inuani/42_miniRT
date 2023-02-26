@@ -1,13 +1,18 @@
 #include "../../includes/minirt.h"
 
+
+
 void	parse_line(char *line)
 {
 	int	i;
 
 	i = -1;
-	while(line(++i))
+	while (line && line[i])
 	{
-		
+		if (line[i] && is_space(line[i]))
+			skip_space(line, &i);
+		// if (line[i] && !ft_strncmp(line + i, "A", 1))
+			// ambiant_light
 	}
 	printf("%s\n", line);
 }

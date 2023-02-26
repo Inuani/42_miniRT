@@ -17,7 +17,8 @@
 # include "../libs/mlx/mlx.h"
 
 # include "struct.h"
-#include "parsing.h"
+# include "parsing.h"
+# include "object_type.h"
 
 # include <stdio.h> //temporarily
 # include <fcntl.h> // functions for working with file descriptors, opening and manipulating files

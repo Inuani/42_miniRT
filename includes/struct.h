@@ -18,11 +18,31 @@ typedef struct s_vec
 	float	z;
 }				t_vec;
 
+typedef struct s_light {
+	t_vec	point;
+	float	light_ratio;
+	t_vec	colors;
+}				t_light;
+
 typedef struct s_sphere {
 	t_vec	center;
 	float	radius;
 	t_vec	colors;
 }				t_sphere;
+
+typedef struct s_cylinder {
+	t_vec	base;
+	t_vec	orientation;
+	float	diameter;
+	float	height;
+	t_vec	colors;
+}			t_cylinder;
+
+typedef struct s_plane {
+	t_vec	point;
+	t_vec	orientation;
+	t_vec	colors;
+}				t_plane;
 
 typedef struct s_viewport
 {

@@ -22,6 +22,7 @@ CFLAGS = -Wall -Wextra -Werror
 FSANI = -fsanitize=address -g3
 
 PARS_SRC = $(addprefix $(PARS_DIR),	mrt_parsing.c \
+									parsing_utils.c \
 									errors.c \
 									)
 
