@@ -1,4 +1,3 @@
-// #include "../includes/minirt.h"
 #include "../../includes/minirt.h"
 
 int	mrt_error(char *msg, int error)

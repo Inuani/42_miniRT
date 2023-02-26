@@ -1,8 +1,14 @@
-// #include "../includes/minirt.h"
 #include "../../includes/minirt.h"
 
 void	parse_line(char *line)
 {
+	int	i;
+
+	i = -1;
+	while(line(++i))
+	{
+		
+	}
 	printf("%s\n", line);
 }
 
