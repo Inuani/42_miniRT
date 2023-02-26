@@ -18,6 +18,12 @@ typedef struct s_vec
 	float	z;
 }				t_vec;
 
+typedef struct s_ambiant
+{
+	float	light_ratio;
+	t_vec	colors;
+}			t_ambiant;
+
 typedef struct s_light {
 	t_vec	point;
 	float	light_ratio;

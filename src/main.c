@@ -27,9 +27,9 @@ int	main(int ac, char **av)
 
 	t_data	data;
 
-	if (mrt_parsing(av) != 0)
+	if (mrt_parsing(av, &data) != 0)
 		return (1);
-	initialise_objs(&data, 5);
+	// initialise_objs(&data, 5);
 	// init_window(&data);
 
 	// render(&data);
