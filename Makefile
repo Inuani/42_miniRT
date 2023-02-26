@@ -27,6 +27,7 @@ PARS_SRC = $(addprefix $(PARS_DIR),	mrt_parsing.c \
 									object_list_utils.c \
 									pars_debug.c \
 									tok_list_utils.c \
+									objs_emanation.c \
 									)
 
 SRC =	main.c \

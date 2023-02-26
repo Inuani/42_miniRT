@@ -1,7 +1,7 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
-# define THREADS 24
+// # include "object_type.h"
 
 typedef struct s_img {
 	void	*img;
@@ -77,14 +77,37 @@ typedef struct s_ray {
 	float	depth;
 }				t_ray;
 
+typedef enum object_type {
+	CAMERA,
+	AMBIANT,
+	LIGHT,
+	SPHERE,
+	PLANE,
+	CYLINDER
+}	t_type;
+
+typedef struct s_object {
+	t_type			type;
+	union {
+		struct s_cam		camera;
+		struct s_ambiant	ambiant;
+		struct s_light		light;
+		struct s_sphere		sphere;
+		struct s_plane		plane;
+		struct s_cylinder	cylinder;
+	}	u_data;
+	struct s_object	*next;
+}				t_object;
+
 typedef struct s_data
 {
 	void		*mlx;
 	void		*win;
 	t_img		img;
 	t_viewport	*vp;
-	void	**objs;
-	pthread_t	id[THREADS];
+	void		**objs;
+	t_object	*chaos;
+	t_object	**objss;
 }				t_data;
 
 #endif

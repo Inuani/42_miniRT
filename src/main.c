@@ -26,9 +26,7 @@ int	main(int ac, char **av)
 	(void)av;
 
 	t_data	data;
-
-	if (mrt_parsing(av, &data) != 0)
-		return (1);
+	mrt_parsing(av, &data);
 	// initialise_objs(&data, 5);
 	// init_window(&data);
 
