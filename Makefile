@@ -58,7 +58,7 @@ all: $(NAME)
 $(NAME): $(SRCS) $(OBJ_DIR) $(OBJS)
 	$(MAKE) -C $(LIBFT)
 	${MAKE} -C $(MLX)
-	$(CC) $(CFLAGS) $(OBJS) $(FSANI) $(LIBFLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFLAGS) -o $(NAME)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	$(CC) $(CFLAGS) -I.$(LIBFT) $(INC)  $< -c -o $@
@@ -67,8 +67,8 @@ $(OBJ_DIR):
 	@mkdir $(OBJ_DIR)
 	@mkdir $(OBJ_DIR)/$(PARS_DIR)
 
-debug:
-	$(CC) $(CFLAGS)
+debug: $(SRCS) $(OBJ_DIR) $(OBJS)
+	$(CC) $(CFLAGS) $(FSANI) $(OBJS) $(LIBFLAGS) -o $(NAME)
 
 clean:
 	$(RM) $(OBJS)

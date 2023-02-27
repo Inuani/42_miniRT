@@ -23,8 +23,6 @@ void	printf_vec(t_vec vec)
 int	main(int ac, char **av)
 {
 	(void)ac;
-	(void)av;
-
 	t_data	data;
 
 	data.count.l_count = 0;
@@ -33,26 +31,26 @@ int	main(int ac, char **av)
 	data.count.cy_count = 0;
 
 	mrt_parsing(av, &data);
-	initialise_viewport(&data);
+	// initialise_viewport(&data);
 
 	int i = 0;
 	while(data.objs[i])
 	 	print_object(*data.objs[i++]);
 
-	t_plane	*plane;
+	// t_plane	*plane;
 
-	plane = (t_plane*)data.objs[4];
-	//plane->orient = vec_unit(plane->orient);
-	//printf_vec(plane->orient);
-	//printf_vec(plane->point);
+	// plane = (t_plane*)data.objs[4];
+	// //plane->orient = vec_unit(plane->orient);
+	// //printf_vec(plane->orient);
+	// //printf_vec(plane->point);
 
-	printf("count: %i\n", data.count.sp_count);
-	init_window(&data);
+	// printf("count: %i\n", data.count.sp_count);
+	// init_window(&data);
 
-	render(&data);
-	mlx_hook(data.win, 17, 1L << 2, close_win, &data);
-	mlx_key_hook(data.win, event_handler, &data);
-	mlx_loop(data.mlx);
+	// render(&data);
+	// mlx_hook(data.win, 17, 1L << 2, close_win, &data);
+	// mlx_key_hook(data.win, event_handler, &data);
+	// mlx_loop(data.mlx);
 	return (0);
 }
 
