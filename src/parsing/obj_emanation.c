@@ -27,15 +27,14 @@ void	add_ambiant(t_data *d, t_tok *lst)
 	nb = calc_nb_prop(lst);
 	if (nb != 4)
 		exit_error(ERR_PROPERTIES, 1); // make a personalised error for ambiant etc. ?
-	remove_tok(&lst, lst);
+	lst = lst->next;
 	inst.light_ratio = ft_atof(lst->s);
-	remove_tok(&lst, lst);
+	lst = lst->next;
 	inst.colors.x = ft_atof(lst->s);
-	remove_tok(&lst, lst);
+	lst = lst->next;;
 	inst.colors.y = ft_atof(lst->s);
-	remove_tok(&lst, lst);
+	lst = lst->next;
 	inst.colors.z = ft_atof(lst->s);
-	remove_tok(&lst, lst);
 	new = create_object(AMBIANT, &inst);
 	//print_object(*new);
 	//printf("\n");
