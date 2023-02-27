@@ -1,23 +1,12 @@
 
 #include "../includes/minirt.h"
 
-float	sphere_hits(t_object **objs, t_ray *ray)
+float	sphere_hits(t_vec vector, t_vec v, t_sphere sphere)
 {
-	t_sphere	sphere;
-	t_cam		cam;
-	t_vec		v;
 	float		det;
 
-	sphere = objs[3]->u_data.sphere;
-	cam = objs[1]->u_data.camera;
-
-	//printf("%f\n", sphere.radius);
-	//printf_vec(sphere.center);
-
-	v = vec_subs(cam.pos, sphere.center);
-
-	float a = vec_dot(ray->direction, ray->direction); //can simplify
-	float half_b = vec_dot(v, ray->direction);
+	float a = vec_dot(vector, vector); //can simplify
+	float half_b = vec_dot(v, vector);
 	float c = vec_dot(v, v) - (sphere.radius * sphere.radius); //can simplify
 	det = half_b*half_b - a*c;
 
@@ -41,11 +30,15 @@ t_vec front(t_ray *ray) //useless?
 float it_hit_sphere(t_data *data, t_ray *ray, t_sphere sphere)
 {
 	t_cam	cam;
+	float	root;
 
 	cam = data->objs[1]->u_data.camera;
-	float root = sphere_hits(data->objs, ray);
-	//printf("%f\n", root);
-	ray->point_at = (t_vec){999, 999, 999};
+
+	t_vec vector = (t_vec) {ray->direction.x, ray->direction.y, ray->direction.z};
+	t_vec v = vec_subs(cam.pos, sphere.center);
+
+	root = sphere_hits(vector, v, sphere);
+	ray->point_at = (t_vec){0, 0, 0};
 	if (root < 0)
 		return -1;
 	//ray->depth *= 0.5;
@@ -56,9 +49,9 @@ float it_hit_sphere(t_data *data, t_ray *ray, t_sphere sphere)
 
 	//vec_unit(ray->normal); //useless?
 
-	if (light_hit(ray, data))
-		return (light_hit(ray, data));
-
+	float value = light_hit(ray, data, sphere);
+	if (value)
+		return (value);//can optimize
 
 	return (0);
 }

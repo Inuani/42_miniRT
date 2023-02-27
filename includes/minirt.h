@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:13:13 by egauthey          #+#    #+#             */
-/*   Updated: 2023/02/27 18:37:42 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/02/27 22:13:22 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define HEIGHT 1080
 # define WIDTH 1920
 
-int	light_hit(t_ray *ray, t_data *data);
+int	light_hit(t_ray *ray, t_data *data, t_sphere sphere);
 float hit_objs(t_data *data, t_ray *ray, t_vec *colors);
 
 void	printf_vec(t_vec vec);
@@ -50,8 +50,7 @@ int	plane_hit(t_data *data, t_ray *ray, t_plane *plane);
 
 //sphere
 float		it_hit_sphere(t_data *data, t_ray *ray, t_sphere sphere);
-float		sphere_hits(t_object **objs, t_ray *ray);
-t_sphere	*create_sphere(t_vec center, float diameter, t_vec colors);
+float		sphere_hits(t_vec vector, t_vec v, t_sphere sphere);
 
 //render frames
 void	render(t_data *data);

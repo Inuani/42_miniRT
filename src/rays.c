@@ -47,21 +47,39 @@ t_ray	create_ray(t_cam *cam, t_viewport *vp, float u, float v)
 int ray_color(t_ray *ray, t_data *data)
 {
 	t_vec		color = {0, 0, 0};
+	float		value;
+	float		li;
+	float		ai;
+
+	ai = data->objs[0]->u_data.ambiant.light_ratio;
+	li = data->objs[2]->u_data.light.light_ratio;
 
 	//if (plane_life(data, ray))
 	//	return create_trgb(0, 0, 30, 150);
-	
-	if (hit_objs(data, ray, &color) >= 0)
+
+	value = hit_objs(data, ray, &color);
+
+	if (value == 0)
+		color = vec_scale(ai, color);
+	else if (value == -1)
 		return create_trgb(0, color.x, color.y, color.z);
+	else
+	{
+		float scale = map2(li + map(value), ai, li); //in bonus it needs to change intensity depending on the light
+		color = vec_scale(scale, color);
+	}
+	return create_trgb(0, color.x, color.y, color.z);
+}
+
 /*
 	if (it_hit_sphere(data, ray, sphere) == 0)
 		color = vec_scale(0.2, sphere.colors); //0.5 correspond a la lumiere ambiante
 	else if (it_hit_sphere(data, ray, sphere) == -1)
-		return create_trgb(0, color.x,  color.y,  color.z);
+		return create_trgb(0, color.x, color.y, color.z);
 	else
 	{
 		float scale = map2(0.9 + map(it_hit_sphere(data, ray, sphere)), 0.2, 0.9);
 		color = vec_scale(scale, sphere.colors);
-	}*/
+	}
 	return create_trgb(0, color.x,  color.y,  color.z);
-}
+}*/

@@ -1,16 +1,23 @@
 
 #include "../includes/minirt.h"
 
-int	is_first(t_ray *ray, t_cam cam, t_vec point_at)
+int	is_first(t_ray *ray, t_cam cam, t_vec point_at, int *first)
 {
 	t_vec vector;
 	t_vec vector2;
 
+	if (!(*first) && (ray->point_at.x || ray->point_at.y || ray->point_at.z))
+	{
+		point_at.x = ray->point_at.x;
+		point_at.y = ray->point_at.y;
+		point_at.z = ray->point_at.z;
+		*first = 1;
+		return (1);
+	}
+
 	vector = vec_subs(ray->point_at, cam.pos); //maybe other side.
 	vector2 = vec_subs(point_at, cam.pos);
 
-	//printf_vec(vector);
-	//printf_vec(vector2);
 	if (vec_len(vector) < vec_len(vector2))
 	{
 		point_at.x = ray->point_at.x;
@@ -24,19 +31,21 @@ int	is_first(t_ray *ray, t_cam cam, t_vec point_at)
 float hit_objs(t_data *data, t_ray *ray, t_vec *colors)
 {
 	int			i;
+	int			first;
 	float		tmp;
 	float		ret;
 	t_vec		point_at;
 
+	first = 0;
 	ret = -1;
-	point_at = (t_vec){99, 99, 99};
+	point_at = (t_vec){0, 0, 0};
 	i = 2 + data->count.l_count;
 	while (data->objs[i])
 	{
 		if (i < 2 + data->count.l_count + data->count.sp_count)
 		{
 			tmp = it_hit_sphere(data, ray, data->objs[i]->u_data.sphere);
-			if (is_first(ray, data->objs[1]->u_data.camera, point_at))
+			if (is_first(ray, data->objs[1]->u_data.camera, point_at, &first))
 			{
 				ret = tmp;
 				colors->x = data->objs[i]->u_data.sphere.colors.x;
@@ -47,7 +56,7 @@ float hit_objs(t_data *data, t_ray *ray, t_vec *colors)
 		else if (i < 2 + data->count.l_count + data->count.sp_count
 				+ data->count.pl_count)
 			tmp = plane_life(data, ray, data->objs[i]->u_data.plane);
-			if (is_first(ray, data->objs[1]->u_data.camera, point_at))
+			if (is_first(ray, data->objs[1]->u_data.camera, point_at, &first))
 			{
 				ret = tmp;
 				colors->x = data->objs[i]->u_data.plane.colors.x;
