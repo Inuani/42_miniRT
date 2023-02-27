@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:13:13 by egauthey          #+#    #+#             */
-/*   Updated: 2023/02/25 19:27:04 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/02/27 12:25:35 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define HEIGHT 1080
 # define WIDTH 1920
 
-
+int	light_hit(t_ray *ray, t_data *data);
 
 void	printf_vec(t_vec vec);
 
@@ -43,8 +43,12 @@ float	rand_double(int seed);
 //init objs
 void	initialise_objs(t_data *data, int num);
 
+//plane
+int	plane_life(t_data *data, t_ray *ray);
+int	plane_hit(t_data *data, t_ray *ray, t_plane *plane);
+
 //sphere
-int			it_hit_sphere(t_data *data, t_ray *ray, t_sphere *sphere);
+float		it_hit_sphere(t_data *data, t_ray *ray, t_sphere *sphere);
 float		sphere_hits(void **objs, t_ray *ray);
 t_sphere	*create_sphere(t_vec center, float diameter, t_vec colors);
 

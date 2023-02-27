@@ -36,6 +36,8 @@ SRC =	main.c \
 		init_objs.c \
 		sphere.c \
 		rand.c \
+		light.c \
+		plane.c \
 #		mrt_parsing.c \
 #		errors.c \
 

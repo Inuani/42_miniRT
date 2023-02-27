@@ -67,6 +67,7 @@ typedef struct s_ray {
 	t_vec	ray;
 	t_vec	normal;
 	t_vec	point_at;
+	float	t;
 	int		front;
 	float	depth;
 }				t_ray;

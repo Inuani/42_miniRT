@@ -19,6 +19,8 @@ void	new_cam(t_data *data, t_vec coords, t_vec orientation, int fov)
 	else
 		cam->up = (t_vec) {0, 1, 0}; //camera's up vector is perpendicular to the camera's orientation vector. This will ensure that the camera is oriented correctly.
 	
+	cam->up = vec_unit(cam->up);
+
 	cam->right = vec_cross(orientation, cam->up);
 	cam->right = vec_unit(cam->right);
 
@@ -52,10 +54,10 @@ void	initialise_viewport(t_data *data) // will have to normalise cam->orientatio
 void	initialise_objs(t_data *data, int num)
 {
 	t_vec temp_coords = {.x = 0, .y = 0, .z = 0};
-	t_vec temp_direction = {.x = 0.25, .y = 0.5, .z = 0.25};
+	t_vec temp_direction = {.x = 0, .y = 0, .z = 1};
 	temp_direction = vec_unit(temp_direction);
 
-	t_vec temp_center = {5, 10, 5};
+	t_vec temp_center = {7, 0, 10};
 	float diameter = 5;
 	t_vec s_colors = {255, 102, 102};
 
