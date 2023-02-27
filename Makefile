@@ -43,6 +43,7 @@ SRC =	main.c \
 		rand.c \
 		light.c \
 		plane.c \
+		hit_objs.c \
 #		mrt_parsing.c \
 #		errors.c \
 
@@ -57,7 +58,7 @@ all: $(NAME)
 $(NAME): $(SRCS) $(OBJ_DIR) $(OBJS)
 	$(MAKE) -C $(LIBFT)
 	${MAKE} -C $(MLX)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(FSANI) $(LIBFLAGS) -o $(NAME)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	$(CC) $(CFLAGS) -I.$(LIBFT) $(INC)  $< -c -o $@

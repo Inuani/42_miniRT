@@ -50,13 +50,70 @@ void	get_ambiant(t_data *d)
 void	get_light(t_data *d)
 {
 	t_object	*tmp;
+	int	i;
 
 	tmp = d->chaos;
+	i = 2;
 	while(tmp)
 	{
 		if (tmp->type == LIGHT)
 		{
-			d->objs[0] = tmp;
+			d->objs[i] = tmp;
+			i++;
+		}
+		tmp = tmp->next;
+	}
+}
+
+void	get_sphere(t_data *d)
+{
+	t_object	*tmp;
+	int	i;
+
+	i = 2 + d->count.l_count;
+	tmp = d->chaos;
+	while(tmp)
+	{
+		if (tmp->type == SPHERE)
+		{
+			d->objs[i] = tmp;
+			i++;
+		}
+		tmp = tmp->next;
+	}
+}
+
+void	get_plane(t_data *d)
+{
+	t_object	*tmp;
+	int	i;
+
+	i = 2 + d->count.l_count + d->count.sp_count;
+	tmp = d->chaos;
+	while(tmp)
+	{
+		if (tmp->type == PLANE)
+		{
+			d->objs[i] = tmp;
+			i++;
+		}
+		tmp = tmp->next;
+	}
+}
+
+void	get_cylindre(t_data *d)
+{
+	t_object	*tmp;
+	int	i;
+
+	tmp = d->chaos;
+	i = 2 + d->count.l_count + d->count.sp_count + d->count.pl_count;
+	while(tmp)
+	{
+		if (tmp->type == CYLINDER)
+		{
+			d->objs[i] = tmp;
+			i++;
 		}
 		tmp = tmp->next;
 	}
@@ -64,10 +121,25 @@ void	get_light(t_data *d)
 
 void	obj_array_create(t_data *d)
 {
-	int	nb;
+	int	i;
 
-	nb = calc_nb_obj(d->chaos);
-	d->objs = malloc(sizeof(t_object*) * nb);
+	i = 0;
+	d->count.total = calc_nb_obj(d->chaos);
+	d->objs = malloc(sizeof(t_object*) * (d->count.total + 1));
+
+	get_ambiant(d);
+	get_camera(d);
+	get_light(d);
+	get_sphere(d);
+	get_plane(d);
+	get_cylindre(d);
+	d->objs[d->count.total] = NULL;
+
+	/*printf_vec(d->objs[4]->u_data.plane.orient);
+
+	t_plane plane;
+	plane = d->objs[4]->u_data.plane;
+	printf_vec(plane.orient);*/
 	// get_camera(d);
 	// get_ambiant(d);
 	// get_light(d);

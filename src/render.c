@@ -21,7 +21,7 @@ void render(t_data *data)
 			//	v = ((float)(j) + rand_double(j)) / (float)(HEIGHT - 1);
 			u = (float)(i) / (float)(WIDTH - 1);
 			v = (float)(j) / (float)(HEIGHT - 1);
-			t_ray ray = create_ray((t_cam*)data->objs[1], data->vp, u, v);
+			t_ray ray = create_ray(&data->objs[1]->u_data.camera, data->vp, u, v);
 			my_mlx_pixel_put(&(data->img), i, j, ray_color(&ray, data));
 			//	spp++;
 			//}

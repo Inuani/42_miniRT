@@ -20,6 +20,7 @@ t_ray	create_ray(t_cam *cam, t_viewport *vp, float u, float v)
 {
 	t_ray	ray;
 
+	ray.point_at = (t_vec){0, 0, 0};
 	ray.depth = 0.5;
 
 	ray.direction = (t_vec) {
@@ -27,8 +28,6 @@ t_ray	create_ray(t_cam *cam, t_viewport *vp, float u, float v)
 		-1 * (v - 0.5) * vp->viewp_hgt,
 		vp->focal_len// * (-1)
 	};
-
-	(void)cam;
 
 	ray.direction = vec_unit(ray.direction);
 
@@ -47,23 +46,22 @@ t_ray	create_ray(t_cam *cam, t_viewport *vp, float u, float v)
 
 int ray_color(t_ray *ray, t_data *data)
 {
-	//t_sphere	*sphere;
-	t_vec		tmp_color = {0, 0, 0};
+	t_vec		color = {0, 0, 0};
 
-	if (plane_life(data, ray))
-		return create_trgb(0, 0, 30, 150);
+	//if (plane_life(data, ray))
+	//	return create_trgb(0, 0, 30, 150);
+	
+	if (hit_objs(data, ray, &color) >= 0)
+		return create_trgb(0, color.x, color.y, color.z);
 /*
-	sphere = (t_sphere*)data->objs[2];
 	if (it_hit_sphere(data, ray, sphere) == 0)
-		tmp_color = vec_scale(0.2, sphere->colors); //0.5 correspond a la lumiere ambiante
+		color = vec_scale(0.2, sphere.colors); //0.5 correspond a la lumiere ambiante
 	else if (it_hit_sphere(data, ray, sphere) == -1)
-		return create_trgb(0, tmp_color.x,  tmp_color.y,  tmp_color.z);
+		return create_trgb(0, color.x,  color.y,  color.z);
 	else
 	{
 		float scale = map2(0.9 + map(it_hit_sphere(data, ray, sphere)), 0.2, 0.9);
-		//printf("a : %f\n",  map(it_hit_sphere(data, ray, sphere)));
-		// if lumiere spot plus intense que lumiere ambiante
-		tmp_color = vec_scale(scale, sphere->colors);
+		color = vec_scale(scale, sphere.colors);
 	}*/
-	return create_trgb(0, tmp_color.x,  tmp_color.y,  tmp_color.z);
+	return create_trgb(0, color.x,  color.y,  color.z);
 }

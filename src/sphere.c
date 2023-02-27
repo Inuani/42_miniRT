@@ -1,40 +1,24 @@
 
 #include "../includes/minirt.h"
 
-t_sphere	*create_sphere(t_vec center, float diameter, t_vec colors)
+float	sphere_hits(t_object **objs, t_ray *ray)
 {
-	t_sphere	*sphere;
-	
-	sphere = malloc(sizeof(t_sphere) + 1);
-
-	sphere->center.x = center.x;
-	sphere->center.y = center.y;
-	sphere->center.z = center.z;
-
-	sphere->radius = diameter / 2.0;
-
-	sphere->colors.x = colors.x;
-	sphere->colors.y = colors.y;
-	sphere->colors.z = colors.z;
-
-	return (sphere);
-}
-
-float	sphere_hits(void **objs, t_ray *ray)
-{
-	t_sphere	*sphere;
-	t_cam		*cam;
+	t_sphere	sphere;
+	t_cam		cam;
 	t_vec		v;
 	float		det;
 
-	sphere = (t_sphere*)objs[2];
-	cam = (t_cam*)objs[1];
+	sphere = objs[3]->u_data.sphere;
+	cam = objs[1]->u_data.camera;
 
-	v = vec_subs(cam->pos, sphere->center);
+	//printf("%f\n", sphere.radius);
+	//printf_vec(sphere.center);
+
+	v = vec_subs(cam.pos, sphere.center);
 
 	float a = vec_dot(ray->direction, ray->direction); //can simplify
 	float half_b = vec_dot(v, ray->direction);
-	float c = vec_dot(v, v) - (sphere->radius * sphere->radius); //can simplify
+	float c = vec_dot(v, v) - (sphere.radius * sphere.radius); //can simplify
 	det = half_b*half_b - a*c;
 
 	if (det < 0)
@@ -54,18 +38,20 @@ t_vec front(t_ray *ray) //useless?
 	return (front ? ray->normal : vec_scale(-1, ray->normal));
 }
 
-float it_hit_sphere(t_data *data, t_ray *ray, t_sphere *sphere)
+float it_hit_sphere(t_data *data, t_ray *ray, t_sphere sphere)
 {
-	t_cam	*cam;
+	t_cam	cam;
 
-	cam = (t_cam*)data->objs[1];
-	float root = sphere_hits(data->objss, ray);
+	cam = data->objs[1]->u_data.camera;
+	float root = sphere_hits(data->objs, ray);
+	//printf("%f\n", root);
+	ray->point_at = (t_vec){999, 999, 999};
 	if (root < 0)
-		return 0;
+		return -1;
 	//ray->depth *= 0.5;
 	//if (ray->depth < )
-	ray->point_at = vec_add(cam->pos, vec_scale(root, ray->direction));
-	ray->normal = vec_scale(1/sphere->radius, vec_subs(ray->point_at, sphere->center));
+	ray->point_at = vec_add(cam.pos, vec_scale(root, ray->direction));
+	ray->normal = vec_scale(1/sphere.radius, vec_subs(ray->point_at, sphere.center));
 	ray->normal = front(ray);
 
 	//vec_unit(ray->normal); //useless?

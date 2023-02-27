@@ -100,6 +100,14 @@ typedef struct s_object {
 	struct s_object	*next;
 }				t_object;
 
+typedef struct s_count {
+	int total;
+	int	sp_count;
+	int	pl_count;
+	int	cy_count;
+	int	l_count;
+}				t_count;
+
 typedef struct s_data
 {
 	void		*mlx;
@@ -109,6 +117,7 @@ typedef struct s_data
 	void		**objss;
 	t_object	*chaos;
 	t_object	**objs;
+	t_count		count;
 }				t_data;
 
 #endif
