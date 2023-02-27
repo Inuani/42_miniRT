@@ -59,7 +59,7 @@ float it_hit_sphere(t_data *data, t_ray *ray, t_sphere *sphere)
 	t_cam	*cam;
 
 	cam = (t_cam*)data->objs[1];
-	root = sphere_hits(data->objss, ray);
+	float root = sphere_hits(data->objss, ray);
 	if (root < 0)
 		return 0;
 	//ray->depth *= 0.5;
