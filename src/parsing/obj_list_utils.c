@@ -8,7 +8,11 @@ t_object	*create_object(t_type type, void *data)
 	if (!new)
 		return (NULL);
 	new->type = type;
-	if (type == LIGHT)
+	if (type == AMBIANT)
+		new->u_data.ambiant = *(t_ambiant*)data;
+	else if (type == CAMERA)
+		new->u_data.camera = *(t_cam*)data;
+	else if (type == LIGHT)
 		new->u_data.light = *(t_light*)data;
 	else if (type == SPHERE)
 		new->u_data.sphere = *(t_sphere*)data;

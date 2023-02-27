@@ -18,19 +18,19 @@ void	create_obj_tok(t_tok **lst, char *line, int *i)
 	tok_add_back(lst, new);
 }
 
-void	create_attrib_tok(t_tok **lst, char *line, int *i)
+void	create_prop_tok(t_tok **lst, char *line, int *i)
 {
-	char	*attrib;
+	char	*prop;
 	int		j;
 	t_tok	*new;
 
 	j = *i;
 	while (line[*i] && (ft_isdigit(line[*i]) || line[*i] == '.' || line[*i] == '-'))
 		*i += 1;
-	attrib = ft_substr(line, j, *i - j);
-	if (!attrib)
+	prop = ft_substr(line, j, *i - j);
+	if (!prop)
 		exit_error(ERR_MALLOC, 260);
-	new = tok_lstnew(attrib, 1);
+	new = tok_lstnew(prop, 1);
 	if (!new)
 		exit_error(ERR_MALLOC, 260);
 	tok_add_back(lst, new);
@@ -50,24 +50,14 @@ void	parse_line(char *line, t_data *d)
 			else if (line[i] && ft_isalpha(line[i]))
 				create_obj_tok(&lst, line, &i);
 			else if (line[i] && (ft_isdigit(line[i]) || line[i] == '-'))
-				create_attrib_tok(&lst, line, &i);
+				create_prop_tok(&lst, line, &i);
 			else if (line[i] && line[i] == ',')
 				i++;
 			else
 				exit_error(ERR_FILE, 1);
 	}
-	print_token(&lst);
-	obj_eman(lst, d);
-
-	// create object
-
-	// add to tableau of object in d
-	// printf("%s\n", line);
-
+	obj_eman(d, lst);
 }
-
-
-
 
 void	mrt_parsing(char **av, t_data *d)
 {
@@ -87,4 +77,5 @@ void	mrt_parsing(char **av, t_data *d)
 	}
 	free(line);
 	close(fd);
+	obj_array_create(d);
 }

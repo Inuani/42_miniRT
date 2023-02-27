@@ -18,7 +18,8 @@ void	mrt_parsing(char **av, t_data *d);
 // obj_emanation.c
 // ----------------------------------------------
 
-void	obj_eman(t_tok *lst, t_data *d);
+void	what_obj(t_data *d, t_tok *lst, char *obj);
+void	obj_eman(t_data *d, t_tok *lst);
 
 // ----------------------------------------------
 // parsing_utils.c
@@ -36,8 +37,13 @@ t_tok	*tok_lstnew(char *s, int t);
 void	tok_add_back(t_tok **lst, t_tok *new);
 t_tok	*tok_last(t_tok *lst);
 int		tok_lst_size(t_tok *lst);
-t_tok	*msh_remove_tok(t_tok **lst, t_tok *tok_to_remove);
+t_tok	*remove_tok(t_tok **lst, t_tok *tok_to_remove);
 
+// ----------------------------------------------
+// obj_array_creation.c
+// ----------------------------------------------
+
+void	obj_array_create(t_data *d);
 
 // ----------------------------------------------
 // errors.c
@@ -50,7 +56,9 @@ void	exit_error(char *msg, int error);
 // pars_debug.c
 // ----------------------------------------------
 
+
 void	print_token(t_tok **lst);
+void	print_object(t_object obj);
 
 # define ERR_OPEN "Open error "
 # define ERR_FILE "Error : file corrupted."

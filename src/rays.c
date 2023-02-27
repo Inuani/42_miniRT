@@ -18,9 +18,9 @@ t_ray	create_ray(t_cam *cam, t_viewport *vp, float u, float v)
 	ray.direction = vec_unit(ray.direction);
 
 	ray.ray = (t_vec) {
-		ray.direction.x * cam->right.x + ray.direction.y * cam->up.x + ray.direction.z * cam->orientation.x,
-		ray.direction.x * cam->right.y + ray.direction.y * cam->up.y + ray.direction.z * cam->orientation.y,
-		ray.direction.x * cam->right.z + ray.direction.y * cam->up.z + ray.direction.z * cam->orientation.z
+		ray.direction.x * cam->right.x + ray.direction.y * cam->up.x + ray.direction.z * cam->orient.x,
+		ray.direction.x * cam->right.y + ray.direction.y * cam->up.y + ray.direction.z * cam->orient.y,
+		ray.direction.x * cam->right.z + ray.direction.y * cam->up.z + ray.direction.z * cam->orient.z
 	};
 
 	ray.ray = vec_unit(ray.ray);
