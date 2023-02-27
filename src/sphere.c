@@ -30,7 +30,7 @@ float	sphere_hits(void **objs, t_ray *ray)
 	sphere = (t_sphere*)objs[2];
 	cam = (t_cam*)objs[1];
 
-	v = vec_subs(cam->coords, sphere->center);
+	v = vec_subs(cam->pos, sphere->center);
 
 	float a = vec_dot(ray->direction, ray->direction); //can simplify
 	float half_b = vec_dot(v, ray->direction);
@@ -59,12 +59,12 @@ float it_hit_sphere(t_data *data, t_ray *ray, t_sphere *sphere)
 	t_cam	*cam;
 
 	cam = (t_cam*)data->objs[1];
-	ray->t = sphere_hits(data->objs, ray);
-	if (ray->t < 0)
-		return (-1);
+	root = sphere_hits(data->objss, ray);
+	if (root < 0)
+		return 0;
 	//ray->depth *= 0.5;
 	//if (ray->depth < )
-	ray->point_at = vec_add(cam->coords, vec_scale(ray->t, ray->direction));
+	ray->point_at = vec_add(cam->pos, vec_scale(root, ray->direction));
 	ray->normal = vec_scale(1/sphere->radius, vec_subs(ray->point_at, sphere->center));
 	ray->normal = front(ray);
 

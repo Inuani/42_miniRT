@@ -5,17 +5,17 @@ void	new_cam(t_data *data, t_vec coords, t_vec orientation, int fov)
 {
 	t_cam	*cam = malloc(sizeof(t_cam));
 
-	cam->coords.x = coords.x;
-	cam->coords.y = coords.y;
-	cam->coords.z = coords.z;
+	cam->pos.x = coords.x;
+	cam->pos.y = coords.y;
+	cam->pos.z = coords.z;
 
 
-	cam->orientation.x = orientation.x;
-	cam->orientation.y = orientation.y;
-	cam->orientation.z = orientation.z;
+	cam->orient.x = orientation.x;
+	cam->orient.y = orientation.y;
+	cam->orient.z = orientation.z;
 
 	if (!orientation.x && !orientation.z)
-		cam->up = vec_cross(cam->orientation, (t_vec) {0, 0, 1});
+		cam->up = vec_cross(cam->orient, (t_vec) {0, 0, 1});
 	else
 		cam->up = (t_vec) {0, 1, 0}; //camera's up vector is perpendicular to the camera's orientation vector. This will ensure that the camera is oriented correctly.
 	
@@ -26,7 +26,7 @@ void	new_cam(t_data *data, t_vec coords, t_vec orientation, int fov)
 
 	cam->fov = fov;
 
-	data->objs[1] = cam;
+	data->objss[1] = cam;
 }
 
 void	initialise_viewport(t_data *data) // will have to normalise cam->orientation
@@ -61,11 +61,11 @@ void	initialise_objs(t_data *data, int num)
 	float diameter = 5;
 	t_vec s_colors = {255, 102, 102};
 
-	data->objs = malloc((num + 1) * sizeof(void *));
+	data->objss = malloc((num + 1) * sizeof(void *));
 
 	new_cam(data, temp_coords, temp_direction, 90);
-	data->objs[2] = create_sphere(temp_center, diameter, s_colors);
-	data->objs[num] = NULL;
+	data->objss[2] = create_sphere(temp_center, diameter, s_colors);
+	data->objss[num] = NULL;
 	initialise_viewport(data);
 
 }

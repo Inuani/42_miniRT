@@ -24,6 +24,11 @@ FSANI = -fsanitize=address -g3
 PARS_SRC = $(addprefix $(PARS_DIR),	mrt_parsing.c \
 									parsing_utils.c \
 									errors.c \
+									obj_list_utils.c \
+									pars_debug.c \
+									tok_list_utils.c \
+									obj_emanation.c \
+									obj_array_creation.c \
 									)
 
 SRC =	main.c \

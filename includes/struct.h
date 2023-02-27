@@ -1,7 +1,7 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
-# define THREADS 24
+// # include "object_type.h"
 
 typedef struct s_img {
 	void	*img;
@@ -18,8 +18,14 @@ typedef struct s_vec
 	float	z;
 }				t_vec;
 
+typedef struct s_ambiant
+{
+	float	light_ratio;
+	t_vec	colors;
+}			t_ambiant;
+
 typedef struct s_light {
-	t_vec	point;
+	t_vec	pos;
 	float	light_ratio;
 	t_vec	colors;
 }				t_light;
@@ -32,15 +38,15 @@ typedef struct s_sphere {
 
 typedef struct s_cylinder {
 	t_vec	base;
-	t_vec	orientation;
+	t_vec	orient;
 	float	diameter;
-	float	height;
+	float	hgt;
 	t_vec	colors;
 }			t_cylinder;
 
 typedef struct s_plane {
 	t_vec	point;
-	t_vec	orientation;
+	t_vec	orient;
 	t_vec	colors;
 }				t_plane;
 
@@ -55,8 +61,8 @@ typedef struct s_viewport
 
 typedef struct s_cam
 {
-	t_vec	coords;
-	t_vec	orientation;
+	t_vec	pos;
+	t_vec	orient;
 	t_vec	up;
 	t_vec	right;
 	float	fov;
@@ -72,14 +78,37 @@ typedef struct s_ray {
 	float	depth;
 }				t_ray;
 
+typedef enum object_type {
+	AMBIANT,
+	CAMERA,
+	LIGHT,
+	SPHERE,
+	PLANE,
+	CYLINDER
+}	t_type;
+
+typedef struct s_object {
+	t_type			type;
+	union {
+		struct s_ambiant	ambiant;
+		struct s_cam		camera;
+		struct s_light		light;
+		struct s_sphere		sphere;
+		struct s_plane		plane;
+		struct s_cylinder	cylinder;
+	}	u_data;
+	struct s_object	*next;
+}				t_object;
+
 typedef struct s_data
 {
 	void		*mlx;
 	void		*win;
 	t_img		img;
 	t_viewport	*vp;
-	void	**objs;
-	pthread_t	id[THREADS];
+	void		**objss;
+	t_object	*chaos;
+	t_object	**objs;
 }				t_data;
 
 #endif
