@@ -16,8 +16,6 @@ int	calc_nb_prop(t_tok *lst)
 	return (nb);
 }
 
-//POSSIBLE SEGFAULT EN ENLEVANT LE PRINT; REGLÉ GRACE A FSANITIZE...
-
 void	add_ambiant(t_data *d, t_tok *lst)
 {
 	t_object	*new;
@@ -39,6 +37,7 @@ void	add_ambiant(t_data *d, t_tok *lst)
 	//print_object(*new);
 	//printf("\n");
 	add_object_to_list(&d->chaos, new);
+	free_tok_from_end(d);
 }
 
 void	add_camera(t_data *d, t_tok *lst)
@@ -78,6 +77,7 @@ void	add_camera(t_data *d, t_tok *lst)
 	//print_object(*new);
 	//printf("\n");*/
 	add_object_to_list(&d->chaos, new);
+	free_tok_from_end(d);
 }
 
 int	add_light(t_data *d, t_tok *lst)
@@ -107,6 +107,7 @@ int	add_light(t_data *d, t_tok *lst)
 	/*print_object(*new);
 	printf("\n");*/
 	add_object_to_list(&d->chaos, new);
+	free_tok_from_end(d);
 	return (1);
 }
 
@@ -137,6 +138,7 @@ int	add_sphere(t_data *d, t_tok *lst)
 	//print_object(*new);
 	//printf("\n");
 	add_object_to_list(&d->chaos, new);
+	free_tok_from_end(d);
 	return (1);
 }
 
@@ -171,6 +173,7 @@ int	add_plane(t_data *d, t_tok *lst)
 	//print_object(*new);
 	//printf("\n");
 	add_object_to_list(&d->chaos, new);
+	free_tok_from_end(d);
 	return (1);
 }
 
@@ -209,38 +212,39 @@ int	add_cylinder(t_data *d, t_tok *lst)
 	/*print_object(*new);
 	printf("\n");*/
 	add_object_to_list(&d->chaos, new);
+	free_tok_from_end(d);
 	return (1);
 }
 
 
 
-void	what_obj(t_data *d, t_tok *lst, char *obj)
+void	what_obj(t_data *d, char *obj)
 {
 	if (!ft_strncmp(obj, "A", 1) && obj[1] == 0)
-		add_ambiant(d, lst);
+		add_ambiant(d, d->lst);
 	else if (!ft_strncmp(obj, "C", 1) && obj[1] == 0)
-		add_camera(d, lst);
+		add_camera(d, d->lst);
 	else if (!ft_strncmp(obj, "L", 1) && obj[1] == 0)
-		d->count.l_count += add_light(d, lst);
+		d->count.l_count += add_light(d, d->lst);
 	else if (!ft_strncmp(obj, "sp", 2) && obj[2] == 0)
-		d->count.sp_count += add_sphere(d, lst);
+		d->count.sp_count += add_sphere(d, d->lst);
 	else if (!ft_strncmp(obj, "pl", 2) && obj[2] == 0)
-		d->count.pl_count += add_plane(d, lst);
+		d->count.pl_count += add_plane(d, d->lst);
 	else if (!ft_strncmp(obj, "cy", 2) && obj[2] == 0)
-		d->count.cy_count += add_cylinder(d, lst);
+		d->count.cy_count += add_cylinder(d, d->lst);
 	else
 		exit_error(ERR_OBJ, 1);
 }
 
-void	obj_eman(t_data *d, t_tok *lst)
+void	obj_eman(t_data *d)
 {
 	t_tok	*tmp;
 
-	tmp = lst;
+	tmp = d->lst;
 	while(tmp)
 	{
 		if (tmp->type == 0)
-			what_obj(d, lst, tmp->s);
+			what_obj(d, tmp->s);
 		tmp = tmp->next;
 	}
 }

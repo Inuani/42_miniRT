@@ -25,19 +25,14 @@ int	main(int ac, char **av)
 	(void)ac;
 	t_data	data;
 
-	data.count.l_count = 0;
-	data.count.sp_count = 0;
-	data.count.pl_count = 0;
-	data.count.cy_count = 0;
-
 	mrt_parsing(av, &data);
 	initialise_viewport(&data);
 
-	int i = 0;
-	while(data.objs[i])
-	 	print_object(*data.objs[i++]);
+	// int i = 0;
+	// while(data.objs[i])
+	//  	print_object(*data.objs[i++]);
 
-	printf("count: %i\n", data.count.sp_count);
+	// printf("count: %i\n", data.count.sp_count);
 	init_window(&data);
 
 	render(&data);

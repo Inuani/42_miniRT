@@ -36,3 +36,23 @@ void	exit_error(char *msg, int error)
 	//free
 	exit(error);
 }
+
+void	free_tok_from_end(t_data *d)
+{
+	t_tok	*tmp;
+
+	while (d->lst)
+	{
+		if (d->lst->prev != NULL)
+			tmp = d->lst->prev;
+		else
+			tmp = NULL;
+		free(d->lst->s);
+		d->lst->s = NULL;
+		free(d->lst);
+		d->lst = NULL;
+		if (tmp != NULL)
+			d->lst = tmp;
+	}
+}
+

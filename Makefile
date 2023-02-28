@@ -44,8 +44,6 @@ SRC =	main.c \
 		light.c \
 		plane.c \
 		hit_objs.c \
-#		mrt_parsing.c \
-#		errors.c \
 
 OBJ := $(SRC:%.c=%.o)
 PARS_OBJ := $(PARS_SRC:%.c=%.o)

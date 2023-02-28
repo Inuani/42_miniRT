@@ -18,6 +18,13 @@ typedef struct s_vec
 	float	z;
 }				t_vec;
 
+typedef struct s_tok {
+	int				type;
+	char			*s;
+	struct s_tok	*next;
+	struct s_tok	*prev;
+}				t_tok;
+
 typedef struct s_ambiant
 {
 	float	light_ratio;
@@ -114,10 +121,11 @@ typedef struct s_data
 	void		*win;
 	t_img		img;
 	t_viewport	*vp;
+	t_tok		*lst;
 	void		**objss;
+	t_count		count;
 	t_object	*chaos;
 	t_object	**objs;
-	t_count		count;
 }				t_data;
 
 #endif
