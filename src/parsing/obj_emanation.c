@@ -16,6 +16,7 @@ int	calc_nb_prop(t_tok *lst)
 	return (nb);
 }
 
+
 void	add_ambiant(t_data *d, t_tok *lst)
 {
 	t_object	*new;
@@ -35,7 +36,8 @@ void	add_ambiant(t_data *d, t_tok *lst)
 	inst.colors.z = ft_atof(lst->s);
 	new = create_object(AMBIANT, &inst);
 	add_object_to_list(&d->chaos, new);
-	free_tok_from_end(d);
+	free_tok_from_end(lst);
+	d->lst = NULL;
 }
 
 
@@ -75,8 +77,8 @@ void	add_camera(t_data *d, t_tok *lst)
 	inst.right = vec_unit(inst.right);
 	new = create_object(CAMERA, &inst);
 	add_object_to_list(&d->chaos, new);
-
-	free_tok_from_end(d);
+	free_tok_from_end(lst);
+	d->lst = NULL;
 }
 
 int	add_light(t_data *d, t_tok *lst)
@@ -104,7 +106,8 @@ int	add_light(t_data *d, t_tok *lst)
 	inst.colors.z = ft_atof(lst->s);
 	new = create_object(LIGHT, &inst);
 	add_object_to_list(&d->chaos, new);
-	free_tok_from_end(d);
+	free_tok_from_end(lst);
+	d->lst = NULL;
 	return (1);
 }
 
@@ -133,7 +136,8 @@ int	add_sphere(t_data *d, t_tok *lst)
 	inst.colors.z = ft_atof(lst->s);
 	new = create_object(SPHERE, &inst);
 	add_object_to_list(&d->chaos, new);
-	free_tok_from_end(d);
+	free_tok_from_end(lst);
+	d->lst = NULL;
 	return (1);
 }
 
@@ -166,7 +170,8 @@ int	add_plane(t_data *d, t_tok *lst)
 	inst.colors.z = ft_atof(lst->s);
 	new = create_object(PLANE, &inst);
 	add_object_to_list(&d->chaos, new);
-	free_tok_from_end(d);
+	free_tok_from_end(lst);
+	d->lst = NULL;
 	return (1);
 }
 
@@ -203,7 +208,8 @@ int	add_cylinder(t_data *d, t_tok *lst)
 	inst.colors.z = ft_atof(lst->s);
 	new = create_object(CYLINDER, &inst);
 	add_object_to_list(&d->chaos, new);
-	free_tok_from_end(d);
+	free_tok_from_end(lst);
+	d->lst = NULL;
 	return (1);
 }
 
@@ -235,7 +241,10 @@ void	obj_eman(t_data *d)
 	while(tmp)
 	{
 		if (tmp->type == 0)
+		{
 			what_obj(d, tmp->s);
+			break ;
+		}
 		tmp = tmp->next;
 	}
 }

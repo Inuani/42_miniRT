@@ -5,7 +5,6 @@ void	create_obj_tok(t_data *d, char *line, int *i)
 	char	*obj;
 	int		j;
 	t_tok	*new;
-
 	j = *i;
 	while (line[*i] && ft_isalpha(line[*i]))
 		*i += 1;
@@ -54,6 +53,7 @@ void	parse_line(char *line, t_data *d)
 			else
 				exit_error(ERR_FILE, 1);
 	}
+	// print_token(&d->lst);
 	obj_eman(d);
 }
 
