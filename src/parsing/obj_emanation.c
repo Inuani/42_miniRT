@@ -34,11 +34,11 @@ void	add_ambiant(t_data *d, t_tok *lst)
 	lst = lst->next;
 	inst.colors.z = ft_atof(lst->s);
 	new = create_object(AMBIANT, &inst);
-	//print_object(*new);
-	//printf("\n");
 	add_object_to_list(&d->chaos, new);
 	free_tok_from_end(d);
 }
+
+
 
 void	add_camera(t_data *d, t_tok *lst)
 {
@@ -74,9 +74,8 @@ void	add_camera(t_data *d, t_tok *lst)
 	inst.right = vec_cross(inst.orient, inst.up);
 	inst.right = vec_unit(inst.right);
 	new = create_object(CAMERA, &inst);
-	//print_object(*new);
-	//printf("\n");*/
 	add_object_to_list(&d->chaos, new);
+
 	free_tok_from_end(d);
 }
 
@@ -104,8 +103,6 @@ int	add_light(t_data *d, t_tok *lst)
 	lst = lst->next;
 	inst.colors.z = ft_atof(lst->s);
 	new = create_object(LIGHT, &inst);
-	/*print_object(*new);
-	printf("\n");*/
 	add_object_to_list(&d->chaos, new);
 	free_tok_from_end(d);
 	return (1);
@@ -135,8 +132,6 @@ int	add_sphere(t_data *d, t_tok *lst)
 	lst = lst->next;
 	inst.colors.z = ft_atof(lst->s);
 	new = create_object(SPHERE, &inst);
-	//print_object(*new);
-	//printf("\n");
 	add_object_to_list(&d->chaos, new);
 	free_tok_from_end(d);
 	return (1);
@@ -170,8 +165,6 @@ int	add_plane(t_data *d, t_tok *lst)
 	lst = lst->next;
 	inst.colors.z = ft_atof(lst->s);
 	new = create_object(PLANE, &inst);
-	//print_object(*new);
-	//printf("\n");
 	add_object_to_list(&d->chaos, new);
 	free_tok_from_end(d);
 	return (1);
@@ -209,8 +202,6 @@ int	add_cylinder(t_data *d, t_tok *lst)
 	lst = lst->next;
 	inst.colors.z = ft_atof(lst->s);
 	new = create_object(CYLINDER, &inst);
-	/*print_object(*new);
-	printf("\n");*/
 	add_object_to_list(&d->chaos, new);
 	free_tok_from_end(d);
 	return (1);

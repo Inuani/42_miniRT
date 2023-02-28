@@ -27,18 +27,20 @@ int	main(int ac, char **av)
 
 	mrt_parsing(av, &data);
 	initialise_viewport(&data);
+	free (data.objs);
+	free_obj_list(data.chaos);
 
 	// int i = 0;
 	// while(data.objs[i])
 	//  	print_object(*data.objs[i++]);
 
 	// printf("count: %i\n", data.count.sp_count);
-	init_window(&data);
+	// init_window(&data);
 
-	render(&data);
-	mlx_hook(data.win, 17, 1L << 2, close_win, &data);
-	mlx_key_hook(data.win, event_handler, &data);
-	mlx_loop(data.mlx);
+	// render(&data);
+	// mlx_hook(data.win, 17, 1L << 2, close_win, &data);
+	// mlx_key_hook(data.win, event_handler, &data);
+	// mlx_loop(data.mlx);
 	return (0);
 }
 

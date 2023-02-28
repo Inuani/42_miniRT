@@ -37,22 +37,74 @@ void	exit_error(char *msg, int error)
 	exit(error);
 }
 
+// void	free_tok_from_end(t_data *d)
+// {
+// 	t_tok	*tmp;
+
+// 	while (d->lst)
+// 	{
+// 		if (d->lst->prev != NULL)
+// 			tmp = d->lst->prev;
+// 		else
+// 			tmp = NULL;
+// 		free(d->lst->s);
+// 		d->lst->s = NULL;
+// 		free(d->lst);
+// 		// d->lst = NULL;
+// 		d->lst = tmp;
+// 	}
+// }
+
+// void	free_tok_from_end(t_data *d)
+// {
+// 	t_tok	*tmp;
+
+// 	while (d->lst)
+// 	{
+// 		tmp = d->lst->prev;
+// 		free(d->lst->s);
+// 		d->lst->s = NULL;
+// 		free(d->lst);
+// 		d->lst = NULL;
+// 		d->lst = tmp;
+// 	}
+// }
+
 void	free_tok_from_end(t_data *d)
 {
 	t_tok	*tmp;
+	t_tok	*to_free;
 
-	while (d->lst)
+	tmp = d->lst;
+	if (!tmp)
+		return ;
+	while (tmp)
 	{
-		if (d->lst->prev != NULL)
-			tmp = d->lst->prev;
-		else
-			tmp = NULL;
-		free(d->lst->s);
-		d->lst->s = NULL;
-		free(d->lst);
-		d->lst = NULL;
-		if (tmp != NULL)
-			d->lst = tmp;
+		if (tmp->s != NULL)
+		{
+			free(tmp->s);
+			tmp->s = NULL;
+		}
+		to_free = tmp;
+		tmp = tmp->prev;
+		free(to_free);
 	}
+	d->lst = NULL;
 }
 
+void	free_obj_list(t_object *chaos)
+{
+	t_object	*tmp;
+
+	while (chaos)
+	{
+		if (chaos->next != NULL)
+			tmp = chaos->next;
+		else
+			tmp = NULL;
+		free(chaos);
+		chaos = NULL;
+		if (tmp != NULL)
+			chaos = tmp;
+	}
+}
