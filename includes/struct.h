@@ -122,7 +122,6 @@ typedef struct s_data
 	t_img		img;
 	t_viewport	*vp;
 	t_tok		*lst;
-	void		**objss;
 	t_count		count;
 	t_object	*chaos;
 	t_object	**objs;
