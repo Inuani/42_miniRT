@@ -77,7 +77,7 @@ float it_hit_sphere(t_data *data, t_ray *ray, t_sphere sphere) //sphere_life
 	//if (ray->depth < )
 	ray->point_at = vec_add(cam.pos, vec_scale(root, ray->direction));
 	ray->normal = vec_scale(1/sphere.radius, vec_subs(ray->point_at, sphere.center));
-	ray->normal = front(ray);
+	//ray->normal = front(ray); useless?
 
 	vec_unit(ray->normal); //useless?
 	if (!light_hit_objs(data, ray, ray->point_at))
