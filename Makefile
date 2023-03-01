@@ -41,7 +41,6 @@ SRC =	main.c \
 		init_objs.c \
 		sphere.c \
 		rand.c \
-		light.c \
 		plane.c \
 		hit_objs.c \
 

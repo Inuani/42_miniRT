@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:13:13 by egauthey          #+#    #+#             */
-/*   Updated: 2023/02/27 22:13:22 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/03/01 13:12:29 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@
 # define HEIGHT 1080
 # define WIDTH 1920
 
+float	light_hit_objs(t_data *data, t_ray *ray, t_vec point_at);
+int	get_angle(t_vec normal, t_vec ray_l);
 int	light_hit(t_ray *ray, t_data *data, t_sphere sphere);
-float hit_objs(t_data *data, t_ray *ray, t_vec *colors);
+float	hit_objs(t_data *data, t_ray *ray, t_vec *colors);
 
 void	printf_vec(t_vec vec);
 
@@ -46,7 +48,7 @@ void	initialise_viewport(t_data *data);
 
 //plane
 int	plane_life(t_data *data, t_ray *ray, t_plane plane);
-int	plane_hit(t_data *data, t_ray *ray, t_plane *plane);
+int	plane_hit(t_plane *plane, t_vec ray_origine, t_vec ray_direction);
 
 //sphere
 float		it_hit_sphere(t_data *data, t_ray *ray, t_sphere sphere);
