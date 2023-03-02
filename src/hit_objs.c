@@ -79,8 +79,18 @@ float hit_objs(t_data *data, t_ray *ray, t_vec *colors)
 				colors->z = data->objs[i]->u_data.plane.colors.z;
 			}
 		}
-		//else if (i < 2 + data->count.l_count + data->count.sp_count
-		//		+ data->count.pl_count + data->count.cy_count)
+		else if (i < 2 + data->count.l_count + data->count.sp_count
+				+ data->count.pl_count + data->count.cy_count)
+		{
+			tmp = cylinder_eman(data, ray, data->objs[i]->u_data.cylinder);
+			// if (tmp != -1 && is_first(ray, data->objs[1]->u_data.camera, &point_at))
+			// {
+				ret = tmp;
+				colors->x = data->objs[i]->u_data.cylinder.colors.x;
+				colors->y = data->objs[i]->u_data.cylinder.colors.y;
+				colors->z = data->objs[i]->u_data.cylinder.colors.z;
+			// }
+		}
 		i++;
 	}
 	//printf("%f\n", ret);

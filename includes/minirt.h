@@ -54,6 +54,9 @@ int	plane_hit(t_plane *plane, t_vec ray_origine, t_vec ray_direction);
 float		it_hit_sphere(t_data *data, t_ray *ray, t_sphere sphere);
 float		sphere_hits(t_vec vector, t_vec v, t_sphere sphere);
 
+//cylinder
+float	cylinder_eman(t_data *data, t_ray *ray, t_cylinder cyl);
+
 //render frames
 void	render(t_data *data);
 

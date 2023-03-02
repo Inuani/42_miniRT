@@ -43,6 +43,7 @@ SRC =	main.c \
 		rand.c \
 		plane.c \
 		hit_objs.c \
+		cylinder.c \
 
 OBJ := $(SRC:%.c=%.o)
 PARS_OBJ := $(PARS_SRC:%.c=%.o)
