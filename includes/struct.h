@@ -126,6 +126,7 @@ typedef struct s_data
 	t_object	*chaos;
 	t_object	**objs;
 	int			current;
+	int			changed;
 }				t_data;
 
 #endif

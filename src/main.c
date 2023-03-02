@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:24:22 by egauthey          #+#    #+#             */
-/*   Updated: 2023/03/02 14:17:21 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:20:05 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,11 @@ void	printf_vec(t_vec vec)
 int	main(int ac, char **av)
 {
 	(void)ac;
+	(void)av;
 	t_data	data;
 
+	data.changed = 1;
+	data.current = 0;
 	mrt_parsing(av, &data);
 	initialise_viewport(&data);
 	// free (data.objs);
@@ -38,9 +41,9 @@ int	main(int ac, char **av)
 	init_window(&data);
 
 	render(&data);
-	mlx_key_hook(vars.win, event_handler, &data);
 	mlx_hook(data.win, 17, 1L << 2, close_win, &data);
 	mlx_key_hook(data.win, event_handler, &data);
+	//mlx_key_hook(data.win, print_key, &data);
 	mlx_loop(data.mlx);
 	return (0);
 }

@@ -39,7 +39,6 @@ int	plane_life(t_data *data, t_ray *ray, t_plane plane)
 	cam = data->objs[1]->u_data.camera;
 	plane.orient = vec_unit(plane.orient);
 	root = plane_hit(&plane, cam.pos, ray->direction);
-	//ray->point_at = (t_vec){cam.pos.x, cam.pos.y, cam.pos.z}; //useless
 
 	if (root < 0)
 		return -1;

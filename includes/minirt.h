@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:13:13 by egauthey          #+#    #+#             */
-/*   Updated: 2023/03/02 13:32:11 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/03/02 15:34:55 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define HEIGHT 1080
 # define WIDTH 1920
 
+int	print_key(int key, t_data *data);
 float	light_hit_objs(t_data *data, t_ray *ray, t_vec point_at);
 int	get_angle(t_vec normal, t_vec ray_l);
 int	light_hit(t_ray *ray, t_data *data, t_sphere sphere);
