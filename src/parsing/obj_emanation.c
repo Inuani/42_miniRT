@@ -185,11 +185,11 @@ int	add_cylinder(t_data *d, t_tok *lst)
 	if (nb != 11)
 		exit_error(ERR_PROPERTIES, 1);
 	lst = lst->next;
-	inst.base.x = ft_atof(lst->s);
+	inst.center.x = ft_atof(lst->s);
 	lst = lst->next;
-	inst.base.y = ft_atof(lst->s);
+	inst.center.y = ft_atof(lst->s);
 	lst = lst->next;
-	inst.base.z = ft_atof(lst->s);
+	inst.center.z = ft_atof(lst->s);
 	lst = lst->next;
 	inst.orient.x = ft_atof(lst->s);
 	lst = lst->next;
@@ -197,7 +197,7 @@ int	add_cylinder(t_data *d, t_tok *lst)
 	lst = lst->next;
 	inst.orient.z = ft_atof(lst->s);
 	lst = lst->next;
-	inst.diameter = ft_atof(lst->s);
+	inst.radius = (ft_atof(lst->s) / 2.0);
 	lst = lst->next;
 	inst.hgt = ft_atof(lst->s);
 	lst = lst->next;

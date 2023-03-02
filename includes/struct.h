@@ -44,9 +44,9 @@ typedef struct s_sphere {
 }				t_sphere;
 
 typedef struct s_cylinder {
-	t_vec	base;
+	t_vec	center;
 	t_vec	orient;
-	float	diameter;
+	float	radius;
 	float	hgt;
 	t_vec	colors;
 }			t_cylinder;
