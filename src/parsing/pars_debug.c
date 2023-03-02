@@ -69,6 +69,7 @@ void	print_object(t_object obj)
 	printf("Cylinder color: (%f, %f, %f)\n", obj.u_data.cylinder.colors.x,
 		obj.u_data.cylinder.colors.y, obj.u_data.cylinder.colors.z);
 	}
+	printf("\n");
 }
 
 

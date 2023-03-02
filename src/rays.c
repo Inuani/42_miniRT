@@ -1,6 +1,9 @@
 
 #include "../includes/minirt.h"
 
+// used to calculate the intensity of lighting on an object
+// based on the angle between the normal vector
+// of the object and the direction of the light source.
 
 //what if negatif?
 float map(int x)
@@ -10,6 +13,8 @@ float map(int x)
 	return (0.0 +  ((1.0 - 0.0) / (float)(90.0 - 0)) * (y - 0));
 }
 
+// used to adjust the intensity of lighting based on
+// the minimum intensity and the minimum value of the range.
 float map2(float x, float min, float input_min)
 {
 	return (((1 - min) / (2 - input_min)) * (x - input_min) + min);
