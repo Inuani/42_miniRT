@@ -2,7 +2,7 @@
 #include "../includes/minirt.h"
 
 
-int	plane_hit(t_plane *plane, t_vec ray_origine, t_vec ray_direction)
+float	plane_hit(t_plane *plane, t_vec ray_origine, t_vec ray_direction)
 {
 	float	t;
 	float	numer;
@@ -39,7 +39,7 @@ int	plane_life(t_data *data, t_ray *ray, t_plane plane)
 	cam = data->objs[1]->u_data.camera;
 	plane.orient = vec_unit(plane.orient);
 	root = plane_hit(&plane, cam.pos, ray->direction);
-	ray->point_at = (t_vec){cam.pos.x, cam.pos.y, cam.pos.z}; //useless
+	//ray->point_at = (t_vec){cam.pos.x, cam.pos.y, cam.pos.z}; //useless
 
 	if (root < 0)
 		return -1;
@@ -49,7 +49,7 @@ int	plane_life(t_data *data, t_ray *ray, t_plane plane)
 	if (!light_hit_objs(data, ray, ray->point_at))
 		return (0);
 	float value = plane_light(ray, data, plane);
-	if (value)
-		return (value);//can optimize
-	return 0;
+	//if (value)
+	return (value);//can optimize
+	//return 0;
 }

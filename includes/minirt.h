@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:13:13 by egauthey          #+#    #+#             */
-/*   Updated: 2023/03/01 13:12:29 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/03/02 13:32:11 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	initialise_viewport(t_data *data);
 
 //plane
 int	plane_life(t_data *data, t_ray *ray, t_plane plane);
-int	plane_hit(t_plane *plane, t_vec ray_origine, t_vec ray_direction);
+float	plane_hit(t_plane *plane, t_vec ray_origine, t_vec ray_direction);
 
 //sphere
 float		it_hit_sphere(t_data *data, t_ray *ray, t_sphere sphere);
