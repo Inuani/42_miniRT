@@ -9,12 +9,6 @@ int equal (t_vec vec, t_vec vec2)
 	return (0);
 }
 
-// calculates the distance between the camera's position and
-// the intersection point of the ray with the scene.
-// If this distance is less than the distance between the cam's position
-// and the intersection point previously stored in point_at,
-// the function returns 0, indicating that this intersection is not the first
-// intersection between the ray and the scene.
 int	is_first(t_ray *ray, t_cam cam, t_vec *point_at)
 {
 	t_vec vector;
@@ -35,13 +29,6 @@ int	is_first(t_ray *ray, t_cam cam, t_vec *point_at)
 	return (1);
 }
 
-// iterates through the objects in the scene and checks for
-// intersections between the ray and each object using 
-// it_hit_sphere and plane_life functions.
-// If an intersection is found and it is the first intersection,
-// the function updates colors to store the color of the intersected object
-// and returns the distance to the intersection point.
-// Otherwise, the function returns -1 to indicate that no intersection was found.
 float hit_objs(t_data *data, t_ray *ray, t_vec *colors)
 {
 	int			i;
@@ -97,12 +84,6 @@ float hit_objs(t_data *data, t_ray *ray, t_vec *colors)
 	return ret;
 }
 
-// calculates the distance between the light's position and
-// the intersection point point_at and the distance between
-// the light's position and the intersection point root_at.
-// If the distance between point_at and the light's position is less
-// than the distance between root_at and the light's position,
-// it returns 1 to indicate that point_at is closer to the light source.
 int	is_first_light(t_light light, t_vec point_at, t_vec root_at)
 {
 	t_vec vector;
@@ -113,10 +94,13 @@ int	is_first_light(t_light light, t_vec point_at, t_vec root_at)
 
 	if (vec_len(vector) - 0.01 <= vec_len(vector2)) //maybe needs offset
 		return (1);
+	
+	//printf("--------------\n");
+	//printf_vec(point_at);
+	//printf_vec(root_at);
 	return (0);
 }
 
-// checks if the light is on the same side of the plane as the camera. 
 int is_light_plane(t_light light, t_data *data, t_plane plane)
 {
 	t_cam cam;
@@ -138,17 +122,14 @@ int is_light_plane(t_light light, t_data *data, t_plane plane)
 	return 0;
 }
 
-// checks if each light source in the scene illuminates
-// the intersection point by checking if the light source
-// intersects with any objects in the scene before reaching the intersection
-// point using sphere_hits and is_light_plane functions
 float light_hit_objs(t_data *data, t_ray *ray, t_vec point_at)
 {
 	float	root;
 	int		i;
 
+	(void)ray;
 	t_light light = data->objs[2]->u_data.light;
-	t_vec vector = vec_subs(ray->point_at, light.pos);
+	t_vec vector = vec_subs(point_at, light.pos);
 
 	i = 2 + data->count.l_count;
 	while (data->objs[i])
@@ -158,8 +139,14 @@ float light_hit_objs(t_data *data, t_ray *ray, t_vec point_at)
 			t_vec v = vec_subs(light.pos, data->objs[i]->u_data.sphere.center);
 			root = sphere_hits(vector, v, data->objs[i]->u_data.sphere);
 			t_vec root_at = vec_add(light.pos, vec_scale(root, vector));
-			if (!is_first_light(light, point_at, root_at))
+			if (root >= 0 && !is_first_light(light, point_at, root_at))
+			{
+			//	printf("----------\n");
+			//	printf_vec(point_at);
+			//	printf_vec(root_at);
+
 				return (0);
+			}
 		}
 		else if (i < 2 + data->count.l_count + data->count.sp_count
 				+ data->count.pl_count)

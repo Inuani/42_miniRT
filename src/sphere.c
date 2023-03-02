@@ -66,15 +66,11 @@ float it_hit_sphere(t_data *data, t_ray *ray, t_sphere sphere) //sphere_life
 
 	cam = data->objs[1]->u_data.camera;
 
-	t_vec vector = (t_vec) {ray->direction.x, ray->direction.y, ray->direction.z};
 	t_vec v = vec_subs(cam.pos, sphere.center);
 
-	root = sphere_hits(vector, v, sphere);
-	ray->point_at = (t_vec){cam.pos.x, cam.pos.y, cam.pos.z}; //useless
+	root = sphere_hits(ray->direction, v, sphere);
 	if (root < 0)
-		return -1;
-	//ray->depth *= 0.5;
-	//if (ray->depth < )
+		return -1; 
 	ray->point_at = vec_add(cam.pos, vec_scale(root, ray->direction));
 	ray->normal = vec_scale(1/sphere.radius, vec_subs(ray->point_at, sphere.center));
 	//ray->normal = front(ray); useless?
@@ -83,7 +79,7 @@ float it_hit_sphere(t_data *data, t_ray *ray, t_sphere sphere) //sphere_life
 	if (!light_hit_objs(data, ray, ray->point_at))
 		return (0);
 	float value = light_hit(ray, data, sphere);
-	if (value)
-		return (value);//can optimize
-	return (0);
+	//if (value)
+	return (value);//can optimize
+	//return (0);
 }
