@@ -60,8 +60,9 @@ float	hit_cylinder(t_vec ray_dir, t_vec cam2cyl, t_cylinder cyl)
 	// printf("---------\n");
 	// printf_vec(cyl_ori_unit);
 	top_cyl = vec_add(cyl.center, vec_scale(cyl.hgt, cyl.orient));
-	printf_vec(top_cyl);
+	// printf_vec(top_cyl);
 	// h = vec_div(vec_subs(top_cyl, cyl.center), vec_unit(vec_subs(top_cyl, cyl.center)));
+
 	h = vec_unit(vec_subs(top_cyl, cyl.center));
 	//printf_vec(h);
 	// printf("---------\n");
@@ -87,9 +88,8 @@ float	hit_cylinder(t_vec ray_dir, t_vec cam2cyl, t_cylinder cyl)
 	}
 	else if (delta > 0)
 	{
-			t1 = (-b - sqrt(delta)) / (2.0 * a);
-			t2 = (-b + sqrt(delta)) / (2.0 * a);
-
+		t1 = (-b - sqrt(delta)) / (2.0 * a);
+		t2 = (-b + sqrt(delta)) / (2.0 * a);
 		if (t1 > 0.0 && (t2 < 0.0 || t1 < t2))
 			return (t1);
 		return (t2);
@@ -102,17 +102,25 @@ float	cylinder_eman(t_data *data, t_ray *ray, t_cylinder cyl)
 	t_cam	cam;
 	t_vec	cam2cyl;
 	float	hot_or_not;
+
 	cam = data->objs[1]->u_data.camera;
 	// printf_vec()
 	cam2cyl = vec_subs(cam.pos, cyl.center);
 	// cam2cyl = vec_unit(vec_subs(cam.pos, cyl.center));
+	// hot_or_not = hit_cylinder(ray->direction, cam2cyl, cyl);
 	hot_or_not = hit_cylinder(ray->direction, cam2cyl, cyl);
-	//hot_or_not = hit_cylinder(ray->direction, cam2cyl, cyl, cam.pos);
 	// printf("hot or not : %f\n", hot_or_not);
 	if (hot_or_not < 0)
 		return (-1);
-	// ray->point_at = vec_add(cam.pos, vec_scale(hot_or_not, ray->direction));
+	cyl.h = vec_subs(vec_add(cyl.center, vec_scale(cyl.hgt, cyl.orient)), cyl.center);
+	ray->point_at = vec_add(cam.pos, vec_scale(hot_or_not, ray->direction));
 	// printf_vec(ray->point_at);
+	// printf("vec len: %f\n", vec_len(cyl.h));
+	// printf_vec(cyl.h);
+	if (vec_dot(vec_subs(ray->point_at, cyl.center), cyl.h) < 0)
+		return -1;
+	if (vec_dot(vec_subs(ray->point_at, cyl.center), cyl.h) > vec_len(cyl.h))
+		return -1;
 	return(0);
 }
 
