@@ -32,9 +32,18 @@ t_vec	vec_mult(t_vec vec1, t_vec vec2)
 t_vec	vec_div(t_vec vec1, t_vec vec2)
 {
 	t_vec result;
-	result.x = vec1.x / vec2.x;
-	result.y = vec1.y / vec2.y;
-	result.z = vec1.z / vec2.z;
+	if (vec2.x != 0)
+		result.x = vec1.x / vec2.x;
+	else
+		result.x = 0.0;
+	if (vec2.y != 0)
+		result.y = vec1.y / vec2.y;
+	else
+		result.y = 0.0;
+	if (vec2.z != 0)
+		result.z = vec1.z / vec2.z;
+	else
+		result.z = 0.0;
 	return (result);
 }
 
@@ -80,6 +89,15 @@ t_vec	vec_unit(t_vec vec)
 	return (result);
 }
 
+t_vec	vec_abs(t_vec vec)
+{
+	t_vec	res;
+
+	res.x = fabs(vec.x);
+	res.y = fabs(vec.y);
+	res.z = fabs(vec.z);
+	return(res);
+}
 
 
 // vec pointeur
