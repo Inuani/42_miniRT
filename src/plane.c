@@ -18,11 +18,8 @@ float	plane_hit(t_plane *plane, t_vec ray_origine, t_vec ray_direction)
 	return t;
 }
 
-int	plane_light(t_ray *ray, t_data *data, t_plane plane)
+int	plane_light(t_ray *ray, t_plane plane, t_light light)
 {
-	t_light		light;
-
-	light = data->objs[2]->u_data.light;
 	t_vec dir = vec_subs(ray->point_at, light.pos);
 	//if (vec_dot(dir, ray->normal) < 0);
 	dir = vec_unit(dir); //kinda useless, maybe faster?
@@ -35,7 +32,12 @@ int	plane_life(t_data *data, t_ray *ray, t_plane plane)
 {
 	float	root;
 	t_cam	cam;
+	int		i;
+	float	value;
+	float	v_tmp;
 
+	i = 0;
+	value = 90.0;
 	cam = data->objs[1]->u_data.camera;
 	plane.orient = vec_unit(plane.orient);
 	root = plane_hit(&plane, cam.pos, ray->direction);
@@ -47,7 +49,12 @@ int	plane_life(t_data *data, t_ray *ray, t_plane plane)
 	
 	if (!light_hit_objs(data, ray, ray->point_at))
 		return (0);
-	float value = plane_light(ray, data, plane);
+	while (i < data->count.l_count)
+	{
+		v_tmp = plane_light(ray, plane, data->objs[2 + i++]->u_data.light);
+		if (map(v_tmp) > map(value))		//maybe can remove to make program faster;
+			value = v_tmp;
+	}
 	//if (value)
 	return (value);//can optimize
 	//return 0;

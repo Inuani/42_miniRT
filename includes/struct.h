@@ -44,6 +44,7 @@ typedef struct s_sphere {
 }				t_sphere;
 
 typedef struct s_cylinder {
+	t_vec	h;
 	t_vec	center;
 	t_vec	orient;
 	float	radius;
@@ -127,6 +128,8 @@ typedef struct s_data
 	t_object	**objs;
 	int			current;
 	int			changed;
+	t_vec		final_color;
+	t_vec		point_at;
 }				t_data;
 
 #endif

@@ -6,10 +6,10 @@
 // of the object and the direction of the light source.
 
 //what if negatif?
-float map(int x)
+float map(float x) //changed to float
 {
 	float	y;
-	y = abs(90 - x);
+	y = fabs(90 - x);
 	return (0.0 +  ((1.0 - 0.0) / (float)(90.0 - 0)) * (y - 0));
 }
 
@@ -49,30 +49,33 @@ t_ray	create_ray(t_cam *cam, t_viewport *vp, float u, float v)
 	return (ray);
 }
 
+
+
 int ray_color(t_ray *ray, t_data *data)
 {
 	t_vec		color = {0, 0, 0};
 	float		value;
-	float		li;
-	float		ai;
+	//float		li;
+	//float		ai;
 
-	ai = data->objs[0]->u_data.ambiant.light_ratio;
-	li = data->objs[2]->u_data.light.light_ratio;
+	data->final_color = (t_vec){0, 0, 0};
+	//ai = data->objs[0]->u_data.ambiant.light_ratio;
+	//li = data->objs[2]->u_data.light.light_ratio;
 
 	//if (plane_life(data, ray))
 	//	return create_trgb(0, 0, 30, 150);
 
-	value = hit_objs(data, ray, &color);
+	value = hit_objs(data, ray);
 
-	if (value == 0)
-		color = vec_scale(ai, color);
-	else if (value == -1)
-		return create_trgb(0, color.x, color.y, color.z);
-	else
-	{
-		float scale = map2(li + map(value), ai, li); //in bonus it needs to change intensity depending on the light
-		color = vec_scale(scale, color);
-	}
+	//printf("%f\n", ai);
+	//data->final_color = add_colors(data->final_color, data->objs[0]->u_data.ambiant.colors, ai);
+	if (data->final_color.x > 255 || data->final_color.x < 0)
+		data->final_color.x = 255;
+	if (data->final_color.y > 255 || data->final_color.y < 0)
+		data->final_color.y = 255;
+	if (data->final_color.z > 255 || data->final_color.z < 0)
+		data->final_color.z = 255;
+	color = data->final_color;
 	return create_trgb(0, color.x, color.y, color.z);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:13:13 by egauthey          #+#    #+#             */
-/*   Updated: 2023/03/02 15:34:55 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/03/04 15:54:56 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,18 @@
 
 # define HEIGHT 1080
 # define WIDTH 1920
+# define K 0.8
 
-int	print_key(int key, t_data *data);
+t_vec	add_color(t_vec c1, t_vec c2);
+t_vec	add_colors(t_vec c1, t_vec c2, float intensity);
+int		is_first(t_vec r_point_at, t_cam cam, t_vec *point_at, int *first);
+float	map2(float x, float min, float input_min);
+float	map(float x);
+int		print_key(int key, t_data *data);
 float	light_hit_objs(t_data *data, t_ray *ray, t_vec point_at);
-int	get_angle(t_vec normal, t_vec ray_l);
-int	light_hit(t_ray *ray, t_data *data, t_sphere sphere);
-float	hit_objs(t_data *data, t_ray *ray, t_vec *colors);
+int		get_angle(t_vec normal, t_vec ray_l);
+void	light_hit(t_ray *ray, t_data *data, t_sphere sphere, t_light light);
+void	hit_objs(t_data *data, t_ray *ray);
 
 void	printf_vec(t_vec vec);
 
@@ -48,7 +54,7 @@ float	rand_double(int seed);
 void	initialise_viewport(t_data *data);
 
 //plane
-int	plane_life(t_data *data, t_ray *ray, t_plane plane);
+int		plane_life(t_data *data, t_ray *ray, t_plane plane);
 float	plane_hit(t_plane *plane, t_vec ray_origine, t_vec ray_direction);
 
 //sphere
