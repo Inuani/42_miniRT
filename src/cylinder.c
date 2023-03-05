@@ -39,15 +39,15 @@ float	hit_cylinder(t_ray *ray, t_cylinder cyl, t_vec origin)
 	{
 		if (fabs(vec_dot(vec_unit(ray->direction), cyl.h_unit)) != 1)
 			return(-(b / (2.0 * a)));
-		else if (fabs(vec_dot(vec_unit(ray->direction), cyl.h_unit)) == 1)
-		{
-				t1 = (-b - sqrt(delta)) / (2.0 * a);
-				t2 = (-b + sqrt(delta)) / (2.0 * a);
+		// else if (fabs(vec_dot(vec_unit(ray->direction), cyl.h_unit)) == 1)
+		// {
+		// 		t1 = (-b - sqrt(delta)) / (2.0 * a);
+		// 		t2 = (-b + sqrt(delta)) / (2.0 * a);
 
-			if (t1 > 0.0 && (t2 < 0.0 || t1 < t2))
-				return (t1);
-			return (t2);
-		}
+		// 	if (t1 > 0.0 && (t2 < 0.0 || t1 < t2))
+		// 		return (t1);
+		// 	return (t2);
+		// }
 	}
 	else if (delta > 0)
 	{
@@ -94,30 +94,49 @@ float	hit_cylinder(t_ray *ray, t_cylinder cyl, t_vec origin)
 	return (-1.0);
 }
 
+void	cyl_light_hit(t_ray *ray, t_data *data, t_cylinder cyl, t_light light)
+{
+	//if (!light_hit_objs(data, ray, ray->point_at, light))
+	//	return ;
+	// if (is_inside(cyl, data->objs[1]->u_data.camera, light))
+	// 	return ;
+	ray->shiny = 100;
+	phong(data, ray, light, cyl.colors);
+}
+
+
 float	cylinder_eman(t_data *data, t_ray *ray, t_cylinder cyl)
 {
-	t_cam	cam;
-	float	hot_or_not;
+	int	i;
 
-	cam = data->objs[1]->u_data.camera;
-	hot_or_not = hit_cylinder(ray, cyl, cam.pos);
-	// printf("hot or not : %f\n", hot_or_not);
-	if (hot_or_not < 0)
-		return (-1);
-	// cyl.h = vec_subs(vec_add(cyl.center, vec_scale(cyl.hgt, cyl.orient)), cyl.center);
-
-	// printf("---------\n");
-	// printf("ray point at\n");
-	// printf_vec(ray->point_at);
-	// printf("vec len: %f\n\n", vec_len(cyl.h));
-	// printf("vec cyl.h :\n");
-	// printf_vec(cyl.h);
-
-	// ray->point_at = vec_add(cam.pos, vec_scale(hot_or_not, ray->direction));
-	// if (vec_dot(vec_subs(ray->point_at, cyl.center), cyl.h) < 0)
-	// 	return -1;
-	// // if (vec_dot(vec_subs(ray->point_at, cyl.center), cyl.h) > vec_len(cyl.h))
-	// if (vec_dot(vec_subs(ray->point_at, cyl.center), cyl.h) > vec_dot(cyl.h, cyl.h))
-	// 	return -1;
+	i = 0;
+	while (i < data->count.l_count)
+		cyl_light_hit(ray, data, cyl, data->objs[2 + i++]->u_data.light);
 	return(0);
+
+	// t_cam	cam;
+	// float	hot_or_not;
+
+	// cam = data->objs[1]->u_data.camera;
+	// hot_or_not = hit_cylinder(ray, cyl, cam.pos);
+	// // printf("hot or not : %f\n", hot_or_not);
+	
+	// if (hot_or_not < 0)
+	// 	return (-1);
+	// // cyl.h = vec_subs(vec_add(cyl.center, vec_scale(cyl.hgt, cyl.orient)), cyl.center);
+
+	// // printf("---------\n");
+	// // printf("ray point at\n");
+	// // printf_vec(ray->point_at);
+	// // printf("vec len: %f\n\n", vec_len(cyl.h));
+	// // printf("vec cyl.h :\n");
+	// // printf_vec(cyl.h);
+
+	// // ray->point_at = vec_add(cam.pos, vec_scale(hot_or_not, ray->direction));
+	// // if (vec_dot(vec_subs(ray->point_at, cyl.center), cyl.h) < 0)
+	// // 	return -1;
+	// // // if (vec_dot(vec_subs(ray->point_at, cyl.center), cyl.h) > vec_len(cyl.h))
+	// // if (vec_dot(vec_subs(ray->point_at, cyl.center), cyl.h) > vec_dot(cyl.h, cyl.h))
+	// // 	return -1;
+	// return(0);
 }

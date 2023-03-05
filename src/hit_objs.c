@@ -83,15 +83,23 @@ int	first_objs(t_data *data, t_ray *ray)
 				}
 			}
 		}
-		/*else if (i < 2 + data->count.l_count + data->count.sp_count
+		else if (i < 2 + data->count.l_count + data->count.sp_count
 				+ data->count.pl_count + data->count.cy_count)
 		{
-			root = ********
-			if (is_first(r_point_at, cam, &point_at, &first))
+			cylinder_init(data, &data->objs[i]->u_data.cylinder);
+			root = hit_cylinder(ray, data->objs[i]->u_data.cylinder, data->objs[1]->u_data.camera.pos);
+			if (root > 0)
 			{
-
+				r_point_at = vec_add(data->objs[1]->u_data.camera.pos, vec_scale(root, ray->direction));
+				if (is_first(r_point_at, cam, &point_at, &first))
+				{
+					ray->point_at.x = r_point_at.x;
+					ray->point_at.y = r_point_at.y;
+					ray->point_at.z = r_point_at.z;
+					obj_n = i;
+				}
 			}
-		}*/
+		}
 		i++;
 	}
 	return (obj_n);
@@ -108,10 +116,9 @@ void hit_objs(t_data *data, t_ray *ray)
 	else if (first_obj < 2 + data->count.l_count + data->count.sp_count
 			+ data->count.pl_count)
 		plane_life(data, ray, data->objs[first_obj]->u_data.plane);
-	/*else if (first_obj < 2 + data->count.l_count + data->count.sp_count
+	else if (first_obj < 2 + data->count.l_count + data->count.sp_count
 			+ data->count.pl_count + data->count.cy_count)
-	{
-	}*/
+		cylinder_eman(data, ray, data->objs[first_obj]->u_data.cylinder);
 }
 
 int	is_first_light(t_light light, t_vec point_at, t_vec root_at)

@@ -53,7 +53,7 @@ typedef struct s_cylinder {
 	float	radius;
 	float	hgt;
 	t_vec	colors;
-}            t_cylinder;
+}				t_cylinder;
 
 typedef struct s_plane {
 	t_vec	point;

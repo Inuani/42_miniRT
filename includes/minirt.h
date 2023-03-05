@@ -33,6 +33,8 @@
 # define WIDTH 1920
 # define K 0.8
 
+int is_inside(t_sphere sphere, t_cam camera, t_light light);
+
 void	phong(t_data *data, t_ray *ray, t_light light, t_vec obj_color);
 t_vec	add_color(t_vec c1, t_vec c2);
 t_vec	add_colors(t_vec c1, t_vec c2, float intensity);
@@ -53,7 +55,7 @@ float	rand_double(int seed);
 
 //init objs
 void	initialise_viewport(t_data *data);
-void	cylinder_init(t_data d, t_cylindercyl);
+void	cylinder_init(t_data *d, t_cylinder *cyl);
 
 //plane
 void	plane_life(t_data *data, t_ray *ray, t_plane plane);
@@ -65,6 +67,7 @@ float		sphere_hits(t_vec vector, t_vec v, t_sphere sphere);
 
 //cylinder
 float	cylinder_eman(t_data *data, t_ray *ray, t_cylinder cyl);
+float	hit_cylinder(t_ray *ray, t_cylinder cyl, t_vec origin);
 
 //render frames
 void	render(t_data *data);
@@ -94,6 +97,7 @@ float	vec_dot(t_vec vec1, t_vec vec2);
 t_vec	vec_cross(t_vec vec1, t_vec vec2);
 float	vec_len(t_vec vec);
 t_vec	vec_unit(t_vec vec);
+t_vec	vec_div_float(t_vec vec, float nb);
 
 // void		close_win(void);
 int		close_win(void);
