@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:05:42 by lskraber          #+#    #+#             */
-/*   Updated: 2023/03/02 19:32:38 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/03/04 16:05:46 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ void	handle_camera(int key, t_data *data)
 		cam->fov -= 10;
 
 	cam->orient = vec_unit(cam->orient);
-	if (cam->orient.x && !cam->orient.z)
+	if (!cam->orient.x && !cam->orient.z)	//problem here
 		cam->up = vec_cross(cam->orient, (t_vec) {0, 0, 1});
 	else
 		cam->up = (t_vec) {0, 1, 0};

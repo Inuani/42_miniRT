@@ -13,6 +13,13 @@ float map(float x) //changed to float
 	return (0.0 +  ((1.0 - 0.0) / (float)(90.0 - 0)) * (y - 0));
 }
 
+float inverse_map(float x)
+{
+	float	y;
+	y = fabs(1 - x);
+	return (0.0 +  ((1.0 - 0.0) / (float)(90.0 - 0)) * (y - 0));
+}
+
 // used to adjust the intensity of lighting based on
 // the minimum intensity and the minimum value of the range.
 float map2(float x, float min, float input_min)
@@ -26,7 +33,6 @@ t_ray	create_ray(t_cam *cam, t_viewport *vp, float u, float v)
 	t_ray	ray;
 
 	ray.point_at = (t_vec){0, 0, 0};
-	ray.depth = 0.5;
 
 	ray.direction = (t_vec) {
 		-1 *(u - 0.5) * vp->viewp_wdt,
@@ -54,7 +60,6 @@ t_ray	create_ray(t_cam *cam, t_viewport *vp, float u, float v)
 int ray_color(t_ray *ray, t_data *data)
 {
 	t_vec		color = {0, 0, 0};
-	float		value;
 	//float		li;
 	//float		ai;
 
@@ -65,7 +70,7 @@ int ray_color(t_ray *ray, t_data *data)
 	//if (plane_life(data, ray))
 	//	return create_trgb(0, 0, 30, 150);
 
-	value = hit_objs(data, ray);
+	hit_objs(data, ray);
 
 	//printf("%f\n", ai);
 	//data->final_color = add_colors(data->final_color, data->objs[0]->u_data.ambiant.colors, ai);

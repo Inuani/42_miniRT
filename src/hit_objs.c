@@ -1,13 +1,13 @@
 
 #include "../includes/minirt.h"
 
-
+/*
 int equal (t_vec vec, t_vec vec2)
 {
 	if (vec.x == vec2.x && vec.y == vec2.y && vec.z == vec2.z)
 		return (1);
 	return (0);
-}
+}*/
 
 int	is_first(t_vec r_point_at, t_cam cam, t_vec *point_at, int *first)
 {
@@ -67,26 +67,30 @@ int	first_objs(t_data *data, t_ray *ray)
 				}
 			}
 		}
-		/*else if (i < 2 + data->count.l_count + data->count.sp_count
+		else if (i < 2 + data->count.l_count + data->count.sp_count
 				+ data->count.pl_count)
 		{
-			tmp = plane_life(data, ray, data->objs[i]->u_data.plane);
-			if (tmp != -1 && is_first(ray, data->objs[1]->u_data.camera, &point_at))
+			root = plane_hit(&data->objs[i]->u_data.plane, cam.pos, ray->direction);
+			if (root > 0)
 			{
-				ret = tmp;
+				r_point_at = vec_add(data->objs[1]->u_data.camera.pos, vec_scale(root, ray->direction));
+				if (is_first(r_point_at, cam, &point_at, &first))
+				{
+					ray->point_at.x = r_point_at.x;
+					ray->point_at.y = r_point_at.y;
+					ray->point_at.z = r_point_at.z;
+					obj_n = i;
+				}
 			}
-		}*/
+		}
 		/*else if (i < 2 + data->count.l_count + data->count.sp_count
 				+ data->count.pl_count + data->count.cy_count)
 		{
-			tmp = cylinder_eman(data, ray, data->objs[i]->u_data.cylinder);
-			// if (tmp != -1 && is_first(ray, data->objs[1]->u_data.camera, &point_at))
-			// {
-				ret = tmp;
-				colors->x = data->objs[i]->u_data.cylinder.colors.x;
-				colors->y = data->objs[i]->u_data.cylinder.colors.y;
-				colors->z = data->objs[i]->u_data.cylinder.colors.z;
-			// }
+			root = ********
+			if (is_first(r_point_at, cam, &point_at, &first))
+			{
+
+			}
 		}*/
 		i++;
 	}
@@ -96,38 +100,20 @@ int	first_objs(t_data *data, t_ray *ray)
 void hit_objs(t_data *data, t_ray *ray)
 {
 	int	first_obj = first_objs(data, ray);
-	//printf("%i\n", first_obj);
 
 	if (!first_obj)
 		return ;
 	if (first_obj < 2 + data->count.l_count + data->count.sp_count)
 		it_hit_sphere(data, ray, data->objs[first_obj]->u_data.sphere);
-	/*else if (i < 2 + data->count.l_count + data->count.sp_count
+	else if (first_obj < 2 + data->count.l_count + data->count.sp_count
 			+ data->count.pl_count)
-	{
-		tmp = plane_life(data, ray, data->objs[i]->u_data.plane);
-		if (tmp != -1 && is_first(ray, data->objs[1]->u_data.camera, &point_at))
-		{
-			ret = tmp;
-		}
-	}*/
-	/*else if (i < 2 + data->count.l_count + data->count.sp_count
+		plane_life(data, ray, data->objs[first_obj]->u_data.plane);
+	/*else if (first_obj < 2 + data->count.l_count + data->count.sp_count
 			+ data->count.pl_count + data->count.cy_count)
 	{
-		tmp = cylinder_eman(data, ray, data->objs[i]->u_data.cylinder);
-		// if (tmp != -1 && is_first(ray, data->objs[1]->u_data.camera, &point_at))
-		// {
-			ret = tmp;
-			colors->x = data->objs[i]->u_data.cylinder.colors.x;
-			colors->y = data->objs[i]->u_data.cylinder.colors.y;
-			colors->z = data->objs[i]->u_data.cylinder.colors.z;
-		// }
 	}*/
-	//printf("%f\n", ret);
-	return 1;
 }
 
-//if false object is getting blocked
 int	is_first_light(t_light light, t_vec point_at, t_vec root_at)
 {
 	t_vec vector;
@@ -138,10 +124,6 @@ int	is_first_light(t_light light, t_vec point_at, t_vec root_at)
 
 	if (vec_len(vector) - 0.01 <= vec_len(vector2)) //maybe needs offset
 		return (1);
-	
-	//printf("--------------\n");
-	//printf_vec(point_at);
-	//printf_vec(root_at);
 	return (0);
 }
 
@@ -166,45 +148,36 @@ int is_light_plane(t_light light, t_data *data, t_plane plane)
 	return 0;
 }
 
-int shadow_sphere(t_data *data, int i, t_vec point_at) //RIP norm
+
+int shadow_sphere(t_data *data, int i, t_vec point_at, t_light light)
 {
 	float	root;
 	t_vec	vector;
 	t_vec	v;
 	t_vec	root_at;
-	t_light	light;
-	int		j = 0;
 	int		ret = 0;
 
-	while (j < data->count.l_count)
-	{
-		light = data->objs[2 + j++]->u_data.light;
-		vector = vec_subs(point_at, light.pos);
-		v = vec_subs(light.pos, data->objs[i]->u_data.sphere.center);
-		root = sphere_hits(vector, v, data->objs[i]->u_data.sphere);
-		root_at = vec_add(light.pos, vec_scale(root, vector));
-		if (!(root >= 0 && !is_first_light(light, point_at, root_at)))
-			ret = 1;
-	}
+	vector = vec_subs(point_at, light.pos);
+	v = vec_subs(light.pos, data->objs[i]->u_data.sphere.center);
+	root = sphere_hits(vector, v, data->objs[i]->u_data.sphere);
+	root_at = vec_add(light.pos, vec_scale(root, vector));
+	if (!(root >= 0 && !is_first_light(light, point_at, root_at)))
+		ret = 1;
 	return (ret);
 }
 
-int shadow_plane(t_data *data, int i)
+
+int shadow_plane(t_data *data, int i, t_light light)
 {
-	int		j = 0;
 	int		ret = 0;
-	t_light	light;
 
-	while (j < data->count.l_count)
-	{
-		light = data->objs[2 + j++]->u_data.light;
-		if (!(!is_light_plane(light, data, data->objs[i]->u_data.plane)))
-			ret = 1;
-	}
+	if (!(!is_light_plane(light, data, data->objs[i]->u_data.plane)))
+		ret = 1;
 	return (ret);
 }
 
-float light_hit_objs(t_data *data, t_ray *ray, t_vec point_at)
+
+float light_hit_objs(t_data *data, t_ray *ray, t_vec point_at, t_light light)
 {
 	int		i;
 
@@ -215,13 +188,13 @@ float light_hit_objs(t_data *data, t_ray *ray, t_vec point_at)
 	{
 		if (i < 2 + data->count.l_count + data->count.sp_count)
 		{
-			if (!shadow_sphere(data, i, point_at))
+			if (!shadow_sphere(data, i, point_at, light))
 				return (0);
 		}
 		else if (i < 2 + data->count.l_count + data->count.sp_count
 				+ data->count.pl_count)
 		{
-			if (!shadow_plane(data, i))
+			if (!shadow_plane(data, i, light))
 				return (0);
 		}
 		//else if (i < 2 + data->count.l_count + data->count.sp_count

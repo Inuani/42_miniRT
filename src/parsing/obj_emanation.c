@@ -168,6 +168,7 @@ int	add_plane(t_data *d, t_tok *lst)
 	inst.colors.y = ft_atof(lst->s);
 	lst = lst->next;
 	inst.colors.z = ft_atof(lst->s);
+	inst.orient = vec_unit(inst.orient);
 	new = create_object(PLANE, &inst);
 	add_object_to_list(&d->chaos, new);
 	free_tok_from_end(lst);

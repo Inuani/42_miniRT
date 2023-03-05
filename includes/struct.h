@@ -44,13 +44,16 @@ typedef struct s_sphere {
 }				t_sphere;
 
 typedef struct s_cylinder {
-	t_vec	h;
 	t_vec	center;
 	t_vec	orient;
+	t_vec	h;
+	t_vec	top_cyl;
+	t_vec	h_unit;
+	t_vec	cam2cyl;
 	float	radius;
 	float	hgt;
 	t_vec	colors;
-}			t_cylinder;
+}            t_cylinder;
 
 typedef struct s_plane {
 	t_vec	point;
@@ -81,9 +84,7 @@ typedef struct s_ray {
 	t_vec	ray;
 	t_vec	normal;
 	t_vec	point_at;
-	float	t;
-	int		front;
-	float	depth;
+	float	shiny;
 }				t_ray;
 
 typedef enum object_type {
