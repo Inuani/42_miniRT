@@ -29,6 +29,14 @@ t_vec	vec_mult(t_vec vec1, t_vec vec2)
 	return (result);
 }
 
+t_vec	vec_div_float(t_vec vec, float nb)
+{
+	vec.x /= nb;
+	vec.y /= nb;
+	vec.z /= nb;
+	return (vec);
+}
+
 t_vec	vec_div(t_vec vec1, t_vec vec2)
 {
 	t_vec result;
