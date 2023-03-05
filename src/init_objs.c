@@ -22,3 +22,14 @@ void	initialise_viewport(t_data *data) // will have to normalise cam->orientatio
 	t_vec c = vec_subs(b, cam->orientation);*/
 	//data->vp->llc = c;
 }
+
+void	cylinder_init(t_data *d, t_cylinder *cyl)
+{
+	cyl->h = vec_subs(vec_add(cyl->center, vec_scale(cyl->hgt, cyl->orient)), cyl->center);
+	cyl->cam2cyl = vec_subs(d->objs[1]->u_data.camera.pos, cyl->center);
+	cyl->orient = vec_unit(cyl->orient);
+	cyl->top_cyl = vec_add(cyl->center, vec_scale(cyl->hgt, cyl->orient));
+	cyl->h_unit = vec_div_float(vec_subs(cyl->top_cyl, cyl->center), vec_len(vec_subs(cyl->top_cyl, cyl->center)));
+	(void)d;
+	(void)cyl;
+}
