@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:13:13 by egauthey          #+#    #+#             */
-/*   Updated: 2023/03/05 16:02:01 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/03/06 14:23:29 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@
 
 //nbr of threads, 24?
 
-
+# define THREADS 12
 # define HEIGHT 1080
 # define WIDTH 1920
 # define K 0.8
 
-int is_inside(t_sphere sphere, t_cam camera, t_light light);
-
+void	init_image(t_data *data, int width, int height, t_img *img);
+int	is_inside(t_sphere sphere, t_cam camera, t_light light);
+void	create_thread(t_data *data);
 void	phong(t_data *data, t_ray *ray, t_light light, t_vec obj_color);
 t_vec	add_color(t_vec c1, t_vec c2);
 t_vec	add_colors(t_vec c1, t_vec c2, float intensity);
@@ -71,6 +72,7 @@ float	hit_cylinder(t_ray *ray, t_cylinder cyl, t_vec origin);
 
 //render frames
 void	render(t_data *data);
+void	*render_thr(void *data);
 
 //handle window && image
 void	init_window(t_data *data);

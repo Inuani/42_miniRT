@@ -126,26 +126,73 @@ void render(t_data *data)
 	//int spp = 0;
 
 	i = -1;
-	j = HEIGHT - 1;
+	j = HEIGHT;
 	while (j-- > 0)
 	{
 		while (++i < WIDTH)
 		{
-		//	while (spp < data->vp->samplespp)
-		//	{
-			// u = ((float)(i) + rand_double(i)) / (float)(WIDTH - 1);
-			// v = ((float)(j) + rand_double(j)) / (float)(HEIGHT - 1);
+		//	if (j < 10 || j > 1070)
+		//		printf("%d\n", j);
+		//	if (i < 10)
+		//		printf("%d\n", i);
+			//u = ((float)(i) + rand_double(i)) / (float)(WIDTH - 1);
+			//v = ((float)(j) + rand_double(j)) / (float)(HEIGHT - 1);
 			u = (float)(i) / (float)(WIDTH - 1);
 			v = (float)(j) / (float)(HEIGHT - 1);
 			t_ray ray = create_ray(&data->objs[1]->u_data.camera, data->vp, u, v);
 			my_mlx_pixel_put(&(data->img), i, j, ray_color(&ray, data));
-		//		spp++;
-		//	}
-		//	spp = 0;
 		}
 		i = -1;
 	}
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
 	render_text(data);
+}
 
+void *render_thr(void *dataV)
+{
+	int		i;
+	int		j;
+	float	u;
+	float	v;
+	t_img img;
+	t_data *data = (t_data*)dataV;
+
+	pthread_mutex_lock(&data->lock);
+	int ti = data->thread_i;
+	pthread_mutex_unlock(&data->lock);
+
+	i = -1;
+	init_image(data, WIDTH, HEIGHT/THREADS, &img);
+
+	j = HEIGHT - HEIGHT/THREADS * ti;
+	while (j-- > HEIGHT/THREADS * (11 - ti))
+	{
+		//if (j < 10 || j > 1050)
+		//printf("%d\n", j);
+		while (++i < WIDTH)
+		{
+		//	while (spp < data->vp->samplespp)
+		//	{
+			//u = ((float)(i) + rand_double(i)) / (float)(WIDTH - 1);
+			//v = ((float)(j) + rand_double(j)) / (float)(HEIGHT - 1);
+			u = (float)(i) / (float)(WIDTH - 1);
+			v = (float)(j) / (float)(HEIGHT - 1);
+			//pthread_mutex_lock(&data->lock);
+			t_ray ray = create_ray(&data->objs[1]->u_data.camera, data->vp, u, v);
+			(void)ray;
+			my_mlx_pixel_put(&img, i, j % 90, ray_color(&ray, data));
+			//pthread_mutex_unlock(&data->lock);
+		//		spp++;
+		//	}
+		//	spp = 0;
+		}
+		i = -1;
+		//printf("%d\n", i);
+	}
+	pthread_mutex_lock(&data->lock);
+	mlx_put_image_to_window(data->mlx, data->win, img.img, 0, HEIGHT - HEIGHT/THREADS * (ti + 1));
+	//pthread_join(data->thread_id[data->thread_i], NULL);
+	pthread_mutex_unlock(&data->lock);
+	//render_text(data);
+	return (0);
 }

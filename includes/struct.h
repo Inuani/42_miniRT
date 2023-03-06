@@ -119,6 +119,9 @@ typedef struct s_count {
 
 typedef struct s_data
 {
+	pthread_t	*thread_id;
+	pthread_mutex_t	lock;
+	int			thread_i;
 	void		*mlx;
 	void		*win;
 	t_img		img;
