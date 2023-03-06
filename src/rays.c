@@ -27,7 +27,10 @@ float map2(float x, float min, float input_min)
 	return (((1 - min) / (2 - input_min)) * (x - input_min) + min);
 }
 
-
+ // Create a ray of light that can be used to calculate the color of a pixel.
+ // u and v that represent the x and y coordinates of the pixel being sampled.
+ // The function computes the direction of the ray by taking the difference between the normalized
+ // viewport coordinates (u-0.5) and (v-0.5) and multiplying them by the viewport width and height.
 t_ray	create_ray(t_cam *cam, t_viewport *vp, float u, float v)
 {
 	t_ray	ray;
@@ -55,8 +58,9 @@ t_ray	create_ray(t_cam *cam, t_viewport *vp, float u, float v)
 	return (ray);
 }
 
-
-
+// Calculate the color of a pixel based on the intersection of a ray with the objects in a scene.
+// Hit_objs function is called to determine if the ray
+// intersects with any of the objects in the scene.
 int ray_color(t_ray *ray, t_data *data)
 {
 	t_vec		color = {0, 0, 0};

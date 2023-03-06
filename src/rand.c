@@ -9,6 +9,8 @@ int	fast_rand(int seed)
 	return (r_seed>>16)&0x7FFF;
 }
 
+// generating a random float number
+// in the range [0,1] based on a given seed.
 float	rand_double(int seed)
 {
 	float	rand;

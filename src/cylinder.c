@@ -1,5 +1,6 @@
 # include "../includes/minirt.h"
 
+
 float	hit_cylinder(t_ray *ray, t_cylinder cyl, t_vec origin)
 {
 	// t_vec	h;
@@ -11,6 +12,7 @@ float	hit_cylinder(t_ray *ray, t_cylinder cyl, t_vec origin)
 	float	t2;
 	float	delta;
 	(void)origin;
+	t_vec	point_at;
 
 	// printf("---------\n");
 	// printf_vec(cyl.orient);
@@ -60,14 +62,14 @@ float	hit_cylinder(t_ray *ray, t_cylinder cyl, t_vec origin)
 			return (-1);
 		t = (t1 > 0 ? t1 : t2);
 		float max = sqrtf(powf(cyl.hgt / 2, 2) + powf(cyl.radius, 2));
-		ray->point_at = vec_add(origin, vec_scale(t, ray->direction));
-		t_vec len = vec_subs(ray->point_at, cyl.center);
-		len = vec_subs(ray->point_at, cyl.center);
+		point_at = vec_add(origin, vec_scale(t, ray->direction));
+		t_vec len = vec_subs(point_at, cyl.center);
+		len = vec_subs(point_at, cyl.center);
 		// len = vec_subs(ray->point_at, vec_add(cyl.center, vec_scale(cyl.hgt / 2, cyl.orient)));
 		if (vec_len(len) > max)
 			t = t2;
-		ray->point_at = vec_add(origin, vec_scale(t, ray->direction));
-		len = vec_subs(ray->point_at, cyl.center);
+		point_at = vec_add(origin, vec_scale(t, ray->direction));
+		len = vec_subs(point_at, cyl.center);
 		// len = vec_subs(ray->point_at, vec_add(cyl.center, vec_scale(cyl.hgt / 2, cyl.orient)));
 		if (vec_len(len) > max)
 			return (-1);
@@ -94,12 +96,42 @@ float	hit_cylinder(t_ray *ray, t_cylinder cyl, t_vec origin)
 	return (-1.0);
 }
 
+// t_vec	cyl_surface_normal_vec()
+// {
+// 	t_vec	center2point;
+
+// }
+
 void	cyl_light_hit(t_ray *ray, t_data *data, t_cylinder cyl, t_light light)
 {
 	//if (!light_hit_objs(data, ray, ray->point_at, light))
 	//	return ;
 	// if (is_inside(cyl, data->objs[1]->u_data.camera, light))
 	// 	return ;
+
+	t_vec dist = vec_subs(ray->point_at, cyl.center);
+	t_vec proj = vec_subs(dist, vec_scale(vec_dot(dist, cyl.orient), cyl.orient));
+	float dot_prod = vec_dot(proj, ray->direction);
+	float sign = dot_prod >= 0 ? 1 : -1;
+	ray->normal = vec_scale(sign, vec_unit(proj));
+
+	// ray->normal = vec_unit(proj);
+	// if (vec_dot(vec_subs(ray->point_at, cyl.center), cyl.orient) < 0)
+	// 	ray->normal = vec_scale(-1, ray->normal);
+	// printf_vec(ray->normal);
+
+	// float dist_from_center = vec_len(vec_subs(ray->point_at, cyl.center));
+	// float half_height = cyl.hgt / 2.0;
+	// if (dist_from_center > half_height)
+	// 	ray->normal = vec_scale(-1, ray->normal);
+
+	// float dot = vec_dot(dist, cyl.orient);
+	// if (dot < 0)
+	// ray->normal = vec_scale(-1, ray->normal);
+		(void)data;
+		(void)ray;
+		(void)cyl;
+		(void)light;
 	ray->shiny = 100;
 	phong(data, ray, light, cyl.colors);
 }
@@ -110,8 +142,11 @@ float	cylinder_eman(t_data *data, t_ray *ray, t_cylinder cyl)
 	int	i;
 
 	i = 0;
+
 	while (i < data->count.l_count)
 		cyl_light_hit(ray, data, cyl, data->objs[2 + i++]->u_data.light);
+	t_vec ambient_color = add_color(vec_scale(K, cyl.colors), vec_scale(1 - K, data->objs[0]->u_data.ambiant.colors));
+	data->final_color = add_colors(data->final_color, ambient_color, data->objs[0]->u_data.ambiant.light_ratio);
 	return(0);
 
 	// t_cam	cam;

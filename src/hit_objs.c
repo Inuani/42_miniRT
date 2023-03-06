@@ -33,6 +33,11 @@ int	is_first(t_vec r_point_at, t_cam cam, t_vec *point_at, int *first)
 	return (1);
 }
 
+// This function checks which object in the scene
+// is the first to intersect with the ray.
+// It iterates over all the objects in the scene and checks
+// whether the ray intersects with them.
+// is_first is used to keep track of the closest intersection point found so far.
 int	first_objs(t_data *data, t_ray *ray)
 {
 	int		i;
@@ -121,6 +126,7 @@ void hit_objs(t_data *data, t_ray *ray)
 		cylinder_eman(data, ray, data->objs[first_obj]->u_data.cylinder);
 }
 
+// checks whether a light source is the first one to reach a point on a ray.
 int	is_first_light(t_light light, t_vec point_at, t_vec root_at)
 {
 	t_vec vector;
@@ -134,7 +140,8 @@ int	is_first_light(t_light light, t_vec point_at, t_vec root_at)
 	return (0);
 }
 
-int is_light_plane(t_light light, t_data *data, t_plane plane)
+// Calculates if a plane is facing the camera and the light source.
+int	is_light_plane(t_light light, t_data *data, t_plane plane)
 {
 	t_cam cam;
 	float f1;
@@ -155,7 +162,8 @@ int is_light_plane(t_light light, t_data *data, t_plane plane)
 	return 0;
 }
 
-
+// Determines if a sphere is blocking the light source from reaching
+// the point of intersection between the ray and the object.
 int shadow_sphere(t_data *data, int i, t_vec point_at, t_light light)
 {
 	float	root;
@@ -173,7 +181,8 @@ int shadow_sphere(t_data *data, int i, t_vec point_at, t_light light)
 	return (ret);
 }
 
-
+// Determines if a plane is blocking the light source from reaching
+// the point of intersection between the ray and the object.
 int shadow_plane(t_data *data, int i, t_light light)
 {
 	int		ret = 0;
@@ -183,7 +192,25 @@ int shadow_plane(t_data *data, int i, t_light light)
 	return (ret);
 }
 
+// int	shadow_cylinder(t_data *data, int i, t_vec point_at, t_light light)
+// {
+// 	float	root;
+// 	t_vec	l2int;
+// 	t_vec	v;
+// 	t_vec	root_at;
+// 	int		ret = 0;
 
+// 	l2int = vec_subs(point_at, light.pos);
+// 	l2int = vec_unit(l2int);
+// 	// v = vec_subs(light.pos, data->objs[i]->u_data.cylinder.center);
+// 	root = hit_cylinder(l2int, data->objs[i]->u_data.cylinder, light.pos);
+// 	root_at = vec_add(light.pos, vec_scale(root, l2int));
+// 	if (!(root >= 0 && !is_first_light(light, point_at, root_at)))
+// 		ret = 1;
+// 	return (ret);
+// }
+
+// Checks if any of the objects in the scene are blocking the light source.
 float light_hit_objs(t_data *data, t_ray *ray, t_vec point_at, t_light light)
 {
 	int		i;
@@ -204,8 +231,8 @@ float light_hit_objs(t_data *data, t_ray *ray, t_vec point_at, t_light light)
 			if (!shadow_plane(data, i, light))
 				return (0);
 		}
-		//else if (i < 2 + data->count.l_count + data->count.sp_count
-		//		+ data->count.pl_count + data->count.cy_count)
+		// else if (i < 2 + data->count.l_count + data->count.sp_count
+		// 		+ data->count.pl_count + data->count.cy_count)
 		i++;
 	}
 	return 1;

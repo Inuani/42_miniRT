@@ -82,7 +82,6 @@ void	init_minirt_data(t_data *d)
 {
 	d->mlx = NULL;
 	d->win = NULL;
-	// d->img = NULL;
 	d->vp = NULL;
 	d->lst = NULL;
 	d->count.l_count = 0;
