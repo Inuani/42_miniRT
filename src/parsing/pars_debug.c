@@ -69,6 +69,10 @@ void	print_object(t_object obj)
 	printf("Cylinder color: (%.1f, %.1f, %.1f)\n", obj.u_data.cylinder.colors.x,
 		obj.u_data.cylinder.colors.y, obj.u_data.cylinder.colors.z);
 	}
+	else if (obj.type == HYPERBOLOID)
+	{
+		printf("hi\n");
+	}
 	printf("\n");
 }
 

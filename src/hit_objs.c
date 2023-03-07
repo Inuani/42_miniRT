@@ -105,6 +105,24 @@ int	first_objs(t_data *data, t_ray *ray)
 				}
 			}
 		}
+		else if (i < 2 + data->count.l_count + data->count.sp_count
+				+ data->count.pl_count + data->count.cy_count + data->count.hy_count)
+		{
+			root = hit_hyperboloid(ray->direction, data->objs[i]->u_data.hyperboloid, cam.pos);
+			//printf("%f\n", root);
+			if (root > 0)
+			{
+				//r_point_at = vec_add(data->objs[1]->u_data.camera.pos, vec_scale(root, ray->direction));
+				//if (is_first(r_point_at, cam, &point_at, &first))
+				//{
+				ray->point_at.x = r_point_at.x;
+				ray->point_at.y = r_point_at.y;
+				ray->point_at.z = r_point_at.z;
+				obj_n = i;
+				//}
+				
+			}
+		}
 		i++;
 	}
 	return (obj_n);
@@ -124,6 +142,9 @@ void hit_objs(t_data *data, t_ray *ray)
 	else if (first_obj < 2 + data->count.l_count + data->count.sp_count
 			+ data->count.pl_count + data->count.cy_count)
 		cylinder_eman(data, ray, data->objs[first_obj]->u_data.cylinder);
+	else if (first_obj < 2 + data->count.l_count + data->count.sp_count
+			+ data->count.pl_count + data->count.cy_count + data->count.hy_count)
+		it_hit_hy(data, ray, data->objs[first_obj]->u_data.hyperboloid);
 }
 
 // checks whether a light source is the first one to reach a point on a ray.

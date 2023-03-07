@@ -43,6 +43,14 @@ typedef struct s_sphere {
 	t_vec	colors;
 }				t_sphere;
 
+typedef struct s_hyperboloid {
+	t_vec	orient;
+	t_vec	center;
+	float	radius;
+	float	hgt;
+	t_vec	colors;
+}				t_hyperboloid;
+
 typedef struct s_cylinder {
 	t_vec	center;
 	t_vec	orient;
@@ -93,18 +101,20 @@ typedef enum object_type {
 	LIGHT,
 	SPHERE,
 	PLANE,
-	CYLINDER
+	CYLINDER,
+	HYPERBOLOID
 }	t_type;
 
 typedef struct s_object {
 	t_type			type;
 	union {
-		struct s_ambiant	ambiant;
-		struct s_cam		camera;
-		struct s_light		light;
-		struct s_sphere		sphere;
-		struct s_plane		plane;
-		struct s_cylinder	cylinder;
+		struct s_ambiant		ambiant;
+		struct s_cam			camera;
+		struct s_light			light;
+		struct s_sphere			sphere;
+		struct s_plane			plane;
+		struct s_cylinder		cylinder;
+		struct s_hyperboloid	hyperboloid;
 	}	u_data;
 	struct s_object	*next;
 }				t_object;
@@ -115,6 +125,7 @@ typedef struct s_count {
 	int	pl_count;
 	int	cy_count;
 	int	l_count;
+	int	hy_count;
 }				t_count;
 
 typedef struct s_data
