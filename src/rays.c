@@ -13,13 +13,6 @@ float map(float x) //changed to float
 	return (0.0 +  ((1.0 - 0.0) / (float)(90.0 - 0)) * (y - 0));
 }
 
-float inverse_map(float x)
-{
-	float	y;
-	y = fabs(1 - x);
-	return (0.0 +  ((1.0 - 0.0) / (float)(90.0 - 0)) * (y - 0));
-}
-
 // used to adjust the intensity of lighting based on
 // the minimum intensity and the minimum value of the range.
 float map2(float x, float min, float input_min)

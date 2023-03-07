@@ -20,6 +20,8 @@ t_object	*create_object(t_type type, void *data)
 		new->u_data.plane = *(t_plane*)data;
 	else if (type == CYLINDER)
 		new->u_data.cylinder = *(t_cylinder*)data;
+	else if (type == HYPERBOLOID)
+		new->u_data.hyperboloid = *(t_hyperboloid*)data;
 	new->next = NULL;
 	return (new);
 }

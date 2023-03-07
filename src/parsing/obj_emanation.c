@@ -215,6 +215,46 @@ int	add_cylinder(t_data *d, t_tok *lst)
 	return (1);
 }
 
+int	add_hyperboloid(t_data *d, t_tok *lst)
+{
+	t_object		*new;
+	t_hyperboloid	inst;
+	int				nb;
+
+	nb = calc_nb_prop(lst);
+	if (nb != 11)
+		exit_error(ERR_PROPERTIES, 1);
+	// print_token(&lst);
+	lst = lst->next;
+	inst.center.x = ft_atof(lst->s);
+	lst = lst->next;
+	inst.center.y = ft_atof(lst->s);
+	lst = lst->next;
+	inst.center.z = ft_atof(lst->s);
+	lst = lst->next;
+	inst.orient.x = ft_atof(lst->s);
+	lst = lst->next;
+	inst.orient.y = ft_atof(lst->s);
+	lst = lst->next;
+	inst.orient.z = ft_atof(lst->s);
+	lst = lst->next;
+	inst.radius = (ft_atof(lst->s) / 2.0);
+	lst = lst->next;
+	inst.hgt = ft_atof(lst->s);
+	lst = lst->next;
+	inst.colors.x = ft_atof(lst->s);
+	lst = lst->next;
+	inst.colors.y = ft_atof(lst->s);
+	lst = lst->next;
+	inst.colors.z = ft_atof(lst->s);
+	inst.orient = vec_unit(inst.orient);
+	new = create_object(HYPERBOLOID, &inst);
+	add_object_to_list(&d->chaos, new);
+	free_tok_from_end(lst);
+	d->lst = NULL;
+	return (1);
+}
+
 void	what_obj(t_data *d, char *obj)
 {
 	if (!ft_strncmp(obj, "A", 1) && obj[1] == 0)
@@ -229,6 +269,8 @@ void	what_obj(t_data *d, char *obj)
 		d->count.pl_count += add_plane(d, d->lst);
 	else if (!ft_strncmp(obj, "cy", 2) && obj[2] == 0)
 		d->count.cy_count += add_cylinder(d, d->lst);
+	else if (!ft_strncmp(obj, "hp", 2) && obj[2] == 0)
+		d->count.hy_count += add_hyperboloid(d, d->lst);
 	else
 		exit_error(ERR_OBJ, 1);
 }

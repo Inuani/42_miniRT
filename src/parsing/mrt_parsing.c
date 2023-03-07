@@ -88,6 +88,7 @@ void	init_minirt_data(t_data *d)
 	d->count.sp_count = 0;
 	d->count.pl_count = 0;
 	d->count.cy_count = 0;
+	d->count.hy_count = 0;
 	d->chaos = NULL;
 	d->objs = NULL;
 }

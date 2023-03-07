@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:13:13 by egauthey          #+#    #+#             */
-/*   Updated: 2023/03/06 14:23:29 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/03/07 15:44:28 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 # define WIDTH 1920
 # define K 0.8
 
+float	it_hit_hy(t_data *data, t_ray *ray, t_hyperboloid hp);
+float	hit_hyperboloid(t_vec vector, t_hyperboloid hyperboloid, t_vec origin);
 void	init_image(t_data *data, int width, int height, t_img *img);
 int		is_inside(t_sphere sphere, t_cam camera, t_light light);
 void	create_thread(t_data *data);

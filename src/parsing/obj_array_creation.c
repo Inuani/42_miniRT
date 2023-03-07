@@ -119,6 +119,24 @@ void	get_cylindre(t_data *d)
 	}
 }
 
+void	get_hyperboloid(t_data *d)
+{
+	t_object	*tmp;
+	int	i;
+
+	tmp = d->chaos;
+	i = 2 + d->count.l_count + d->count.sp_count + d->count.pl_count + d->count.cy_count;
+	while(tmp)
+	{
+		if (tmp->type == HYPERBOLOID)
+		{
+			d->objs[i] = tmp;
+			i++;
+		}
+		tmp = tmp->next;
+	}
+}
+
 void	obj_array_create(t_data *d)
 {
 	int	i;
@@ -132,6 +150,7 @@ void	obj_array_create(t_data *d)
 	get_sphere(d);
 	get_plane(d);
 	get_cylindre(d);
+	get_hyperboloid(d);
 	d->objs[d->count.total] = NULL;
 
 	/*printf_vec(d->objs[4]->u_data.plane.orient);
