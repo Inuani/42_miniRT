@@ -156,7 +156,7 @@ void *render_thr(void *dataV)
 	float	v;
 	t_img img;
 	t_data	*data  = (t_data*)dataV;
-	t_data	th_data;// = (t_data*)dataV;
+	t_data	th_data;
 	
 
 	pthread_mutex_lock(&data->lock);
@@ -180,9 +180,9 @@ void *render_thr(void *dataV)
 			u = (float)(i) / (float)(WIDTH - 1);
 			v = (float)(j) / (float)(HEIGHT - 1);
 			//pthread_mutex_lock(&data->lock);
-			t_ray ray = create_ray(&data->objs[1]->u_data.camera, data->vp, u, v);
+			t_ray ray = create_ray(&th_data.objs[1]->u_data.camera, th_data.vp, u, v);
 			(void)ray;
-			my_mlx_pixel_put(&img, i, j % 90, ray_color(&ray, data));
+			my_mlx_pixel_put(&img, i, j % 90, ray_color(&ray, &th_data));
 			//pthread_mutex_unlock(&data->lock);
 		//		spp++;
 		//	}
@@ -193,8 +193,9 @@ void *render_thr(void *dataV)
 	}
 	pthread_mutex_lock(&data->lock);
 	mlx_put_image_to_window(data->mlx, data->win, img.img, 0, HEIGHT - HEIGHT/THREADS * (ti + 1));
-	//pthread_join(data->thread_id[data->thread_i], NULL);
+	
 	pthread_mutex_unlock(&data->lock);
+	pthread_join(data->thread_id[data->thread_i], NULL);
 	//render_text(data);
 	return (0);
 }

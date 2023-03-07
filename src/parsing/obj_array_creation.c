@@ -152,13 +152,5 @@ void	obj_array_create(t_data *d)
 	get_cylindre(d);
 	get_hyperboloid(d);
 	d->objs[d->count.total] = NULL;
-
-	/*printf_vec(d->objs[4]->u_data.plane.orient);
-
-	t_plane plane;
-	plane = d->objs[4]->u_data.plane;
-	printf_vec(plane.orient);*/
-	// get_camera(d);
-	// get_ambiant(d);
-	// get_light(d);
 }
+

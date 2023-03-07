@@ -16,7 +16,7 @@ void	create_thread(t_data *data)
 	{
 		data->thread_i = i;
 		pthread_create(&data->thread_id[i], NULL, render_thr, data);
-		usleep(1000);
+		usleep(100);
 		i++;
 	}
 	i = 0;
@@ -34,6 +34,7 @@ t_object	*copy_obj_list_deep(const t_object *list)
 	if (!new_node)
 		return (NULL);
 	new_node->type = list->type;
+	new_node->next = NULL;
 	if (list->next != NULL)
 		new_node->next = copy_obj_list_deep(list->next);
 	if (new_node->type == AMBIANT)

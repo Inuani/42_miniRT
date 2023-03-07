@@ -84,6 +84,7 @@ void	init_minirt_data(t_data *d)
 	d->win = NULL;
 	d->vp = NULL;
 	d->lst = NULL;
+	d->count.total = 0;
 	d->count.l_count = 0;
 	d->count.sp_count = 0;
 	d->count.pl_count = 0;

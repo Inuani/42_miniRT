@@ -120,7 +120,7 @@ typedef struct s_object {
 }				t_object;
 
 typedef struct s_count {
-	int total;
+	int	total;
 	int	sp_count;
 	int	pl_count;
 	int	cy_count;

@@ -45,7 +45,7 @@ SRC =	main.c \
 		hit_objs.c \
 		cylinder.c \
 		threads.c \
-		hyperboloid.c
+		hyperboloid.c \
 
 OBJ := $(SRC:%.c=%.o)
 PARS_OBJ := $(PARS_SRC:%.c=%.o)
