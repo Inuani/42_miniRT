@@ -92,7 +92,7 @@ int	first_objs(t_data *data, t_ray *ray)
 				+ data->count.pl_count + data->count.cy_count)
 		{
 			cylinder_init(data, &data->objs[i]->u_data.cylinder);
-			root = hit_cylinder(ray, data->objs[i]->u_data.cylinder, data->objs[1]->u_data.camera.pos);
+			root = hit_cylinder(ray->direction, data->objs[i]->u_data.cylinder, data->objs[1]->u_data.camera.pos);
 			if (root > 0)
 			{
 				r_point_at = vec_add(data->objs[1]->u_data.camera.pos, vec_scale(root, ray->direction));
@@ -173,6 +173,8 @@ int shadow_sphere(t_data *data, int i, t_vec point_at, t_light light)
 	int		ret = 0;
 
 	vector = vec_subs(point_at, light.pos);
+	// printf("sphere\n");
+	// printf_vec(vector);
 	v = vec_subs(light.pos, data->objs[i]->u_data.sphere.center);
 	root = sphere_hits(vector, v, data->objs[i]->u_data.sphere);
 	root_at = vec_add(light.pos, vec_scale(root, vector));
@@ -192,23 +194,22 @@ int shadow_plane(t_data *data, int i, t_light light)
 	return (ret);
 }
 
-// int	shadow_cylinder(t_data *data, int i, t_vec point_at, t_light light)
-// {
-// 	float	root;
-// 	t_vec	l2int;
-// 	t_vec	v;
-// 	t_vec	root_at;
-// 	int		ret = 0;
+int	shadow_cylinder(t_data *data, int i, t_vec point_at, t_light light)
+{
+	float	root;
+	t_vec	l2int;
+	t_vec	root_at;
+	int		ret = 0;
+	t_vec	l2cyl;
 
-// 	l2int = vec_subs(point_at, light.pos);
-// 	l2int = vec_unit(l2int);
-// 	// v = vec_subs(light.pos, data->objs[i]->u_data.cylinder.center);
-// 	root = hit_cylinder(l2int, data->objs[i]->u_data.cylinder, light.pos);
-// 	root_at = vec_add(light.pos, vec_scale(root, l2int));
-// 	if (!(root >= 0 && !is_first_light(light, point_at, root_at)))
-// 		ret = 1;
-// 	return (ret);
-// }
+	l2int = vec_subs(point_at, light.pos);
+	l2cyl = vec_subs(light.pos, data->objs[i]->u_data.cylinder.center);
+	root = hit_cylinder_light(l2int, data->objs[i]->u_data.cylinder, light.pos, l2cyl);
+	root_at = vec_add(light.pos, vec_scale(root, l2int));
+	if (!(root >= 0 && !is_first_light(light, point_at, root_at)))
+		ret = 1;
+	return (ret);
+}
 
 // Checks if any of the objects in the scene are blocking the light source.
 float light_hit_objs(t_data *data, t_ray *ray, t_vec point_at, t_light light)
@@ -231,9 +232,13 @@ float light_hit_objs(t_data *data, t_ray *ray, t_vec point_at, t_light light)
 			if (!shadow_plane(data, i, light))
 				return (0);
 		}
-		// else if (i < 2 + data->count.l_count + data->count.sp_count
-		// 		+ data->count.pl_count + data->count.cy_count)
+		else if (i < 2 + data->count.l_count + data->count.sp_count
+				+ data->count.pl_count + data->count.cy_count)
+		{
+			if (!shadow_cylinder(data, i, point_at, light))
+				return (0);
+		}
 		i++;
 	}
-	return 1;
+	return (1);
 }

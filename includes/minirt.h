@@ -68,7 +68,8 @@ float		sphere_hits(t_vec vector, t_vec v, t_sphere sphere);
 
 //cylinder
 float	cylinder_eman(t_data *data, t_ray *ray, t_cylinder cyl);
-float	hit_cylinder(t_ray *ray, t_cylinder cyl, t_vec origin);
+float	hit_cylinder(t_vec ray_dir, t_cylinder cyl, t_vec origin);
+float	hit_cylinder_light(t_vec ray_dir, t_cylinder cyl, t_vec origin, t_vec l2cyl);
 
 //render frames
 void	render(t_data *data);
