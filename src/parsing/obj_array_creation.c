@@ -126,7 +126,6 @@ void	obj_array_create(t_data *d)
 	i = 0;
 	d->count.total = calc_nb_obj(d->chaos);
 	d->objs = malloc(sizeof(t_object*) * (d->count.total + 1));
-
 	get_ambiant(d);
 	get_camera(d);
 	get_light(d);

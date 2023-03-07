@@ -24,20 +24,24 @@ void	create_thread(t_data *data)
 	//	pthread_join(data->thread_id[i], NULL);
 }
 
-t_object* copy_list_deep(const t_object *list)
+t_object	*copy_obj_list_deep(const t_object *list)
 {
-	if (list == NULL) {
-		return NULL;
-	}
+	t_object	*new_node;
 
-	t_object* new_node = malloc(sizeof(t_object));
+	if (list == NULL)
+		return (NULL);
+	new_node = malloc(sizeof(t_object));
+	if (!new_node)
+		return (NULL);
 	new_node->type = list->type;
 	if (list->next != NULL)
-		new_node->next = copy_list_deep(list->next);
-
+		new_node->next = copy_obj_list_deep(list->next);
 	if (new_node->type == AMBIANT)
 	{
-		
+		new_node->u_data.ambiant.light_ratio = list->u_data.ambiant.light_ratio;
+		new_node->u_data.ambiant.colors.x = list->u_data.ambiant.colors.x;
+		new_node->u_data.ambiant.colors.y = list->u_data.ambiant.colors.y;
+		new_node->u_data.ambiant.colors.z = list->u_data.ambiant.colors.z;
 	}
 	else if (new_node->type == CAMERA)
 	{
@@ -53,22 +57,81 @@ t_object* copy_list_deep(const t_object *list)
 		new_node->u_data.camera.right.x = list->u_data.camera.right.x;
 		new_node->u_data.camera.right.y = list->u_data.camera.right.y; 
 		new_node->u_data.camera.right.z = list->u_data.camera.right.z;
+		new_node->u_data.camera.fov = list->u_data.camera.fov;
 	}
 	else if (new_node->type == LIGHT)
 	{
-		
+		new_node->u_data.light.pos.x = list->u_data.light.pos.x;
+		new_node->u_data.light.pos.y = list->u_data.light.pos.y;
+		new_node->u_data.light.pos.z = list->u_data.light.pos.z;
+		new_node->u_data.light.colors.x = list->u_data.light.colors.x;
+		new_node->u_data.light.colors.y = list->u_data.light.colors.y;
+		new_node->u_data.light.colors.z = list->u_data.light.colors.z;
+		new_node->u_data.light.light_ratio = list->u_data.light.light_ratio;
 	}
 	else if (new_node->type == SPHERE)
 	{
-		
+		new_node->u_data.sphere.center.x = list->u_data.sphere.center.x;
+		new_node->u_data.sphere.center.y = list->u_data.sphere.center.y;
+		new_node->u_data.sphere.center.z = list->u_data.sphere.center.z;
+		new_node->u_data.sphere.radius = list->u_data.sphere.radius;
+		new_node->u_data.sphere.colors.x = list->u_data.sphere.colors.x;
+		new_node->u_data.sphere.colors.y = list->u_data.sphere.colors.y;
+		new_node->u_data.sphere.colors.z = list->u_data.sphere.colors.z;
 	}
 	else if (new_node->type == PLANE)
 	{
-		
+		new_node->u_data.plane.point.x = list->u_data.plane.point.x;
+		new_node->u_data.plane.point.y = list->u_data.plane.point.y;
+		new_node->u_data.plane.point.z = list->u_data.plane.point.z;
+		new_node->u_data.plane.orient.x = list->u_data.plane.orient.x;
+		new_node->u_data.plane.orient.y = list->u_data.plane.orient.y;
+		new_node->u_data.plane.orient.z = list->u_data.plane.orient.z;
+		new_node->u_data.plane.colors.x = list->u_data.plane.colors.x;
+		new_node->u_data.plane.colors.y = list->u_data.plane.colors.y;
+		new_node->u_data.plane.colors.z = list->u_data.plane.colors.z;
 	}
 	else if (new_node->type == CYLINDER)
 	{
-		
+		new_node->u_data.cylinder.center.x = list->u_data.cylinder.center.x;
+		new_node->u_data.cylinder.center.y = list->u_data.cylinder.center.y;
+		new_node->u_data.cylinder.center.z = list->u_data.cylinder.center.z;
+		new_node->u_data.cylinder.orient.x = list->u_data.cylinder.orient.x;
+		new_node->u_data.cylinder.orient.y = list->u_data.cylinder.orient.y;
+		new_node->u_data.cylinder.orient.z = list->u_data.cylinder.orient.z;
+		new_node->u_data.cylinder.colors.x = list->u_data.cylinder.colors.x;
+		new_node->u_data.cylinder.colors.y = list->u_data.cylinder.colors.y;
+		new_node->u_data.cylinder.colors.z = list->u_data.cylinder.colors.z;
+		new_node->u_data.cylinder.radius = list->u_data.cylinder.radius;
+		new_node->u_data.cylinder.hgt = list->u_data.cylinder.hgt;
 	}
-	return new_node;
+	return (new_node);
+}
+
+void	print_new_list(t_data *d)
+{
+	t_object	*tmp;
+	t_object	*new_chaos;
+
+	tmp = d->chaos;
+	new_chaos = copy_obj_list_deep(tmp);
+
+	printf("new objs list:\n\n");
+	while (new_chaos)
+	{
+		print_object(*new_chaos);
+		new_chaos = new_chaos->next;
+	}
+}
+
+void	init_thread_data(t_data *th_d, t_data *d)
+{
+	init_minirt_data(th_d);
+	th_d->chaos = copy_obj_list_deep(d->chaos);
+	th_d->count.sp_count = d->count.sp_count;
+	th_d->count.pl_count = d->count.pl_count;
+	th_d->count.cy_count = d->count.cy_count;
+	th_d->count.l_count = d->count.l_count;
+	obj_array_create(th_d);
+	initialise_viewport(th_d);
 }

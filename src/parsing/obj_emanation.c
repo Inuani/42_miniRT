@@ -215,8 +215,6 @@ int	add_cylinder(t_data *d, t_tok *lst)
 	return (1);
 }
 
-
-
 void	what_obj(t_data *d, char *obj)
 {
 	if (!ft_strncmp(obj, "A", 1) && obj[1] == 0)

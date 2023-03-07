@@ -34,7 +34,7 @@
 # define K 0.8
 
 void	init_image(t_data *data, int width, int height, t_img *img);
-int	is_inside(t_sphere sphere, t_cam camera, t_light light);
+int		is_inside(t_sphere sphere, t_cam camera, t_light light);
 void	create_thread(t_data *data);
 void	phong(t_data *data, t_ray *ray, t_light light, t_vec obj_color);
 t_vec	add_color(t_vec c1, t_vec c2);
@@ -50,11 +50,14 @@ void	hit_objs(t_data *data, t_ray *ray);
 
 void	printf_vec(t_vec vec);
 
+void	print_new_list(t_data *d);
+
 //rand
 int		fast_rand(int seed);
 float	rand_double(int seed);
 
 //init objs
+void	init_minirt_data(t_data *d);
 void	initialise_viewport(t_data *data);
 void	cylinder_init(t_data *d, t_cylinder *cyl);
 
@@ -107,6 +110,10 @@ int		close_win(void);
 
 //handle keys
 int	event_handler(int key, t_data *data);
+
+//threads
+t_object	*copy_obj_list_deep(const t_object *list);
+void	init_thread_data(t_data *th_d, t_data *d);
 
 
 #endif

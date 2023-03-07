@@ -155,12 +155,14 @@ void *render_thr(void *dataV)
 	float	u;
 	float	v;
 	t_img img;
-	t_data *data = (t_data*)dataV;
+	t_data	*data  = (t_data*)dataV;
+	t_data	th_data;// = (t_data*)dataV;
+	
 
 	pthread_mutex_lock(&data->lock);
+	init_thread_data(&th_data, data);
 	int ti = data->thread_i;
 	pthread_mutex_unlock(&data->lock);
-
 	i = -1;
 	init_image(data, WIDTH, HEIGHT/THREADS, &img);
 
