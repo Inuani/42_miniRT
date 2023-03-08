@@ -96,6 +96,8 @@ typedef struct s_ray {
 	t_vec	normal;
 	t_vec	point_at;
 	float	shiny;
+	int		obj_n;
+	int		first;
 }				t_ray;
 
 typedef enum object_type {
