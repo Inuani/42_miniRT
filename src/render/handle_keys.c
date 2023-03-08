@@ -248,7 +248,8 @@ int	event_handler(int key, t_data *data)
 		handle_planes(key, data);
 	/*else
 		handle_cylinder(key, data);*/
-	render(data);
-	//render_thr(data);
+	// render(data);
+	create_thread(data);
+	// render_thr(data);
 	return (0);
 }

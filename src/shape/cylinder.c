@@ -2,8 +2,8 @@
 
 void	cyl_light_hit(t_ray *ray, t_data *data, t_cylinder cyl, t_light light)
 {
-	//if (!light_hit_objs(data, ray, ray->point_at, light))
-	//	return ;
+	if (!light_hit_objs(data, ray, ray->point_at, light))
+		return ;
 	// if (is_inside(cyl, data->objs[1]->u_data.camera, light))
 	// 	return ;
 
