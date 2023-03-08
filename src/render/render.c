@@ -167,7 +167,7 @@ void *render_thr(void *dataV)
 	init_image(data, WIDTH, HEIGHT/THREADS, &img);
 
 	j = HEIGHT - HEIGHT/THREADS * ti;
-	while (j-- > HEIGHT/THREADS * (11 - ti))
+	while (j-- > HEIGHT/THREADS * (THREADS - 1 - ti))
 	{
 		//if (j < 10 || j > 1050)
 		//printf("%d\n", j);
@@ -182,7 +182,7 @@ void *render_thr(void *dataV)
 			//pthread_mutex_lock(&data->lock);
 			t_ray ray = create_ray(&th_data.objs[1]->u_data.camera, th_data.vp, u, v);
 			(void)ray;
-			my_mlx_pixel_put(&img, i, j % 90, ray_color(&ray, &th_data));
+			my_mlx_pixel_put(&img, i, j % (HEIGHT/THREADS), ray_color(&ray, &th_data));
 			//pthread_mutex_unlock(&data->lock);
 		//		spp++;
 		//	}
