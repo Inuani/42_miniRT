@@ -56,8 +56,11 @@ typedef struct s_cylinder {
 	t_vec	orient;
 	t_vec	h;
 	t_vec	top_cyl;
-	t_vec	h_unit;
 	t_vec	cam2cyl;
+	float	a;
+	float	b;
+	float	c;
+	float	delta;
 	float	radius;
 	float	hgt;
 	t_vec	colors;

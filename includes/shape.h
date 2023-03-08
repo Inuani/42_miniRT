@@ -9,8 +9,8 @@ float	hit_hyperboloid(t_vec vector, t_hyperboloid hyperboloid, t_vec origin);
 
 // cylinder
 float	cylinder_eman(t_data *data, t_ray *ray, t_cylinder cyl);
-float	hit_cylinder(t_vec ray_dir, t_cylinder cyl, t_vec origin);
-float	hit_cylinder_light(t_vec ray_dir, t_cylinder cyl, t_vec origin, t_vec l2cyl);
+// float	hit_cylinder(t_vec ray_dir, t_cylinder cyl, t_vec origin);
+float	hit_cylinder(t_vec ray_dir, t_cylinder cyl, t_vec origin, t_vec ori2cy);
 void	cylinder_init(t_data *d, t_cylinder *cyl);
 
 // plane
