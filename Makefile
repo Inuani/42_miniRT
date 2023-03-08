@@ -8,6 +8,10 @@ RM = rm -f
 OBJ_DIR = objs/
 SRC_DIR = src/
 PARS_DIR = parsing/
+SHAPE_DIR = shape/
+VEC_DIR = vector/
+THDS_DIR = threads/
+REND_DIR = render/
 
 # Libraries
 LIBFT  = libs/libft
@@ -31,27 +35,41 @@ PARS_SRC = $(addprefix $(PARS_DIR),	mrt_parsing.c \
 									obj_array_creation.c \
 									)
 
+SHAPE_SRC = $(addprefix $(SHAPE_DIR),	plane.c \
+										cylinder.c \
+										hyperboloid.c \
+										sphere.c \
+										)
+
+VEC_SRC = $(addprefix $(VEC_DIR),	vec_utils.c \
+									vec_utils2.c \
+									)
+
+THDS_SRC = $(addprefix $(THDS_DIR),	threads.c \
+									)
+
+REND_SRC = $(addprefix $(REND_DIR),	render.c \
+									handle_window.c \
+									handle_keys.c \
+									)
+
 SRC =	main.c \
-		handle_window.c \
-		handle_keys.c \
 		rays.c \
-		render.c \
 		trgb.c \
-		vec_utils.c \
 		init_objs.c \
-		sphere.c \
 		rand.c \
-		plane.c \
 		hit_objs.c \
-		cylinder.c \
-		threads.c \
-		hyperboloid.c \
+		debug.c \
 
 OBJ := $(SRC:%.c=%.o)
 PARS_OBJ := $(PARS_SRC:%.c=%.o)
+SHAPE_OBJ := $(SHAPE_SRC:%.c=%.o)
+VEC_OBJ := $(VEC_SRC:%.c=%.o)
+THDS_OBJ := $(THDS_SRC:%.c=%.o)
+REND_OBJ := $(REND_SRC:%.c=%.o)
 
-SRCS = $(addprefix $(SRC_DIR), $(SRC) $(PARS_SRC))
-OBJS = $(addprefix $(OBJ_DIR), $(OBJ) $(PARS_OBJ))
+SRCS = $(addprefix $(SRC_DIR), $(SRC) $(PARS_SRC) $(SHAPE_SRC) $(VEC_SRC) $(THDS_SRC) $(REND_SRC))
+OBJS = $(addprefix $(OBJ_DIR), $(OBJ) $(PARS_OBJ) $(SHAPE_OBJ) $(VEC_OBJ) $(THDS_OBJ) $(REND_OBJ))
 
 all: $(NAME)
 
@@ -66,6 +84,10 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 $(OBJ_DIR):
 	@mkdir $(OBJ_DIR)
 	@mkdir $(OBJ_DIR)/$(PARS_DIR)
+	@mkdir $(OBJ_DIR)/$(SHAPE_DIR)
+	@mkdir $(OBJ_DIR)/$(VEC_DIR)
+	@mkdir $(OBJ_DIR)/$(THDS_DIR)
+	@mkdir $(OBJ_DIR)/$(REND_DIR)
 
 debug: $(SRCS) $(OBJ_DIR) $(OBJS)
 	$(CC) $(CFLAGS) $(FSANI) $(OBJS) $(LIBFLAGS) -o $(NAME)

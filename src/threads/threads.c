@@ -1,5 +1,5 @@
 
-#include "../includes/minirt.h"
+#include "../../includes/minirt.h"
 
 //WIDTH / 6;
 //HEIGH / 4;
@@ -109,21 +109,7 @@ t_object	*copy_obj_list_deep(const t_object *list)
 	return (new_node);
 }
 
-void	print_new_list(t_data *d)
-{
-	t_object	*tmp;
-	t_object	*new_chaos;
 
-	tmp = d->chaos;
-	new_chaos = copy_obj_list_deep(tmp);
-
-	printf("new objs list:\n\n");
-	while (new_chaos)
-	{
-		print_object(*new_chaos);
-		new_chaos = new_chaos->next;
-	}
-}
 
 void	init_thread_data(t_data *th_d, t_data *d)
 {

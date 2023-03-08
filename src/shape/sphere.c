@@ -1,5 +1,5 @@
 
-#include "../includes/minirt.h"
+#include "../../includes/minirt.h"
 
 
 int	get_angle(t_vec normal, t_vec ray_l)

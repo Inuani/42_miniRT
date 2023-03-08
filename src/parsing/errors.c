@@ -1,23 +1,5 @@
 #include "../../includes/minirt.h"
 
-int	mrt_error(char *msg, int error)
-{
-	if (errno)
-	{
-		if (msg)
-			perror(msg);
-		else
-			perror("Error: ");
-		return (error);
-	}
-	if (msg)
-	{
-		write(STDERR_FILENO, msg, ft_strlen(msg));
-		write(STDERR_FILENO, "\n", 1);
-	}
-	return (error);
-}
-
 void	exit_error(char *msg, int error)
 {
 	if (errno)
@@ -73,29 +55,6 @@ void	free_tok_from_end(t_tok *lst)
 		lst = tmp;
 	}
 }
-
-// void	free_tok_from_end(t_tok *lst)
-// {
-// 	t_tok	*tmp;
-// 	t_tok	*to_free;
-
-// 	tmp = d->lst;
-// 	if (!tmp)
-// 		return ;
-// 	while (tmp)
-// 	{
-// 		if (tmp->s != NULL)
-// 		{
-// 			printf("%s\n", tmp->s);
-// 			free(tmp->s);
-// 			tmp->s = NULL;
-// 		}
-// 		to_free = tmp;
-// 		tmp = tmp->prev;
-// 		free(to_free);
-// 	}
-// 	d->lst = NULL;
-// }
 
 void	free_obj_list(t_object *chaos)
 {

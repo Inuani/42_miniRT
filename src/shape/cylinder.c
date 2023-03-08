@@ -1,4 +1,4 @@
-# include "../includes/minirt.h"
+# include "../../includes/minirt.h"
 
 
 float	hit_cylinder(t_vec ray_dir, t_cylinder cyl, t_vec origin)
@@ -74,11 +74,6 @@ float	hit_cylinder(t_vec ray_dir, t_cylinder cyl, t_vec origin)
 	return (-1.0);
 }
 
-// t_vec	cyl_surface_normal_vec()
-// {
-// 	t_vec	center2point;
-
-// }
 
 void	cyl_light_hit(t_ray *ray, t_data *data, t_cylinder cyl, t_light light)
 {
@@ -89,53 +84,10 @@ void	cyl_light_hit(t_ray *ray, t_data *data, t_cylinder cyl, t_light light)
 
 	t_vec dist = vec_subs(ray->point_at, cyl.center);
 	t_vec proj = vec_subs(dist, vec_scale(vec_dot(dist, cyl.orient), cyl.orient));
-	// ray->normal = vec_subs(dist, vec_scale(vec_dot(dist, cyl.orient), cyl.orient));
 	ray->normal = vec_unit(proj);
-	// float dot_prod = vec_dot(proj, ray->direction);
-	// float sign = dot_prod >= 0 ? 1 : -1;
-	// ray->normal = vec_scale(sign, vec_unit(proj));
-
-	
-	// if (vec_dot(vec_subs(ray->point_at, cyl.center), cyl.orient) < 0)
-	// 	ray->normal = vec_scale(-1, ray->normal);
-	// printf_vec(ray->normal);
-
-	// float dist_from_center = vec_len(vec_subs(ray->point_at, cyl.center));
-	// float half_height = cyl.hgt / 2.0;
-	// if (dist_from_center > half_height)
-	// 	ray->normal = vec_scale(-1, ray->normal);
-
-	// float dot = vec_dot(dist, cyl.orient);
-	// if (dot < 0)
-	// ray->normal = vec_scale(-1, ray->normal);
-	(void)data;
-	// (void)ray;
-	// (void)cyl;
-	(void)light;
-
 	ray->shiny = 100;
 	phong(data, ray, light, cyl.colors);
 }
-
-void	cyl_light_hit_bot(t_ray *ray, t_data *data, t_cylinder cyl, t_light light)
-{
-	//if (!light_hit_objs(data, ray, ray->point_at, light))
-	//	return ;
-	// if (is_inside(cyl, data->objs[1]->u_data.camera, light))
-	// 	return ;
-
-	t_vec dist = vec_subs(ray->point_at, cyl.center);
-	t_vec proj = vec_subs(dist, vec_scale(vec_dot(dist, cyl.orient), cyl.orient));
-	ray->normal = vec_unit(proj);
-	ray->normal = vec_scale(-1, ray->normal);
-	ray->shiny = 100;
-	phong(data, ray, light, cyl.colors);
-	(void)data;
-	// (void)ray;
-	// (void)cyl;
-	(void)light;
-}
-
 
 float	cylinder_eman(t_data *data, t_ray *ray, t_cylinder cyl)
 {

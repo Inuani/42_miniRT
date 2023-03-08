@@ -2,12 +2,12 @@
 # define PARSING_H
 
 
-
 // ----------------------------------------------
 // mrt_parsing.c
 // ----------------------------------------------
 
 void	mrt_parsing(char **av, t_data *d);
+void	init_minirt_data(t_data *d);
 
 // ----------------------------------------------
 // obj_emanation.c
@@ -23,6 +23,15 @@ void	obj_eman(t_data *d);
 int		is_space(int c);
 void	skip_space(char *line, int *i);
 float	ft_atof(const char *str);
+
+// ----------------------------------------------
+// object_list_utils.c
+// ----------------------------------------------
+
+t_object	*create_object(t_type type, void *data);
+void		add_object_to_list(t_object **lst, t_object *new);
+t_object	*get_last_object(t_object *lst);
+int			nb_objects(t_object *lst);
 
 // ----------------------------------------------
 // tok_list_utils.c
@@ -44,7 +53,6 @@ void	obj_array_create(t_data *d);
 // errors.c
 // ----------------------------------------------
 
-int		mrt_error(char *msg, int error);
 void	exit_error(char *msg, int error);
 // void	free_tok_from_end(t_data *d);
 void	free_tok_from_end(t_tok *lst);

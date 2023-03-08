@@ -12,13 +12,7 @@
 
 # include "../includes/minirt.h"
 
-void	printf_vec(t_vec vec)
-{
-	printf("x : %f\n", vec.x);
-	printf("y : %f\n", vec.y);
-	printf("z : %f\n", vec.z);
-	printf("\n");
-}
+
 
 int	main(int ac, char **av)
 {
@@ -37,9 +31,6 @@ int	main(int ac, char **av)
 	while(data.objs[i])
 	 	print_object(*data.objs[i++]);
 	
-	// print_new_list(&data);
-
-	// printf("count: %i\n", data.count.sp_count);
 	init_window(&data);// --normal
 	init_image(&data, WIDTH, HEIGHT, &data.img);
 
@@ -52,4 +43,3 @@ int	main(int ac, char **av)
 	return (0);
 }
 
-// TO DO implement depth buffer;

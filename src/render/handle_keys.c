@@ -10,15 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minirt.h"
+#include "../../includes/minirt.h"
 
 
-int	print_key(int key, t_data *data)
-{
-	(void)data;
-	printf("key : %i\n", key);
-	return (0);
-}
 
 	// inst.orient = vec_unit(inst.orient);
 	// if (!inst.orient.x && !inst.orient.z)

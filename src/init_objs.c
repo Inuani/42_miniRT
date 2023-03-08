@@ -16,11 +16,6 @@ void	initialise_viewport(t_data *data) // will have to normalise cam->orientatio
 	data->vp->focal_len = 1;
 
 	data->vp->samplespp = 100;
-
-	/*t_vec a = vec_subs(cam->coords, vec_scale(0.5, d->vp->vp_x));
-	t_vec b = vec_subs(a, vec_scale(0.5, d->vp->vp_x));
-	t_vec c = vec_subs(b, cam->orientation);*/
-	//data->vp->llc = c;
 }
 
 void	cylinder_init(t_data *d, t_cylinder *cyl)

@@ -1,5 +1,5 @@
 
-#include "../includes/minirt.h"
+#include "../../includes/minirt.h"
 
 float inverse_map(float x)
 {
