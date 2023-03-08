@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:05:42 by lskraber          #+#    #+#             */
-/*   Updated: 2023/03/06 18:16:42 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/03/08 15:16:10 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,7 +248,7 @@ int	event_handler(int key, t_data *data)
 		handle_planes(key, data);
 	/*else
 		handle_cylinder(key, data);*/
-	render(data);
-	//render_thr(data);
+	//render(data);
+	create_thread(data);
 	return (0);
 }

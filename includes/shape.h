@@ -20,6 +20,7 @@ float	plane_hit(t_plane *plane, t_vec ray_origine, t_vec ray_direction);
 // sphere
 float		it_hit_sphere(t_data *data, t_ray *ray, t_sphere sphere);
 float		sphere_hits(t_vec vector, t_vec v, t_sphere sphere);
+int		    is_inside(t_sphere sphere, t_cam camera, t_light light);
 
 // viewport
 void	initialise_viewport(t_data *data);

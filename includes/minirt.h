@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:13:13 by egauthey          #+#    #+#             */
-/*   Updated: 2023/03/07 15:44:28 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/03/08 15:19:18 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,25 +34,23 @@
 # define K 0.8
 
 
-// color & light
+//light
 void	phong(t_data *data, t_ray *ray, t_light light, t_vec obj_color);
-t_vec	add_color(t_vec c1, t_vec c2);
-t_vec	add_colors(t_vec c1, t_vec c2, float intensity);
 float	light_hit_objs(t_data *data, t_ray *ray, t_vec point_at, t_light light);
 void	light_hit(t_ray *ray, t_data *data, t_sphere sphere, t_light light);
+
+//color
 int		create_trgb(int t, int r, int g, int b);
+t_vec	add_color(t_vec c1, t_vec c2);
+t_vec	add_colors(t_vec c1, t_vec c2, float intensity);
 
-
-
-int		is_inside(t_sphere sphere, t_cam camera, t_light light);
-int		is_first(t_vec r_point_at, t_cam cam, t_vec *point_at, int *first);
+//utility
 float	map2(float x, float min, float input_min);
 float	map(float x);
-
 int		get_angle(t_vec normal, t_vec ray_l);
-void	hit_objs(t_data *data, t_ray *ray);
 
-
+//render text-tutorial
+void render_text(t_data *data);
 
 // rand
 // int		fast_rand(int seed);
@@ -72,8 +70,9 @@ int		event_handler(int key, t_data *data);
 
 
 // ray
-int		ray_color();
+void	hit_objs(t_data *data, t_ray *ray);
 t_ray	create_ray(t_cam *cam, t_viewport *vp, float u, float v);
+int		is_first(t_vec r_point_at, t_cam cam, t_vec *point_at, int *first);
 
 // vector utils
 t_vec	vec_add(t_vec vec1, t_vec vec2);

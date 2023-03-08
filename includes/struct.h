@@ -148,6 +148,7 @@ typedef struct s_data
 	int			changed;
 	t_vec		final_color;
 	t_vec		point_at;
+	int			fin;
 }				t_data;
 
 #endif

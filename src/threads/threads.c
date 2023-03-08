@@ -10,6 +10,7 @@ void	create_thread(t_data *data)
 	int	i;
 
 	pthread_mutex_init(&data->lock, 0);
+	data->fin = 0;
 	data->thread_id = malloc(sizeof(pthread_t) * THREADS);
 	i = 0;
 	while (i < THREADS)
@@ -19,7 +20,8 @@ void	create_thread(t_data *data)
 		usleep(100);
 		i++;
 	}
-	i = 0;
+	while (data->fin != 12) {}
+	render_text(data);
 	//while (i < 12)
 	//	pthread_join(data->thread_id[i], NULL);
 }
