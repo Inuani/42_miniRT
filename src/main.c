@@ -33,8 +33,8 @@ int	main(int ac, char **av)
 	init_window(&data);// --normal
 	init_image(&data, WIDTH, HEIGHT, &data.img);
 
-	render(&data);
-	// create_thread(&data);
+	// render(&data);
+	create_thread(&data);
 	mlx_hook(data.win, 17, 1L << 2, close_win, &data);
 	mlx_key_hook(data.win, event_handler, &data);
 	//mlx_key_hook(data.win, print_key, &data);

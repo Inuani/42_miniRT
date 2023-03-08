@@ -165,7 +165,6 @@ void *render_thr(void *dataV)
 	pthread_mutex_unlock(&data->lock);
 	i = -1;
 	init_image(data, WIDTH, HEIGHT/THREADS, &img);
-
 	j = HEIGHT - HEIGHT/THREADS * ti;
 	while (j-- > HEIGHT/THREADS * (THREADS - 1 - ti))
 	{
@@ -194,6 +193,9 @@ void *render_thr(void *dataV)
 	pthread_mutex_lock(&data->lock);
 	mlx_put_image_to_window(data->mlx, data->win, img.img, 0, HEIGHT - HEIGHT/THREADS * (ti + 1));
 	pthread_mutex_unlock(&data->lock);
+	free (th_data.objs);
+	free_obj_list(th_data.chaos);
+	free(th_data.vp);
 	pthread_join(data->thread_id[data->thread_i], NULL);
 	//render_text(data);
 	return (0);

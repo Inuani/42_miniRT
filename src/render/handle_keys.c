@@ -214,7 +214,12 @@ int	event_handler(int key, t_data *data)
 {
 	(void) data;
 	if (key == 53)
+	{
+		free (data->objs);
+		free_obj_list(data->chaos);
+		free(data->vp);
 		exit(0);
+	}
 	else if (key == 123) //maybe wrong
 	{
 		if (data -> current == 0)
