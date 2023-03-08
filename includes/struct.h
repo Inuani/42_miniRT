@@ -40,6 +40,8 @@ typedef struct s_light {
 typedef struct s_sphere {
 	t_vec	center;
 	float	radius;
+	t_vec	up;
+	t_vec	right;
 	t_vec	colors;
 }				t_sphere;
 

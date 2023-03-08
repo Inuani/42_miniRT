@@ -93,3 +93,26 @@ int ray_color(t_ray *ray, t_data *data)
 	}
 	return create_trgb(0, color.x,  color.y,  color.z);
 }*/
+
+void	phong(t_data *data, t_ray *ray, t_light light, t_vec obj_color)
+{
+	t_vec	R;
+	t_vec	dir;
+	float	ln2;
+	float	i_d;
+	float	i_s;
+
+	t_vec vector = vec_subs(ray->point_at, light.pos);
+	vector = vec_unit(vector);
+	ln2 = 2 * vec_dot(vector, ray->normal);
+	R = vec_subs(vec_scale(ln2, ray->normal), vector);
+	dir = vec_scale(-1, ray->direction);
+	i_d = vec_dot(vector, ray->normal) * light.light_ratio;
+	i_s = powf(vec_dot(R, dir), ray->shiny) * light.light_ratio;
+	if (i_d < 0)
+		i_d = - i_d;
+	
+	t_vec diffuse_color = add_color(vec_scale(K, obj_color), vec_scale(1 - K, light.colors));
+	data->final_color = add_colors(data->final_color, diffuse_color, i_d);	//maybe not always -i_d?
+	data->final_color = add_colors(data->final_color, light.colors, i_s);
+}

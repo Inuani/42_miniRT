@@ -21,29 +21,6 @@ int is_inside(t_sphere sphere, t_cam camera, t_light light)
 	return 0;
 }
 
-void	phong(t_data *data, t_ray *ray, t_light light, t_vec obj_color)
-{
-	t_vec	R;
-	t_vec	dir;
-	float	ln2;
-	float	i_d;
-	float	i_s;
-
-	t_vec vector = vec_subs(ray->point_at, light.pos);
-	vector = vec_unit(vector);
-	ln2 = 2 * vec_dot(vector, ray->normal);
-	R = vec_subs(vec_scale(ln2, ray->normal), vector);
-	dir = vec_scale(-1, ray->direction);
-	i_d = vec_dot(vector, ray->normal) * light.light_ratio;
-	i_s = powf(vec_dot(R, dir), ray->shiny) * light.light_ratio;
-	if (i_d < 0)
-		i_d = - i_d;
-	
-	t_vec diffuse_color = add_color(vec_scale(K, obj_color), vec_scale(1 - K, light.colors));
-	data->final_color = add_colors(data->final_color, diffuse_color, i_d);	//maybe not always -i_d?
-	data->final_color = add_colors(data->final_color, light.colors, i_s);
-}
-
 void	light_hit(t_ray *ray, t_data *data, t_sphere sphere, t_light light)
 {
 	if (!light_hit_objs(data, ray, ray->point_at, light))
@@ -51,6 +28,7 @@ void	light_hit(t_ray *ray, t_data *data, t_sphere sphere, t_light light)
 	if (is_inside(sphere, data->objs[1]->u_data.camera, light))
 		return ;
 	ray->shiny = 100;
+	
 	phong(data, ray, light, sphere.colors);
 }
 
