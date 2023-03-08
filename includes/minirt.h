@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:13:13 by egauthey          #+#    #+#             */
-/*   Updated: 2023/03/08 16:25:26 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/03/08 20:43:27 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ float	light_hit_objs(t_data *data, t_ray *ray, t_vec point_at, t_light light);
 void	light_hit(t_ray *ray, t_data *data, t_sphere sphere, t_light light);
 
 //color
+t_vec	decimalToRGB(int color);
 int		create_trgb(int t, int r, int g, int b);
 t_vec	add_color(t_vec c1, t_vec c2);
 t_vec	add_colors(t_vec c1, t_vec c2, float intensity);

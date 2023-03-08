@@ -1,6 +1,15 @@
 
 #include "../../includes/minirt.h"
 
+t_vec	decimalToRGB(int color)
+{
+	t_vec	rgbcolor;
+	rgbcolor.x = (color >> 16) & 0xFF;
+	rgbcolor.y = (color >> 8) & 0xFF;
+	rgbcolor.z = color & 0xFF;
+	return (rgbcolor);
+}
+
 t_vec	add_colors(t_vec c1, t_vec c2, float intensity) {
 	t_vec c_res;
 	c_res.x = c1.x + c2.x * intensity;
