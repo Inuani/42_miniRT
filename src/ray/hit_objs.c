@@ -1,5 +1,5 @@
 
-#include "../includes/minirt.h"
+#include "../../includes/minirt.h"
 
 /*
 int equal (t_vec vec, t_vec vec2)

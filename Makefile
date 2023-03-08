@@ -12,6 +12,7 @@ SHAPE_DIR = shape/
 VEC_DIR = vector/
 THDS_DIR = threads/
 REND_DIR = render/
+RAY_DIR = ray/
 
 # Libraries
 LIBFT  = libs/libft
@@ -51,14 +52,16 @@ THDS_SRC = $(addprefix $(THDS_DIR),	threads.c \
 REND_SRC = $(addprefix $(REND_DIR),	render.c \
 									handle_window.c \
 									handle_keys.c \
+									trgb.c \
+									)
+
+RAY_SRC = $(addprefix $(RAY_DIR),	rays.c \
+									hit_objs.c \
 									)
 
 SRC =	main.c \
-		rays.c \
-		trgb.c \
 		init_objs.c \
 		rand.c \
-		hit_objs.c \
 		debug.c \
 
 OBJ := $(SRC:%.c=%.o)
@@ -67,9 +70,10 @@ SHAPE_OBJ := $(SHAPE_SRC:%.c=%.o)
 VEC_OBJ := $(VEC_SRC:%.c=%.o)
 THDS_OBJ := $(THDS_SRC:%.c=%.o)
 REND_OBJ := $(REND_SRC:%.c=%.o)
+RAY_OBJ := $(RAY_SRC:%.c=%.o)
 
-SRCS = $(addprefix $(SRC_DIR), $(SRC) $(PARS_SRC) $(SHAPE_SRC) $(VEC_SRC) $(THDS_SRC) $(REND_SRC))
-OBJS = $(addprefix $(OBJ_DIR), $(OBJ) $(PARS_OBJ) $(SHAPE_OBJ) $(VEC_OBJ) $(THDS_OBJ) $(REND_OBJ))
+SRCS = $(addprefix $(SRC_DIR), $(SRC) $(PARS_SRC) $(SHAPE_SRC) $(VEC_SRC) $(THDS_SRC) $(REND_SRC) $(RAY_SRC))
+OBJS = $(addprefix $(OBJ_DIR), $(OBJ) $(PARS_OBJ) $(SHAPE_OBJ) $(VEC_OBJ) $(THDS_OBJ) $(REND_OBJ) $(RAY_OBJ))
 
 all: $(NAME)
 
@@ -88,6 +92,7 @@ $(OBJ_DIR):
 	@mkdir $(OBJ_DIR)/$(VEC_DIR)
 	@mkdir $(OBJ_DIR)/$(THDS_DIR)
 	@mkdir $(OBJ_DIR)/$(REND_DIR)
+	@mkdir $(OBJ_DIR)/$(RAY_DIR)
 
 debug: $(SRCS) $(OBJ_DIR) $(OBJS)
 	$(CC) $(CFLAGS) $(FSANI) $(OBJS) $(LIBFLAGS) -o $(NAME)

@@ -1,5 +1,5 @@
 
-#include "../includes/minirt.h"
+#include "../../includes/minirt.h"
 
 // used to calculate the intensity of lighting on an object
 // based on the angle between the normal vector
