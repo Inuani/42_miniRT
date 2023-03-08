@@ -56,7 +56,9 @@ REND_SRC = $(addprefix $(REND_DIR),	render.c \
 									)
 
 RAY_SRC = $(addprefix $(RAY_DIR),	rays.c \
+									is_shape.c \
 									hit_objs.c \
+									shadow.c \
 									)
 
 SRC =	main.c \

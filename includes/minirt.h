@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:13:13 by egauthey          #+#    #+#             */
-/*   Updated: 2023/03/08 15:25:07 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/03/08 16:25:26 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,16 @@ int		ray_color(t_ray *ray, t_data *data);
 void	hit_objs(t_data *data, t_ray *ray);
 t_ray	create_ray(t_cam *cam, t_viewport *vp, float u, float v);
 int		is_first(t_vec r_point_at, t_cam cam, t_vec *point_at, int *first);
+//shape
+void	is_sphere(t_data *data, t_ray *ray, t_vec *point_at, int i);
+void	is_plane(t_data *data, t_ray *ray, t_vec *point_at, int i);
+void	is_cylinder(t_data *data, t_ray *ray, t_vec *point_at, int i);
+//shadow
+int shadow_sphere(t_data *data, int i, t_vec point_at, t_light light);
+int shadow_plane(t_data *data, int i, t_light light);
+int	shadow_cylinder(t_data *data, int i, t_vec point_at, t_light light);
+int	is_first_light(t_light light, t_vec point_at, t_vec root_at);
+int	is_light_plane(t_light light, t_data *data, t_plane plane);
 
 // vector utils
 t_vec	vec_add(t_vec vec1, t_vec vec2);
@@ -84,6 +94,7 @@ t_vec	vec_cross(t_vec vec1, t_vec vec2);
 float	vec_len(t_vec vec);
 t_vec	vec_unit(t_vec vec);
 t_vec	vec_div_float(t_vec vec, float nb);
+void	vec_equal(t_vec *vec1, t_vec *vec2);
 
 
 //threads

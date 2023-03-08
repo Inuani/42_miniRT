@@ -2,26 +2,37 @@
 #include "../../includes/minirt.h"
 
 
-float	hit_hyperboloid(t_vec vector, t_hyperboloid hyperboloid, t_vec origin)
+float	hit_hyperboloid(t_vec vector, t_hyperboloid hyp, t_vec origin)
 {
 	float		det;
-	t_vec orient = hyperboloid.orient;
+	//t_vec orient = hyperboloid.orient;
+	//(void)orient;
 
+	/*cy.a = vec_dot(vector, vector) - powf(vec_dot(vector, hyperboloid.orient), 2);
+	cy.b = 2.0 * ((vec_dot(ray_dir, ori2cy)) - (vec_dot(ray_dir, cy.orient) * vec_dot(ori2cy, cy.orient)));
+	cy.c = vec_dot(ori2cy, ori2cy) - powf(vec_dot(ori2cy, cy.orient), 2) - powf(cy.radius, 2.0);*/
 
-	float a = (vector.x * vector.x) / (orient.x * orient.x)
-				+ (vector.y * vector.y) / (orient.y * orient.y)
-				+ (vector.z * vector.z) / (orient.z * orient.z);
+//float a = vec_dot(vector, vector) -
 
-	float b = 2 * (origin.x * vector.x / (orient.x * orient.x))
-					+ (origin.y * vector.y / (orient.y * orient.y))
-					- (origin.z * vector.z / (orient.z * orient.z));
+	//float a = (vector.x * vector.x) / hyp.radius
+	//			+ (vector.y * vector.y) / hyp.radius
+	//			- (vector.z * vector.z) / 1;
+	float a = vec_dot(vector, vector) - powf(vec_dot(vector, hyp.orient), 2);
+	//a = a * -1;
+	printf("%f\n", a);
 
-	float c = (origin.x * origin.x) / (orient.x * orient.x)
-				+ (origin.y * origin.y) / (orient.y * orient.y)
-				- (origin.z * origin.z) / (orient.z * orient.z) - 1;
+	float b = 2 * ((origin.x * vector.x / hyp.radius)
+					+ (origin.y * vector.y / hyp.radius)
+					- (origin.z * vector.z / 1));
+	//float b = 2.0 * ((vec_dot(vector, origin)) - (vec_dot(vector, hyp.orient) * vec_dot(origin, hyp.orient)));
+	//printf("%f\n", b);
+
+	float c = (origin.x * origin.x) / hyp.radius
+				+ (origin.y * origin.y) / hyp.radius
+				- (origin.z * origin.z) / 1 - 1;
 
 	det = b * b - 4 * a * c;
-
+	//printf("%f\n", det);
 	if (det < 0)
 		return (-1.0);
 	float t1 = (-b - sqrt(det)) / (2 * a);
