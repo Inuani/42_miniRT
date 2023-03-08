@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:13:13 by egauthey          #+#    #+#             */
-/*   Updated: 2023/03/08 15:19:18 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/03/08 15:25:07 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ int		close_win(void);
 // handle keys
 int		event_handler(int key, t_data *data);
 
-
 // ray
+int		ray_color(t_ray *ray, t_data *data);
 void	hit_objs(t_data *data, t_ray *ray);
 t_ray	create_ray(t_cam *cam, t_viewport *vp, float u, float v);
 int		is_first(t_vec r_point_at, t_cam cam, t_vec *point_at, int *first);
