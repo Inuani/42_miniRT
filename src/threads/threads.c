@@ -81,6 +81,22 @@ t_object	*copy_obj_list_deep(const t_object *list)
 		new_node->u_data.sphere.colors.x = list->u_data.sphere.colors.x;
 		new_node->u_data.sphere.colors.y = list->u_data.sphere.colors.y;
 		new_node->u_data.sphere.colors.z = list->u_data.sphere.colors.z;
+		
+		new_node->u_data.sphere.xpm.img = list->u_data.sphere.xpm.img;
+		new_node->u_data.sphere.xpm.addr = list->u_data.sphere.xpm.addr;
+		new_node->u_data.sphere.xpm.bits_per_pixel = list->u_data.sphere.xpm.bits_per_pixel;
+		new_node->u_data.sphere.xpm.line_length = list->u_data.sphere.xpm.line_length;
+		new_node->u_data.sphere.xpm.endian = list->u_data.sphere.xpm.endian;
+		new_node->u_data.sphere.xpm.wdth = list->u_data.sphere.xpm.wdth;
+		new_node->u_data.sphere.xpm.hgt = list->u_data.sphere.xpm.hgt;
+
+		new_node->u_data.sphere.n_map.img = list->u_data.sphere.n_map.img;
+		new_node->u_data.sphere.n_map.addr = list->u_data.sphere.n_map.addr;
+		new_node->u_data.sphere.n_map.bits_per_pixel = list->u_data.sphere.n_map.bits_per_pixel;
+		new_node->u_data.sphere.n_map.line_length = list->u_data.sphere.n_map.line_length;
+		new_node->u_data.sphere.n_map.endian = list->u_data.sphere.n_map.endian;
+		new_node->u_data.sphere.n_map.wdth = list->u_data.sphere.n_map.wdth;
+		new_node->u_data.sphere.n_map.hgt = list->u_data.sphere.n_map.hgt;
 	}
 	else if (new_node->type == PLANE)
 	{

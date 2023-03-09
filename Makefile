@@ -24,7 +24,7 @@ INC = -I.includes/
 LIBFLAGS = -Llibs/libft -lft -Llibs/mlx -lmlx -framework OpenGL -framework AppKit
 
 CFLAGS = -Wall -Wextra -Werror
-FSANI = -fsanitize=address -g3
+FSANI = -g3 -fsanitize=address -fno-omit-frame-pointer
 
 PARS_SRC = $(addprefix $(PARS_DIR),	mrt_parsing.c \
 									parsing_utils.c \

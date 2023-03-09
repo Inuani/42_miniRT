@@ -37,7 +37,7 @@
 //light
 void	phong(t_data *data, t_ray *ray, t_light light, t_vec obj_color);
 float	light_hit_objs(t_data *data, t_ray *ray, t_vec point_at, t_light light);
-void	light_hit(t_ray *ray, t_data *data, t_sphere sphere, t_light light);
+void	light_hit(t_ray *ray, t_data *data, t_sphere *sphere, t_light light);
 
 //color
 t_vec	decimalToRGB(int color);
@@ -48,7 +48,8 @@ t_vec	add_colors(t_vec c1, t_vec c2, float intensity);
 //utility
 float	map2(float x, float min, float input_min);
 float	map(float x);
-int		get_angle(t_vec normal, t_vec ray_l);
+int		get_angle_degree(t_vec normal, t_vec ray_l);
+float	get_angle_0_to_1(t_vec normal, t_vec obj);
 
 //render text-tutorial
 void render_text(t_data *data);

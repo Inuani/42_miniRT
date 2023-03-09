@@ -97,6 +97,8 @@ void	init_minirt_data(t_data *d)
 void	mrt_parsing(char **av, t_data *d)
 {
 	init_minirt_data(d);
+	init_window(d);
+	init_image(d, WIDTH, HEIGHT, &d->img);
 	read_rt_file(av, d);
 	obj_array_create(d);
 }

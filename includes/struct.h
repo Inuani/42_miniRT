@@ -9,6 +9,8 @@ typedef struct s_img {
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	int		wdth;
+	int		hgt;
 }				t_img;
 
 typedef struct s_vec
@@ -43,6 +45,8 @@ typedef struct s_sphere {
 	t_vec	up;
 	t_vec	right;
 	t_vec	colors;
+	t_img	xpm;
+	t_img	n_map;
 }				t_sphere;
 
 typedef struct s_hyperboloid {
@@ -154,5 +158,18 @@ typedef struct s_data
 	t_vec		point_at;
 	int			fin;
 }				t_data;
+
+// typedef struct s_texture
+// {
+	
+// 	t_img	xpm_img;
+// 	int		pixel_offset;
+// 	int		pixel_color;
+// 	int		x;
+// 	int		y;
+// 	float	u;
+// 	float	v;
+// 	t_vec	rgb;
+// }			t_texture;
 
 #endif

@@ -31,6 +31,7 @@ int	is_first(t_vec r_point_at, t_cam cam, t_vec *point_at, int *first)
 	point_at->z = r_point_at.z;
 	return (1);
 }
+
 // This function checks which object in the scene
 // is the first to intersect with the ray.
 // It iterates over all the objects in the scene and checks

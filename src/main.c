@@ -21,6 +21,8 @@ int	main(int ac, char **av)
 
 	data.changed = 1;
 	data.current = 0;
+	
+	
 	mrt_parsing(av, &data);
 	initialise_viewport(&data);
 	// free (data.objs);
@@ -30,10 +32,10 @@ int	main(int ac, char **av)
 	while(data.objs[i])
 	 	print_object(*data.objs[i++]);
 	
-	init_window(&data);// --normal
-	init_image(&data, WIDTH, HEIGHT, &data.img);
+	// init_window(&data);// --normal
+	// init_image(&data, WIDTH, HEIGHT, &data.img);
 
-	// render(&data);
+	//render(&data);
 	create_thread(&data);
 	mlx_hook(data.win, 17, 1L << 2, close_win, &data);
 	mlx_key_hook(data.win, event_handler, &data);

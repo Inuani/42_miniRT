@@ -111,6 +111,14 @@ int	add_light(t_data *d, t_tok *lst)
 	return (1);
 }
 
+void	sp_img_init(t_data *d, t_sphere *cur)
+{
+	cur->xpm.img = mlx_xpm_file_to_image(d->mlx, "images/red_damier.xpm", &cur->xpm.wdth, &cur->xpm.hgt);
+	cur->xpm.addr = mlx_get_data_addr(cur->xpm.img, &cur->xpm.bits_per_pixel, &cur->xpm.line_length, &cur->xpm.endian);
+	cur->n_map.img = mlx_xpm_file_to_image(d->mlx, "images/red_damier_n.xpm", &cur->n_map.wdth, &cur->n_map.hgt);
+	cur->n_map.addr = mlx_get_data_addr(cur->n_map.img, &cur->n_map.bits_per_pixel, &cur->n_map.line_length, &cur->n_map.endian);
+}
+
 int	add_sphere(t_data *d, t_tok *lst)
 {
 	t_object	*new;
@@ -127,7 +135,7 @@ int	add_sphere(t_data *d, t_tok *lst)
 	lst = lst->next;
 	inst.center.z = ft_atof(lst->s);
 	lst = lst->next;
-	inst.radius = (ft_atof(lst->s)/2.0);
+	inst.radius = (ft_atof(lst->s) / 2.0);
 	lst = lst->next;
 	inst.colors.x = ft_atof(lst->s);
 	lst = lst->next;
@@ -136,6 +144,7 @@ int	add_sphere(t_data *d, t_tok *lst)
 	inst.colors.z = ft_atof(lst->s);
 	inst.up = (t_vec) {0, 1, 0};
 	inst.right = (t_vec) {1, 0, 0};
+	sp_img_init(d, &inst);
 	new = create_object(SPHERE, &inst);
 	add_object_to_list(&d->chaos, new);
 	free_tok_from_end(lst);
