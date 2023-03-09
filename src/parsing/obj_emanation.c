@@ -36,11 +36,36 @@ void	add_ambiant(t_data *d, t_tok *lst)
 	inst.colors.z = ft_atof(lst->s);
 	new = create_object(AMBIANT, &inst);
 	add_object_to_list(&d->chaos, new);
-	free_tok_from_end(lst);
-	d->lst = NULL;
+	free_tok(d);
+	// free_tok_from_end(lst);
+	// d->lst = NULL;
 }
 
-
+void	set_camera_prop(t_tok **lst, t_cam *inst)
+{
+	*lst = (*lst)->next;
+	inst->pos.x = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->pos.y = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->pos.z = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->orient.x = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->orient.y = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->orient.z = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->fov = ft_atof((*lst)->s);
+	inst->orient = vec_unit(inst->orient);
+	if (!inst->orient.x && !inst->orient.z)
+		inst->up = vec_cross(inst->orient, (t_vec) {0, 0, 1});
+	else
+		inst->up = (t_vec) {0, 1, 0};
+	inst->up = vec_unit(inst->up);
+	inst->right = vec_cross(inst->orient, inst->up);
+	inst->right = vec_unit(inst->right);
+}
 
 void	add_camera(t_data *d, t_tok *lst)
 {
@@ -53,32 +78,52 @@ void	add_camera(t_data *d, t_tok *lst)
 	nb = calc_nb_prop(lst);
 	if (nb != 7)
 		exit_error(ERR_PROPERTIES, 1);
-	lst = lst->next;
-	inst.pos.x = ft_atof(lst->s);
-	lst = lst->next;
-	inst.pos.y = ft_atof(lst->s);
-	lst = lst->next;
-	inst.pos.z = ft_atof(lst->s);
-	lst = lst->next;
-	inst.orient.x = ft_atof(lst->s);
-	lst = lst->next;
-	inst.orient.y = ft_atof(lst->s);
-	lst = lst->next;
-	inst.orient.z = ft_atof(lst->s);
-	lst = lst->next;
-	inst.fov = ft_atof(lst->s);
-	inst.orient = vec_unit(inst.orient);
-	if (!inst.orient.x && !inst.orient.z)
-		inst.up = vec_cross(inst.orient, (t_vec) {0, 0, 1});
-	else
-		inst.up = (t_vec) {0, 1, 0};
-	inst.up = vec_unit(inst.up);
-	inst.right = vec_cross(inst.orient, inst.up);
-	inst.right = vec_unit(inst.right);
+	set_camera_prop(&lst, &inst);
+	// lst = lst->next;
+	// inst.pos.x = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.pos.y = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.pos.z = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.orient.x = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.orient.y = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.orient.z = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.fov = ft_atof(lst->s);
+	// inst.orient = vec_unit(inst.orient);
+	// if (!inst.orient.x && !inst.orient.z)
+	// 	inst.up = vec_cross(inst.orient, (t_vec) {0, 0, 1});
+	// else
+	// 	inst.up = (t_vec) {0, 1, 0};
+	// inst.up = vec_unit(inst.up);
+	// inst.right = vec_cross(inst.orient, inst.up);
+	// inst.right = vec_unit(inst.right);
 	new = create_object(CAMERA, &inst);
 	add_object_to_list(&d->chaos, new);
-	free_tok_from_end(lst);
-	d->lst = NULL;
+	free_tok(d);
+	// free_tok_from_end(lst);
+	// d->lst = NULL;
+}
+
+void	set_light_prop(t_tok **lst, t_light *inst)
+{
+	*lst = (*lst)->next;
+	inst->pos.x = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->pos.y = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->pos.z = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->light_ratio = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->colors.x = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->colors.y = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->colors.z = ft_atof((*lst)->s);
 }
 
 int	add_light(t_data *d, t_tok *lst)
@@ -90,33 +135,55 @@ int	add_light(t_data *d, t_tok *lst)
 	nb = calc_nb_prop(lst);
 	if (nb != 7)
 		exit_error(ERR_PROPERTIES, 1);
-	lst = lst->next;
-	inst.pos.x = ft_atof(lst->s);
-	lst = lst->next;
-	inst.pos.y = ft_atof(lst->s);
-	lst = lst->next;
-	inst.pos.z = ft_atof(lst->s);
-	lst = lst->next;
-	inst.light_ratio = ft_atof(lst->s);
-	lst = lst->next;
-	inst.colors.x = ft_atof(lst->s);
-	lst = lst->next;
-	inst.colors.y = ft_atof(lst->s);
-	lst = lst->next;
-	inst.colors.z = ft_atof(lst->s);
+	set_light_prop(&lst, &inst);
+	// lst = lst->next;
+	// inst.pos.x = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.pos.y = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.pos.z = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.light_ratio = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.colors.x = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.colors.y = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.colors.z = ft_atof(lst->s);
 	new = create_object(LIGHT, &inst);
 	add_object_to_list(&d->chaos, new);
-	free_tok_from_end(lst);
-	d->lst = NULL;
+	free_tok(d);
+	// free_tok_from_end(lst);
+	// d->lst = NULL;
 	return (1);
 }
 
 void	sp_img_init(t_data *d, t_sphere *cur)
 {
-	cur->xpm.img = mlx_xpm_file_to_image(d->mlx, "images/red_damier.xpm", &cur->xpm.wdth, &cur->xpm.hgt);
+	cur->xpm.img = mlx_xpm_file_to_image(d->mlx, "images/crater.xpm", &cur->xpm.wdth, &cur->xpm.hgt);
 	cur->xpm.addr = mlx_get_data_addr(cur->xpm.img, &cur->xpm.bits_per_pixel, &cur->xpm.line_length, &cur->xpm.endian);
-	cur->n_map.img = mlx_xpm_file_to_image(d->mlx, "images/red_damier_n.xpm", &cur->n_map.wdth, &cur->n_map.hgt);
+	cur->n_map.img = mlx_xpm_file_to_image(d->mlx, "images/crater_n.xpm", &cur->n_map.wdth, &cur->n_map.hgt);
 	cur->n_map.addr = mlx_get_data_addr(cur->n_map.img, &cur->n_map.bits_per_pixel, &cur->n_map.line_length, &cur->n_map.endian);
+}
+
+void	set_sp_prop(t_tok **lst, t_sphere *inst)
+{
+	*lst = (*lst)->next;
+	inst->center.x = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->center.y = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->center.z = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->radius = (ft_atof((*lst)->s) / 2.0);
+	*lst = (*lst)->next;
+	inst->colors.x = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->colors.y = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->colors.z = ft_atof((*lst)->s);
+	inst->up = (t_vec) {0, 1, 0};
+	inst->right = (t_vec) {1, 0, 0};
 }
 
 int	add_sphere(t_data *d, t_tok *lst)
@@ -128,28 +195,53 @@ int	add_sphere(t_data *d, t_tok *lst)
 	nb = calc_nb_prop(lst);
 	if (nb != 7)
 		exit_error(ERR_PROPERTIES, 1);
-	lst = lst->next;
-	inst.center.x = ft_atof(lst->s);
-	lst = lst->next;
-	inst.center.y = ft_atof(lst->s);
-	lst = lst->next;
-	inst.center.z = ft_atof(lst->s);
-	lst = lst->next;
-	inst.radius = (ft_atof(lst->s) / 2.0);
-	lst = lst->next;
-	inst.colors.x = ft_atof(lst->s);
-	lst = lst->next;
-	inst.colors.y = ft_atof(lst->s);
-	lst = lst->next;
-	inst.colors.z = ft_atof(lst->s);
-	inst.up = (t_vec) {0, 1, 0};
-	inst.right = (t_vec) {1, 0, 0};
+	set_sp_prop(&lst, &inst);
+	// lst = lst->next;
+	// inst.center.x = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.center.y = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.center.z = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.radius = (ft_atof(lst->s) / 2.0);
+	// lst = lst->next;
+	// inst.colors.x = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.colors.y = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.colors.z = ft_atof(lst->s);
+	// inst.up = (t_vec) {0, 1, 0};
+	// inst.right = (t_vec) {1, 0, 0};
 	sp_img_init(d, &inst);
 	new = create_object(SPHERE, &inst);
 	add_object_to_list(&d->chaos, new);
-	free_tok_from_end(lst);
-	d->lst = NULL;
+	free_tok(d);
+	// free_tok_from_end(lst);
+	// d->lst = NULL;
 	return (1);
+}
+
+void	set_plane_prop(t_tok **lst, t_plane *inst)
+{
+	*lst = (*lst)->next;
+	inst->point.x = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->point.y = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->point.z = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->orient.x = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->orient.y = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->orient.z = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->colors.x = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->colors.y = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->colors.z = ft_atof((*lst)->s);
+	inst->orient = vec_unit(inst->orient);
 }
 
 int	add_plane(t_data *d, t_tok *lst)
@@ -161,30 +253,59 @@ int	add_plane(t_data *d, t_tok *lst)
 	nb = calc_nb_prop(lst);
 	if (nb != 9)
 		exit_error(ERR_PROPERTIES, 1);
-	lst = lst->next;
-	inst.point.x = ft_atof(lst->s);
-	lst = lst->next;
-	inst.point.y = ft_atof(lst->s);
-	lst = lst->next;
-	inst.point.z = ft_atof(lst->s);
-	lst = lst->next;
-	inst.orient.x = ft_atof(lst->s);
-	lst = lst->next;
-	inst.orient.y = ft_atof(lst->s);
-	lst = lst->next;
-	inst.orient.z = ft_atof(lst->s);
-	lst = lst->next;
-	inst.colors.x = ft_atof(lst->s);
-	lst = lst->next;
-	inst.colors.y = ft_atof(lst->s);
-	lst = lst->next;
-	inst.colors.z = ft_atof(lst->s);
-	inst.orient = vec_unit(inst.orient);
+	set_plane_prop(&lst, &inst);
+	// lst = lst->next;
+	// inst.point.x = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.point.y = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.point.z = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.orient.x = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.orient.y = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.orient.z = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.colors.x = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.colors.y = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.colors.z = ft_atof(lst->s);
+	// inst.orient = vec_unit(inst.orient);
 	new = create_object(PLANE, &inst);
 	add_object_to_list(&d->chaos, new);
-	free_tok_from_end(lst);
-	d->lst = NULL;
+	free_tok(d);
+	// free_tok_from_end(lst);
+	// d->lst = NULL;
 	return (1);
+}
+
+void	set_cyl_prop(t_tok **lst, t_cylinder *inst)
+{
+	*lst = (*lst)->next;
+	inst->center.x = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->center.y = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->center.z = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->orient.x = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->orient.y = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->orient.z = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->radius = (ft_atof((*lst)->s) / 2.0);
+	*lst = (*lst)->next;
+	inst->hgt = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->colors.x = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->colors.y = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->colors.z = ft_atof((*lst)->s);
+	inst->orient = vec_unit(inst->orient);
 }
 
 int	add_cylinder(t_data *d, t_tok *lst)
@@ -196,34 +317,63 @@ int	add_cylinder(t_data *d, t_tok *lst)
 	nb = calc_nb_prop(lst);
 	if (nb != 11)
 		exit_error(ERR_PROPERTIES, 1);
-	lst = lst->next;
-	inst.center.x = ft_atof(lst->s);
-	lst = lst->next;
-	inst.center.y = ft_atof(lst->s);
-	lst = lst->next;
-	inst.center.z = ft_atof(lst->s);
-	lst = lst->next;
-	inst.orient.x = ft_atof(lst->s);
-	lst = lst->next;
-	inst.orient.y = ft_atof(lst->s);
-	lst = lst->next;
-	inst.orient.z = ft_atof(lst->s);
-	lst = lst->next;
-	inst.radius = (ft_atof(lst->s) / 2.0);
-	lst = lst->next;
-	inst.hgt = ft_atof(lst->s);
-	lst = lst->next;
-	inst.colors.x = ft_atof(lst->s);
-	lst = lst->next;
-	inst.colors.y = ft_atof(lst->s);
-	lst = lst->next;
-	inst.colors.z = ft_atof(lst->s);
-	inst.orient = vec_unit(inst.orient);
+	set_cyl_prop(&lst, &inst);
+	// lst = lst->next;
+	// inst.center.x = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.center.y = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.center.z = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.orient.x = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.orient.y = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.orient.z = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.radius = (ft_atof(lst->s) / 2.0);
+	// lst = lst->next;
+	// inst.hgt = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.colors.x = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.colors.y = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.colors.z = ft_atof(lst->s);
+	// inst.orient = vec_unit(inst.orient);
 	new = create_object(CYLINDER, &inst);
 	add_object_to_list(&d->chaos, new);
-	free_tok_from_end(lst);
-	d->lst = NULL;
+	free_tok(d);
+	// free_tok_from_end(lst);
+	// d->lst = NULL;
 	return (1);
+}
+
+void	set_hp_prop(t_tok **lst, t_hyperboloid *inst)
+{
+	*lst = (*lst)->next;
+	inst->center.x = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->center.y = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->center.z = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->orient.x = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->orient.y = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->orient.z = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->radius = (ft_atof((*lst)->s) / 2.0);
+	*lst = (*lst)->next;
+	inst->hgt = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->colors.x = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->colors.y = ft_atof((*lst)->s);
+	*lst = (*lst)->next;
+	inst->colors.z = ft_atof((*lst)->s);
+	inst->orient = vec_unit(inst->orient);
 }
 
 int	add_hyperboloid(t_data *d, t_tok *lst)
@@ -236,33 +386,35 @@ int	add_hyperboloid(t_data *d, t_tok *lst)
 	if (nb != 11)
 		exit_error(ERR_PROPERTIES, 1);
 	// print_token(&lst);
-	lst = lst->next;
-	inst.center.x = ft_atof(lst->s);
-	lst = lst->next;
-	inst.center.y = ft_atof(lst->s);
-	lst = lst->next;
-	inst.center.z = ft_atof(lst->s);
-	lst = lst->next;
-	inst.orient.x = ft_atof(lst->s);
-	lst = lst->next;
-	inst.orient.y = ft_atof(lst->s);
-	lst = lst->next;
-	inst.orient.z = ft_atof(lst->s);
-	lst = lst->next;
-	inst.radius = (ft_atof(lst->s) / 2.0);
-	lst = lst->next;
-	inst.hgt = ft_atof(lst->s);
-	lst = lst->next;
-	inst.colors.x = ft_atof(lst->s);
-	lst = lst->next;
-	inst.colors.y = ft_atof(lst->s);
-	lst = lst->next;
-	inst.colors.z = ft_atof(lst->s);
-	inst.orient = vec_unit(inst.orient);
+	set_hp_prop(&lst, &inst);
+	// lst = lst->next;
+	// inst.center.x = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.center.y = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.center.z = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.orient.x = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.orient.y = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.orient.z = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.radius = (ft_atof(lst->s) / 2.0);
+	// lst = lst->next;
+	// inst.hgt = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.colors.x = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.colors.y = ft_atof(lst->s);
+	// lst = lst->next;
+	// inst.colors.z = ft_atof(lst->s);
+	// inst.orient = vec_unit(inst.orient);
 	new = create_object(HYPERBOLOID, &inst);
 	add_object_to_list(&d->chaos, new);
-	free_tok_from_end(lst);
-	d->lst = NULL;
+	free_tok(d);
+	// free_tok_from_end(lst);
+	// d->lst = NULL;
 	return (1);
 }
 
