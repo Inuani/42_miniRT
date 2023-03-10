@@ -124,6 +124,20 @@ t_object	*copy_obj_list_deep(const t_object *list)
 		new_node->u_data.cylinder.radius = list->u_data.cylinder.radius;
 		new_node->u_data.cylinder.hgt = list->u_data.cylinder.hgt;
 	}
+	else if (new_node->type == HYPERBOLOID)
+	{
+		new_node->u_data.hyperboloid.center.x = list->u_data.hyperboloid.center.x;
+		new_node->u_data.hyperboloid.center.y = list->u_data.hyperboloid.center.y;
+		new_node->u_data.hyperboloid.center.z = list->u_data.hyperboloid.center.z;
+		new_node->u_data.hyperboloid.orient.x = list->u_data.hyperboloid.orient.x;
+		new_node->u_data.hyperboloid.orient.y = list->u_data.hyperboloid.orient.y;
+		new_node->u_data.hyperboloid.orient.z = list->u_data.hyperboloid.orient.z;
+		new_node->u_data.hyperboloid.colors.x = list->u_data.hyperboloid.colors.x;
+		new_node->u_data.hyperboloid.colors.y = list->u_data.hyperboloid.colors.y;
+		new_node->u_data.hyperboloid.colors.z = list->u_data.hyperboloid.colors.z;
+		new_node->u_data.hyperboloid.radius = list->u_data.hyperboloid.radius;
+		new_node->u_data.hyperboloid.hgt = list->u_data.hyperboloid.hgt;
+	}
 	return (new_node);
 }
 
@@ -137,6 +151,7 @@ void	init_thread_data(t_data *th_d, t_data *d)
 	th_d->count.pl_count = d->count.pl_count;
 	th_d->count.cy_count = d->count.cy_count;
 	th_d->count.l_count = d->count.l_count;
+	th_d->count.hy_count = d->count.hy_count;
 	obj_array_create(th_d);
 	initialise_viewport(th_d);
 }
