@@ -16,8 +16,8 @@ void	hyp_light_hit(t_ray *ray, t_data *data, t_hyperboloid hyp, t_light light)
 {
 	if (!light_hit_objs(data, ray->point_at, light))
 		return ;
-	// if (is_inside(cyl, data->objs[1]->u_data.camera, light))
-	// 	return ;
+	//if (!is_inside_hyp(ray, hyp))
+	//	return ;
 
 	t_vec dist = vec_subs(ray->point_at, hyp.center);
 	t_vec proj = vec_subs(dist, vec_scale(vec_dot(dist, hyp.orient), hyp.orient));
