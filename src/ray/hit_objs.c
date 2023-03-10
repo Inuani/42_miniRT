@@ -31,6 +31,7 @@ int	is_first(t_vec r_point_at, t_cam cam, t_vec *point_at, int *first)
 	point_at->z = r_point_at.z;
 	return (1);
 }
+
 // This function checks which object in the scene
 // is the first to intersect with the ray.
 // It iterates over all the objects in the scene and checks
@@ -40,9 +41,7 @@ int	first_objs(t_data *data, t_ray *ray)
 {
 	int		i;
 	t_vec	point_at;
-	t_vec	r_point_at;
 	t_cam	cam;
-	float	root;
 
 	cam = data->objs[1]->u_data.camera;
 	ray->first = 1;
@@ -61,22 +60,7 @@ int	first_objs(t_data *data, t_ray *ray)
 			is_cylinder(data, ray, &point_at, i);
 		else if (i < 2 + data->count.l_count + data->count.sp_count
 				+ data->count.pl_count + data->count.cy_count + data->count.hy_count)
-		{
-			root = hit_hyperboloid(ray->direction, data->objs[i]->u_data.hyperboloid, cam.pos);
-			//printf("%f\n", root);
-			if (root > 0)
-			{
-				//r_point_at = vec_add(data->objs[1]->u_data.camera.pos, vec_scale(root, ray->direction));
-				//if (is_first(r_point_at, cam, &point_at, &first))
-				//{
-				ray->point_at.x = r_point_at.x;
-				ray->point_at.y = r_point_at.y;
-				ray->point_at.z = r_point_at.z;
-				ray->obj_n = i;
-				//}
-				
-			}
-		}
+			is_hyperboloid(data, ray, &point_at, i);
 		i++;
 	}
 	return (ray->obj_n);
@@ -102,32 +86,27 @@ void hit_objs(t_data *data, t_ray *ray)
 }
 
 // Checks if any of the objects in the scene are blocking the light source.
-float light_hit_objs(t_data *data, t_ray *ray, t_vec point_at, t_light light)
+float light_hit_objs(t_data *data, t_vec point_at, t_light light)
 {
-	int		i;
+	int	i;
+	int	ret;
 
-	(void)ray;
 	i = 2 + data->count.l_count;
-
 	while (data->objs[i])
 	{
 		if (i < 2 + data->count.l_count + data->count.sp_count)
-		{
-			if (!shadow_sphere(data, i, point_at, light))
-				return (0);
-		}
+			ret = shadow_sphere(data, i, point_at, light);
 		else if (i < 2 + data->count.l_count + data->count.sp_count
 				+ data->count.pl_count)
-		{
-			if (!shadow_plane(data, i, light))
-				return (0);
-		}
+			ret = shadow_plane(light, data, data->objs[i]->u_data.plane);
 		else if (i < 2 + data->count.l_count + data->count.sp_count
 				+ data->count.pl_count + data->count.cy_count)
-		{
-			if (!shadow_cylinder(data, i, point_at, light))
-				return (0);
-		}
+			ret = shadow_cylinder(data, i, point_at, light);
+		else if (i < 2 + data->count.l_count + data->count.sp_count
+			+ data->count.pl_count + data->count.cy_count + data->count.hy_count)
+			ret = shadow_hyp(data, i, point_at, light);
+		if (!ret)
+			return (0);
 		i++;
 	}
 	return (1);

@@ -51,6 +51,12 @@ typedef struct s_hyperboloid {
 	float	radius;
 	float	hgt;
 	t_vec	colors;
+	t_vec	h;
+	t_vec	h_point;
+	t_vec	w;
+	float	m;
+	float	v_h;
+	float	w_h;
 }				t_hyperboloid;
 
 typedef struct s_cylinder {

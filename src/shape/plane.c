@@ -46,25 +46,7 @@ float	plane_hit(t_plane *plane, t_vec ray_origine, t_vec ray_direction)
 	return t;
 }
 
-int getcolorofpixel(t_data *data, int *width,	int	*height)
-{
-	void	*img_data;
-	img_data = mlx_xpm_file_to_image(data->mlx, "images/plaque_metal.xpm", width, height);
-
-	printf("height : %d\n", height);
-	printf("width : %d\n", width);
-
-	int bpp;
-	int size_line;
-	int endian;
-	char *img_info = mlx_get_data_addr(img_data, &bpp, &size_line, &endian);
-	int x = 10;
-	int y = 10;
-	int	pixel_offset = (y * size_line) + (x * (bpp / 8));
-	int	pixel_color = mlx_get_color_value(data->mlx, *(int *)(img_info + pixel_offset));
-	return (pixel_color);
-}
-
+/*
 void get_texture(t_data *data, t_ray *ray, t_plane *plane)
 {
 	int w;
@@ -80,14 +62,14 @@ void get_texture(t_data *data, t_ray *ray, t_plane *plane)
 
 	color = decimalToRGB(getcolorofpixel(data, &w, &h));
 	plane->colors = color;
-}
+}*/
 
 void	plane_light(t_data *data, t_ray *ray, t_plane plane, t_light light)
 {
-	if (!light_hit_objs(data, ray, ray->point_at, light))
+	if (!light_hit_objs(data, ray->point_at, light))
 		return ;
 
-	get_texture(data, ray, &plane);
+	//get_texture(data, ray, &plane);
 	ray->normal = plane.orient;
 	ray->shiny = 5;
 	phong_plane(data, ray, light, plane.colors);

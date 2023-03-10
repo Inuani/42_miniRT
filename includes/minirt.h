@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:13:13 by egauthey          #+#    #+#             */
-/*   Updated: 2023/03/08 20:43:27 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/03/09 16:37:30 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 
 //light
 void	phong(t_data *data, t_ray *ray, t_light light, t_vec obj_color);
-float	light_hit_objs(t_data *data, t_ray *ray, t_vec point_at, t_light light);
+float	light_hit_objs(t_data *data, t_vec point_at, t_light light);
 void	light_hit(t_ray *ray, t_data *data, t_sphere sphere, t_light light);
 
 //color
@@ -78,12 +78,13 @@ int		is_first(t_vec r_point_at, t_cam cam, t_vec *point_at, int *first);
 void	is_sphere(t_data *data, t_ray *ray, t_vec *point_at, int i);
 void	is_plane(t_data *data, t_ray *ray, t_vec *point_at, int i);
 void	is_cylinder(t_data *data, t_ray *ray, t_vec *point_at, int i);
+void	is_hyperboloid(t_data *data, t_ray *ray, t_vec *point_at, int i);
 //shadow
 int shadow_sphere(t_data *data, int i, t_vec point_at, t_light light);
-int shadow_plane(t_data *data, int i, t_light light);
+int	shadow_plane(t_light light, t_data *data, t_plane plane);
 int	shadow_cylinder(t_data *data, int i, t_vec point_at, t_light light);
 int	is_first_light(t_light light, t_vec point_at, t_vec root_at);
-int	is_light_plane(t_light light, t_data *data, t_plane plane);
+int	shadow_hyp(t_data *data, int i, t_vec point_at, t_light light);
 
 // vector utils
 t_vec	vec_add(t_vec vec1, t_vec vec2);
