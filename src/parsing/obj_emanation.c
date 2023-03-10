@@ -432,7 +432,7 @@ void	what_obj(t_data *d, char *obj)
 		d->count.pl_count += add_plane(d, d->lst);
 	else if (!ft_strncmp(obj, "cy", 2) && obj[2] == 0)
 		d->count.cy_count += add_cylinder(d, d->lst);
-	else if (!ft_strncmp(obj, "hp", 2) && obj[2] == 0)
+	else if (!ft_strncmp(obj, "hy", 2) && obj[2] == 0)
 		d->count.hy_count += add_hyperboloid(d, d->lst);
 	else
 		exit_error(ERR_OBJ, 1);

@@ -24,6 +24,8 @@ void	phong_plane(t_data *data, t_ray *ray, t_light light, t_vec obj_color)
 	dir = ray->direction;
 	i_d = vec_dot(vector, ray->normal) * light.light_ratio;
 	i_s = 0;
+	if (i_d < 0)
+		i_d = -i_d;
 	
 	t_vec diffuse_color = add_color(vec_scale(K, obj_color), vec_scale(1 - K, light.colors));
 	data->final_color = add_colors(data->final_color, diffuse_color, i_d);
@@ -46,50 +48,35 @@ float	plane_hit(t_plane *plane, t_vec ray_origine, t_vec ray_direction)
 	return t;
 }
 
-/*
-void get_texture(t_data *data, t_ray *ray, t_plane *plane)
-{
-	int w;
-	int h;
-	int	x;
-	int	y;
-	t_vec	color;
-	(void)plane;
-// int getcolorofpixel(t_data *data, int *width, int	*height)
-// {
-// 	void	*img_data;
-// 	img_data = mlx_xpm_file_to_image(data->mlx, "images/plaque_metal.xpm", width, height);
-
-// 	printf("height : %d\n", height);
-// 	printf("width : %d\n", width);
-
-// 	int bpp;
-// 	int size_line;
-// 	int endian;
-// 	char *img_info = mlx_get_data_addr(img_data, &bpp, &size_line, &endian);
-// 	int x = 10;
-// 	int y = 10;
-// 	int	pixel_offset = (y * size_line) + (x * (bpp / 8));
-// 	int	pixel_color = mlx_get_color_value(data->mlx, *(int *)(img_info + pixel_offset));
-// 	return (pixel_color);
-// }
-
 // void get_texture(t_data *data, t_ray *ray, t_plane *plane)
 // {
 // 	int w;
 // 	int h;
 // 	int	x;
 // 	int	y;
-// 	t_vec	color;
-// 	(void)plane;
 
 // 	getcolorofpixel(data, &w, &h);
 // 	x = ((int)ray->point_at.x % 2) / w;
 // 	y = ((int)ray->point_at.z % 2) / h;
+// 	plane->colors = decimalToRGB(get_color_pixel(data, &w, &h, plane));
+// }
 
-// 	color = decimalToRGB(getcolorofpixel(data, &w, &h));
-// 	plane->colors = color;
-// }*/
+t_vec calculate_x_y_pcb(t_ray ray)
+{
+	int	x;
+	int	y;
+
+	if (ray.point_at.x < 0)
+		ray.point_at.x -= 1;
+	if (ray.point_at.y < 0)
+		ray.point_at.y -= 1;
+	x = ((int)ray.point_at.x % 2);
+	y = ((int)ray.point_at.z % 2);
+
+	if ((!x && !y) || (x && y))
+		return ((t_vec) {255, 255, 255});
+	return ((t_vec) {0, 0, 0});
+}
 
 void	plane_light(t_data *data, t_ray *ray, t_plane plane, t_light light)
 {
@@ -109,6 +96,7 @@ void	plane_life(t_data *data, t_ray *ray, t_plane plane)
 
 	i = 0;
 
+	plane.colors = calculate_x_y_pcb(*ray);
 	while (i < data->count.l_count)
 		plane_light(data, ray, plane, data->objs[2 + i++]->u_data.light);
 	t_vec ambient_color = add_color(vec_scale(K, plane.colors), vec_scale(1 - K, data->objs[0]->u_data.ambiant.colors));

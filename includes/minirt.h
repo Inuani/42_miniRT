@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:13:13 by egauthey          #+#    #+#             */
-/*   Updated: 2023/03/10 11:40:06 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/03/10 16:27:39 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,21 @@
 
 //nbr of threads, 24?
 
+# define CB_W 8;
+# define CB_H 6;
 # define THREADS 12
 # define HEIGHT 1080
 # define WIDTH 1920
-# define K 0.8
+# define K_LIGHT 0.8
 
 
 //light
 void	phong(t_data *data, t_ray *ray, t_light light, t_vec obj_color);
 float	light_hit_objs(t_data *data, t_vec point_at, t_light light);
-void	light_hit(t_ray *ray, t_data *data, t_sphere sphere, t_light light);
+void	light_hit(t_ray *ray, t_data *data, t_sphere *sphere, t_light light);
 
 //color
+int		get_color_pixel(t_data *d, int x, int y, t_img *xpm);
 t_vec	decimalToRGB(int color);
 int		create_trgb(int t, int r, int g, int b);
 t_vec	add_color(t_vec c1, t_vec c2);
@@ -110,5 +113,8 @@ void		*render_thr(void *data);
 int		print_key(int key, t_data *data);
 void	printf_vec(t_vec vec);
 void	print_new_list(t_data *d);
+
+//render
+char	*floatToString(float n, char* res);
 
 #endif

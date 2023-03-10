@@ -53,6 +53,7 @@ REND_SRC = $(addprefix $(REND_DIR),	render.c \
 									handle_window.c \
 									handle_keys.c \
 									trgb.c \
+									ftoa.c \
 									)
 
 RAY_SRC = $(addprefix $(RAY_DIR),	rays.c \

@@ -22,8 +22,10 @@ void	create_thread(t_data *data)
 	}
 	while (data->fin != 12) {}
 	render_text(data);
-	//while (i < 12)
-	//	pthread_join(data->thread_id[i], NULL);
+	i = 0;
+	while (i < THREADS)
+		free(data->thread_id[i++]);
+	free(data->thread_id);
 }
 
 t_object	*copy_obj_list_deep(const t_object *list)

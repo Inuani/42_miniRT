@@ -6,12 +6,12 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:05:42 by lskraber          #+#    #+#             */
-/*   Updated: 2023/03/08 15:16:10 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/03/10 16:34:31 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minirt.h"
-
+#include "../../includes/keys.h"
 
 
 	// inst.orient = vec_unit(inst.orient);
@@ -23,11 +23,12 @@
 	// inst.right = vec_cross(inst.orient, inst.up);
 	// inst.right = vec_unit(inst.right);
 
-void	handle_planes(int key, t_data *data)
+/*
+void	handle_cylinder(int key, t_data *data)
 {
 	t_plane	*plane;
 
-	plane = &data->objs[data->current]->u_data.plane;
+	plane = &data->objs[data->current]->u_data.cylinder;
 	if (key == 12)
 		plane->point.x += 1.0;
 	else if (key == 13)
@@ -64,6 +65,49 @@ void	handle_planes(int key, t_data *data)
 		plane->colors.y -= 10;
 	else if (key == 88 && plane->colors.z > 9)
 		plane->colors.z -= 10;
+}*/
+
+void	handle_planes(int key, t_data *data)
+{
+	t_plane	*plane;
+
+	plane = &data->objs[data->current]->u_data.plane;
+	if (key == Q)
+		plane->point.x += 1.0;
+	else if (key == W)
+		plane->point.y += 1.0;
+	else if (key == E)
+		plane->point.z += 1.0;
+	else if (key == A)
+		plane->point.x -= 1.0;
+	else if (key == B)
+		plane->point.y -= 1.0;
+	else if (key == C)
+		plane->point.z -= 1.0;
+	else if (key == U && plane->orient.x <= 0.9)
+		plane->orient.x += 0.1;
+	else if (key == I && plane->orient.y <= 0.9)
+		plane->orient.y += 0.1;
+	else if (key == O && plane->orient.z <= 0.9)
+		plane->orient.z += 0.1;
+	else if (key == J && plane->orient.x >= -0.9)
+		plane->orient.x -= 0.1;
+	else if (key == K && plane->orient.y >= -0.9)
+		plane->orient.y -= 0.1;
+	else if (key == L && plane->orient.z >= -0.9)
+		plane->orient.z -= 0.1;
+	else if (key == N_SEVEN && plane->colors.x < 246)
+		plane->colors.x += 10;
+	else if (key == N_EIGHT &&plane->colors.y < 246)
+		plane->colors.y += 10;
+	else if (key == N_NINE && plane->colors.z < 246)
+		plane->colors.z += 10;
+	else if (key == N_FOUR && plane->colors.x > 9)
+		plane->colors.x -= 10;
+	else if (key == N_FIVE && plane->colors.y > 9)
+		plane->colors.y -= 10;
+	else if (key == N_SIX && plane->colors.z > 9)
+		plane->colors.z -= 10;
 }
 
 void	handle_spheres(int key, t_data *data)
@@ -71,33 +115,33 @@ void	handle_spheres(int key, t_data *data)
 	t_sphere	*sphere;
 
 	sphere = &data->objs[data->current]->u_data.sphere;
-	if (key == 12)
+	if (key == Q)
 		sphere->center.x += 5.0;
-	else if (key == 13)
+	else if (key == W)
 		sphere->center.y += 5.0;
-	else if (key == 14)
+	else if (key == E)
 		sphere->center.z += 5.0;
-	else if (key == 0)
+	else if (key == A)
 		sphere->center.x -= 5.0;
-	else if (key == 1)
+	else if (key == B)
 		sphere->center.y -= 5.0;
-	else if (key == 2)
+	else if (key == C)
 		sphere->center.z -= 5.0;
-	if (key == 34)
+	if (key == I)
 		sphere->radius += 1.0;
-	else if (key == 40 && sphere->radius >= 1.0)
+	else if (key == K && sphere->radius >= 1.0)
 		sphere->radius -= 1.0;
-	else if (key == 89 && sphere->colors.x < 246)
+	else if (key == N_SEVEN && sphere->colors.x < 246)
 		sphere->colors.x += 10;
-	else if (key == 91 && sphere->colors.y < 246)
+	else if (key == N_EIGHT && sphere->colors.y < 246)
 		sphere->colors.y += 10;
-	else if (key == 92 && sphere->colors.z < 246)
+	else if (key == N_NINE && sphere->colors.z < 246)
 		sphere->colors.z += 10;
-	else if (key == 86 && sphere->colors.x > 9)
+	else if (key == N_FOUR && sphere->colors.x > 9)
 		sphere->colors.x -= 10;
-	else if (key == 87 && sphere->colors.y > 9)
+	else if (key == N_FIVE && sphere->colors.y > 9)
 		sphere->colors.y -= 10;
-	else if (key == 88 && sphere->colors.z > 9)
+	else if (key == N_SIX && sphere->colors.z > 9)
 		sphere->colors.z -= 10;
 }
 
@@ -106,33 +150,33 @@ void	handle_lights(int key, t_data *data)
 	t_light *light;
 
 	light = &data->objs[data->current]->u_data.light;
-	if (key == 12)
+	if (key == Q)
 		light->pos.x += 5.0;
-	else if (key == 13)
+	else if (key == W)
 		light->pos.y += 5.0;
-	else if (key == 14)
+	else if (key == E)
 		light->pos.z += 5.0;
-	else if (key == 0)
+	else if (key == A)
 		light->pos.x -= 5.0;
-	else if (key == 1)
+	else if (key == B)
 		light->pos.y -= 5.0;
-	else if (key == 2)
+	else if (key == C)
 		light->pos.z -= 5.0;
-	if (key == 34 && light->light_ratio <= 0.9)
+	if (key == I && light->light_ratio <= 0.9)
 		light->light_ratio += 0.1;
-	else if (key == 40 && light->light_ratio >= 0.1)
+	else if (key == K && light->light_ratio >= 0.1)
 		light->light_ratio -= 0.1;
-	else if (key == 89 && light->colors.x < 246)
+	else if (key == N_SEVEN && light->colors.x < 246)
 		light->colors.x += 10;
-	else if (key == 91 && light->colors.y < 246)
+	else if (key == N_EIGHT && light->colors.y < 246)
 		light->colors.y += 10;
-	else if (key == 92 && light->colors.z < 246)
+	else if (key == N_NINE && light->colors.z < 246)
 		light->colors.z += 10;
-	else if (key == 86 && light->colors.x > 9)
+	else if (key == N_FOUR && light->colors.x > 9)
 		light->colors.x -= 10;
-	else if (key == 87 && light->colors.y > 9)
+	else if (key == N_FIVE && light->colors.y > 9)
 		light->colors.y -= 10;
-	else if (key == 88 && light->colors.z > 9)
+	else if (key == N_SIX && light->colors.z > 9)
 		light->colors.z -= 10;
 }
 
@@ -142,33 +186,33 @@ void	handle_camera(int key, t_data *data)
 	t_cam *cam;
 
 	cam = &data->objs[1]->u_data.camera;
-	if (key == 12)
+	if (key == Q)
 		cam->pos.x += 1.0;
-	else if (key == 13)
+	else if (key == W)
 		cam->pos.y += 1.0;
-	else if (key == 14)
+	else if (key == E)
 		cam->pos.z += 1.0;
-	else if (key == 0)
+	else if (key == A)
 		cam->pos.x -= 1.0;
-	else if (key == 1)
+	else if (key == B)
 		cam->pos.y -= 1.0;
-	else if (key == 2)
+	else if (key == C)
 		cam->pos.z -= 1.0;
-	else if (key == 32 && cam->orient.x <= 0.9)
+	else if (key == U && cam->orient.x <= 0.9)
 		cam->orient.x += 0.1;
-	else if (key == 34 && cam->orient.y <= 0.9)
+	else if (key == I && cam->orient.y <= 0.9)
 		cam->orient.y += 0.1;
-	else if (key == 31 && cam->orient.z <= 0.9)
+	else if (key == O && cam->orient.z <= 0.9)
 		cam->orient.z += 0.1;
-	else if (key == 38 && cam->orient.x >= -0.9)
+	else if (key == J && cam->orient.x >= -0.9)
 		cam->orient.x -= 0.1;
-	else if (key == 40 && cam->orient.y >= -0.9)
+	else if (key == K && cam->orient.y >= -0.9)
 		cam->orient.y -= 0.1;
-	else if (key == 37 && cam->orient.z >= -0.9)
+	else if (key == L && cam->orient.z >= -0.9)
 		cam->orient.z -= 0.1;
-	else if (key == 35 && cam->fov <= 170)
+	else if (key == P && cam->fov <= 170)
 		cam->fov += 10;
-	else if (key == 41 && cam->fov >= 10)
+	else if (key == POINT_COMMA && cam->fov >= 10)
 		cam->fov -= 10;
 
 	cam->orient = vec_unit(cam->orient);
@@ -191,21 +235,21 @@ void	handle_ambient(int key, t_data *data)
 	t_ambiant *ambient;
 
 	ambient = &data->objs[0]->u_data.ambiant;
-	if (key == 34 && ambient->light_ratio <= 0.9)
+	if (key == I && ambient->light_ratio <= 0.9)
 		ambient->light_ratio += 0.1;
-	else if (key == 40 && ambient->light_ratio >= 0.1)
+	else if (key == K && ambient->light_ratio >= 0.1)
 		ambient->light_ratio -= 0.1;
-	else if (key == 89 && ambient->colors.x < 246)
+	else if (key == N_SEVEN && ambient->colors.x < 246)
 		ambient->colors.x += 10;
-	else if (key == 91 && ambient->colors.y < 246)
+	else if (key == N_EIGHT && ambient->colors.y < 246)
 		ambient->colors.y += 10;
-	else if (key == 92 && ambient->colors.z < 246)
+	else if (key == N_NINE && ambient->colors.z < 246)
 		ambient->colors.z += 10;
-	else if (key == 86 && ambient->colors.x > 9)
+	else if (key == N_FOUR && ambient->colors.x > 9)
 		ambient->colors.x -= 10;
-	else if (key == 87 && ambient->colors.y > 9)
+	else if (key == N_FIVE && ambient->colors.y > 9)
 		ambient->colors.y -= 10;
-	else if (key == 88 && ambient->colors.z > 9)
+	else if (key == N_SIX && ambient->colors.z > 9)
 		ambient->colors.z -= 10;
 }
 
@@ -246,8 +290,10 @@ int	event_handler(int key, t_data *data)
 		handle_spheres(key, data);
 	else if (data->current < 2 + data->count.l_count + data->count.sp_count + data->count.pl_count)
 		handle_planes(key, data);
-	/*else
-		handle_cylinder(key, data);*/
+	//else if (data->current < 2 + data->count.l_count + data->count.sp_count + data->count.pl_count + data->count.cy_count)
+	//	handle_cylinder(key, data);
+	/*else if
+		handle_hyperboloid(key, data);*/
 	//render(data);
 	create_thread(data);
 	return (0);

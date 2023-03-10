@@ -42,12 +42,25 @@ t_vec	get_sp_xpm_color(t_data *d, t_ray *ray, t_img *xpm)
 	return (pixel_color);
 }
 
+t_vec calculate_x_y_scb(t_ray *ray)
+{
+	float	u;
+	float	v;
+	u = get_angle_0_to_1(vec_unit(ray->normal), (t_vec){1,0,0});
+	v = get_angle_0_to_1(vec_unit(ray->normal), (t_vec){0,1,0});
+	u = u * CB_W;
+	v = v * CB_H;
+
+	if (((int)u + (int)v) % 2 == 0)
+		return ((t_vec) {255, 255, 255});
+	return ((t_vec) {0, 0, 0});
+}
 
 void	light_hit(t_ray *ray, t_data *data, t_sphere *sphere, t_light light)
 {
 	
 
-	if (!light_hit_objs(data, ray, ray->point_at, light))
+	if (!light_hit_objs(data, ray->point_at, light))
 		return ;
 	if (is_inside(*sphere, data->objs[1]->u_data.camera, light))
 		return ;
@@ -85,9 +98,9 @@ float it_hit_sphere(t_data *data, t_ray *ray, t_sphere sphere)
 	float	ret;
 
 	t_vec	normal_map_color;
-	
 	normal_map_color = get_sp_xpm_color(data, ray, &sphere.n_map);
 	sphere.colors = vec_add(get_sp_xpm_color(data, ray, &sphere.xpm), vec_unit(normal_map_color));
+	//sphere.colors = calculate_x_y_scb(ray);
 	ret = 0;
 	i = 0;
 	ray->normal = vec_scale(1/sphere.radius, vec_subs(ray->point_at, sphere.center));

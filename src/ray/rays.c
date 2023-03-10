@@ -112,7 +112,7 @@ void	phong(t_data *data, t_ray *ray, t_light light, t_vec obj_color)
 	if (i_d < 0)
 		i_d = - i_d;
 	
-	t_vec diffuse_color = add_color(vec_scale(K, obj_color), vec_scale(1 - K, light.colors));
+	t_vec diffuse_color = add_color(vec_scale(K_LIGHT, obj_color), vec_scale(1 - K_LIGHT, light.colors));
 	data->final_color = add_colors(data->final_color, diffuse_color, i_d);	//maybe not always -i_d?
 	data->final_color = add_colors(data->final_color, light.colors, i_s);
 }
