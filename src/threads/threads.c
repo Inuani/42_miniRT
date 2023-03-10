@@ -23,8 +23,6 @@ void	create_thread(t_data *data)
 	while (data->fin != 12) {}
 	render_text(data);
 	i = 0;
-	while (i < THREADS)
-		free(data->thread_id[i++]);
 	free(data->thread_id);
 }
 

@@ -27,7 +27,7 @@ void	phong_plane(t_data *data, t_ray *ray, t_light light, t_vec obj_color)
 	if (i_d < 0)
 		i_d = -i_d;
 	
-	t_vec diffuse_color = add_color(vec_scale(K, obj_color), vec_scale(1 - K, light.colors));
+	t_vec diffuse_color = add_color(vec_scale(K_LIGHT, obj_color), vec_scale(1 - K_LIGHT, light.colors));
 	data->final_color = add_colors(data->final_color, diffuse_color, i_d);
 	data->final_color = add_colors(data->final_color, light.colors, i_s);
 }
@@ -96,9 +96,9 @@ void	plane_life(t_data *data, t_ray *ray, t_plane plane)
 
 	i = 0;
 
-	plane.colors = calculate_x_y_pcb(*ray);
+	//plane.colors = calculate_x_y_pcb(*ray);
 	while (i < data->count.l_count)
 		plane_light(data, ray, plane, data->objs[2 + i++]->u_data.light);
-	t_vec ambient_color = add_color(vec_scale(K, plane.colors), vec_scale(1 - K, data->objs[0]->u_data.ambiant.colors));
+	t_vec ambient_color = add_color(vec_scale(K_LIGHT, plane.colors), vec_scale(1 - K_LIGHT, data->objs[0]->u_data.ambiant.colors));
 	data->final_color = add_colors(data->final_color, ambient_color, data->objs[0]->u_data.ambiant.light_ratio);
 }

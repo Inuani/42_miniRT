@@ -68,7 +68,7 @@ float it_hit_hy(t_data *data, t_ray *ray, t_hyperboloid hp)
 	i = 0;
 	while (i < data->count.l_count)
 		hyp_light_hit(ray, data, hp, data->objs[2 + i++]->u_data.light);
-	t_vec ambient_color = add_color(vec_scale(K, hp.colors), vec_scale(1 - K, data->objs[0]->u_data.ambiant.colors));
+	t_vec ambient_color = add_color(vec_scale(K_LIGHT, hp.colors), vec_scale(1 - K_LIGHT, data->objs[0]->u_data.ambiant.colors));
 	data->final_color = add_colors(data->final_color, ambient_color, data->objs[0]->u_data.ambiant.light_ratio);
 	return (1);
 }

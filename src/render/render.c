@@ -1,6 +1,6 @@
 
 #include "../../includes/minirt.h"
-
+/*
 void	print_color(t_data *data, t_vec color)
 {
 	int	i;
@@ -31,7 +31,7 @@ void	print_color(t_data *data, t_vec color)
 			my_mlx_pixel_put(img, 100 + i++, 0 + j++, create_trgb(0, 0, 0, color.z));
 	}
 	mlx_put_image_to_window(data->mlx, data->win, img, 5, 5);
-}
+}*/
 
 //2 + data->count.l_count + data->count.sp_count + data->count.pl_count
 
@@ -45,7 +45,7 @@ void render_text(t_data *data)
 		mlx_string_put(data->mlx, data->win, WIDTH/2 - WIDTH/30, HEIGHT - HEIGHT/19, 0xFFFFFF, "You are on ambient");
 		mlx_string_put(data->mlx, data->win, WIDTH/2 - 80, HEIGHT - HEIGHT/30, 0xFFFFFF, "light intensity : ");
 		mlx_string_put(data->mlx, data->win, WIDTH/2 + 60, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[0]->u_data.ambiant.light_ratio, str));
-		print_color(data, data->objs[0]->u_data.ambiant.colors);
+		//print_color(data, data->objs[0]->u_data.ambiant.colors);
 	}
 	else if (data->current == 1)
 	{
@@ -70,7 +70,7 @@ void render_text(t_data *data)
 		mlx_string_put(data->mlx, data->win, WIDTH/2 + 90, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.light.pos.z, str));
 		mlx_string_put(data->mlx, data->win, WIDTH/2 - 80, HEIGHT - HEIGHT/55, 0xFFFFFF, "light intensity : ");
 		mlx_string_put(data->mlx, data->win, WIDTH/2 + 50, HEIGHT - HEIGHT/55, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.light.light_ratio, str));
-		print_color(data, data->objs[data->current]->u_data.light.colors);
+		//print_color(data, data->objs[data->current]->u_data.light.colors);
 	}
 	else if (data->current < 2 + data->count.l_count + data->count.sp_count)
 	{
@@ -83,7 +83,7 @@ void render_text(t_data *data)
 		mlx_string_put(data->mlx, data->win, WIDTH/2 + 110, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.sphere.center.z, str));
 		mlx_string_put(data->mlx, data->win, WIDTH/2 - 70, HEIGHT - HEIGHT/55, 0xFFFFFF, "sphere radius : ");
 		mlx_string_put(data->mlx, data->win, WIDTH/2 + 50, HEIGHT - HEIGHT/55, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.sphere.radius, str));
-		print_color(data, data->objs[data->current]->u_data.sphere.colors);
+		//print_color(data, data->objs[data->current]->u_data.sphere.colors);
 	}
 	else if (data->current < 2 + data->count.l_count + data->count.sp_count + data->count.pl_count)
 	{
@@ -98,7 +98,7 @@ void render_text(t_data *data)
 		mlx_string_put(data->mlx, data->win, WIDTH/2, HEIGHT - HEIGHT/55, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.orient.x, str));
 		mlx_string_put(data->mlx, data->win, WIDTH/2 + 50, HEIGHT - HEIGHT/55, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.orient.y, str));
 		mlx_string_put(data->mlx, data->win, WIDTH/2 + 100, HEIGHT - HEIGHT/55, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.orient.z, str));
-		print_color(data, data->objs[data->current]->u_data.plane.colors);
+		//print_color(data, data->objs[data->current]->u_data.plane.colors);
 	}
 	else
 	{
