@@ -37,7 +37,7 @@
 //light
 void	phong(t_data *data, t_ray *ray, t_light light, t_vec obj_color);
 float	light_hit_objs(t_data *data, t_vec point_at, t_light light);
-void	light_hit(t_ray *ray, t_data *data, t_sphere sphere, t_light light);
+void	light_hit(t_ray *ray, t_data *data, t_sphere *sphere, t_light light);
 
 //color
 t_vec	decimalToRGB(int color);

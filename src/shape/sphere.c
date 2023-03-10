@@ -47,7 +47,7 @@ void	light_hit(t_ray *ray, t_data *data, t_sphere *sphere, t_light light)
 {
 	
 
-	if (!light_hit_objs(data, ray, ray->point_at, light))
+	if (!light_hit_objs(data, ray->point_at, light))
 		return ;
 	if (is_inside(*sphere, data->objs[1]->u_data.camera, light))
 		return ;

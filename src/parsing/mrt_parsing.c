@@ -5,6 +5,7 @@ void	create_obj_tok(t_data *d, char *line, int *i)
 	char	*obj;
 	int		j;
 	t_tok	*new;
+
 	j = *i;
 	while (line[*i] && ft_isalpha(line[*i]))
 		*i += 1;
@@ -35,6 +36,24 @@ void	create_prop_tok(t_data *d, char *line, int *i)
 	tok_add_back(&d->lst, new);
 }
 
+void	create_xpm_tok(t_data *d, char *line, int *i)
+{
+	char	*xpm;
+	int		j;
+	t_tok	*new;
+
+	j = *i;
+	while (line[*i] && (ft_isalpha(line[*i]) || line[*i] == '.'))
+		*i += 1;
+	xpm = ft_substr(line, j, *i - j);
+	if (!xpm)
+		exit_error(ERR_MALLOC, 260);
+	new = tok_lstnew(xpm, 2);
+	if (!new)
+		exit_error(ERR_MALLOC, 260);
+	tok_add_back(&d->lst, new);
+}
+
 void	parse_line(char *line, t_data *d)
 {
 	int		i;
@@ -44,10 +63,12 @@ void	parse_line(char *line, t_data *d)
 	{
 			if (line[i] && is_space(line[i]))
 				skip_space(line, &i);
-			else if (line[i] && ft_isalpha(line[i]))
+			else if (line[i] && ft_isalpha(line[i]) /*&& line[i + 1] && line[i + 2] && (is_space(line[i + 1]) || is_space(line[i + 2]))*/)
 				create_obj_tok(d, line, &i);
 			else if (line[i] && (ft_isdigit(line[i]) || line[i] == '-'))
 				create_prop_tok(d, line, &i);
+			// else if (line[i] && ft_isalpha(line[i]))
+			// 	create_xpm_tok(d, line, &i);
 			else if (line[i] && line[i] == ',')
 				i++;
 			else

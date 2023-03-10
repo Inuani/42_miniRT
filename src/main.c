@@ -32,8 +32,8 @@ int	main(int ac, char **av)
 	while(data.objs[i])
 	 	print_object(*data.objs[i++]);
 	
-	// init_window(&data);// --normal
-	// init_image(&data, WIDTH, HEIGHT, &data.img);
+	init_window(&data);// --normal
+	init_image(&data, WIDTH, HEIGHT, &data.img);
 
 	// render(&data);
 	create_thread(&data);
