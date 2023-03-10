@@ -56,19 +56,19 @@ void	create_xpm_tok(t_data *d, char *line, int *i)
 
 void	parse_line(char *line, t_data *d)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (line && line[i])
 	{
 			if (line[i] && is_space(line[i]))
 				skip_space(line, &i);
-			else if (line[i] && ft_isalpha(line[i]) /*&& line[i + 1] && line[i + 2] && (is_space(line[i + 1]) || is_space(line[i + 2]))*/)
+			else if (line[i] && ft_isalpha(line[i]) && line[i + 1] && line[i + 2] && (is_space(line[i + 1]) || is_space(line[i + 2])))
 				create_obj_tok(d, line, &i);
 			else if (line[i] && (ft_isdigit(line[i]) || line[i] == '-'))
 				create_prop_tok(d, line, &i);
-			// else if (line[i] && ft_isalpha(line[i]))
-			// 	create_xpm_tok(d, line, &i);
+			else if (line[i] && ft_isalpha(line[i]))
+				create_xpm_tok(d, line, &i);
 			else if (line[i] && line[i] == ',')
 				i++;
 			else
