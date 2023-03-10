@@ -1,48 +1,78 @@
 
 #include "../../includes/minirt.h"
 
-
-float	hit_hyperboloid(t_vec vector, t_hyperboloid hyp, t_vec origin)
+int is_inside_hyp(t_ray *ray, t_hyperboloid hyp)
 {
-	float		det;
-	//t_vec orient = hyperboloid.orient;
-	//(void)orient;
+	t_vec	h_point = vec_add(hyp.center, vec_scale(hyp.hgt, hyp.orient));
 
-	/*cy.a = vec_dot(vector, vector) - powf(vec_dot(vector, hyperboloid.orient), 2);
-	cy.b = 2.0 * ((vec_dot(ray_dir, ori2cy)) - (vec_dot(ray_dir, cy.orient) * vec_dot(ori2cy, cy.orient)));
-	cy.c = vec_dot(ori2cy, ori2cy) - powf(vec_dot(ori2cy, cy.orient), 2) - powf(cy.radius, 2.0);*/
+	float cone_dist = vec_dot(vec_subs(ray->point_at, h_point), hyp.orient);
+	float cone_radius = (cone_dist / hyp.hgt) * hyp.radius;
+	float orth_distance = vec_len(vec_subs(vec_subs(ray->point_at, h_point), vec_scale(cone_dist, hyp.orient)));
 
-//float a = vec_dot(vector, vector) -
-
-	//float a = (vector.x * vector.x) / hyp.radius
-	//			+ (vector.y * vector.y) / hyp.radius
-	//			- (vector.z * vector.z) / 1;
-	float a = vec_dot(vector, vector) - powf(vec_dot(vector, hyp.orient), 2);
-	//a = a * -1;
-	printf("%f\n", a);
-
-	float b = 2 * ((origin.x * vector.x / hyp.radius)
-					+ (origin.y * vector.y / hyp.radius)
-					- (origin.z * vector.z / 1));
-	//float b = 2.0 * ((vec_dot(vector, origin)) - (vec_dot(vector, hyp.orient) * vec_dot(origin, hyp.orient)));
-	//printf("%f\n", b);
-
-	float c = (origin.x * origin.x) / hyp.radius
-				+ (origin.y * origin.y) / hyp.radius
-				- (origin.z * origin.z) / 1 - 1;
-
-	det = b * b - 4 * a * c;
-	//printf("%f\n", det);
-	if (det < 0)
-		return (-1.0);
-	float t1 = (-b - sqrt(det)) / (2 * a);
-	float t2 = (-b + sqrt(det)) / (2 * a);
-
-	if (t1 > 0.0 && (t2 < 0.0 || t1 < t2)) //change in function of camera
-		return (t1);
-	return (t2);
+	return (orth_distance <= cone_radius);
 }
 
+void	hyp_light_hit(t_ray *ray, t_data *data, t_hyperboloid hyp, t_light light)
+{
+	if (!light_hit_objs(data, ray->point_at, light))
+		return ;
+//	if (!is_inside_hyp(ray, hyp))
+//		return ;
+
+	float slant_height = sqrt(hyp.radius * hyp.radius + hyp.hgt * hyp.hgt);
+	ray->normal.x = ray->point_at.x / slant_height;
+	ray->normal.y = ray->point_at.y / slant_height;
+	ray->normal.z = hyp.hgt / slant_height;
+	ray->normal = vec_unit(ray->normal);
+	ray->shiny = 100;
+	phong(data, ray, light, hyp.colors);
+}
+
+void	init_hy(t_hyperboloid *hyp, t_vec v, t_vec origin)
+{
+	(void)v;
+	(void)origin;
+
+	hyp->h_point = vec_add(hyp->center, vec_scale(hyp->hgt, hyp->orient));
+	hyp->h = vec_subs(hyp->center, hyp->h_point);
+	hyp->w = vec_subs(origin, hyp->h_point);
+	hyp->m = (hyp->radius * hyp->radius) / (vec_len(hyp->h) * vec_len(hyp->h));
+	hyp->v_h = vec_dot(v, vec_unit(hyp->h));
+	hyp->w_h = vec_dot(hyp->w, vec_unit(hyp->h));
+}
+
+float	hit_hyperboloid(t_vec v, t_hyperboloid hyp, t_vec origin)
+{
+	(void)v;
+	(void)hyp;
+	(void)origin;
+	
+	t_vec	point_at1;
+	t_vec	point_at2;
+	float	a;
+	float	b;
+	float	c;
+
+	init_hy(&hyp, v, origin);
+	/*hyp.h_point = vec_add(hyp.center, vec_scale(hyp.hgt, hyp.orient));
+	hyp.h = vec_subs(hyp.center, hyp.h_point);
+	hyp.w = vec_subs(origin, hyp.h_point);
+	hyp.m = (hyp.radius * hyp.radius) / (vec_len(hyp.h) * vec_len(hyp.h));
+	hyp.v_h = vec_dot(v, vec_unit(hyp.h));
+	hyp.w_h = vec_dot(hyp.w, vec_unit(hyp.h));*/
+	a = vec_dot(v, v) - hyp.m * hyp.v_h * hyp.v_h - hyp.v_h * hyp.v_h;
+	b = 2 * (vec_dot(v, hyp.w) - hyp.m * hyp.v_h * hyp.w_h - hyp.v_h * hyp.w_h);
+	c = vec_dot(hyp.w, hyp.w) - hyp.m * hyp.w_h * hyp.w_h - hyp.w_h * hyp.w_h;
+	point_at1 = vec_add(origin, vec_scale((-b - sqrt(b * b - 4 * a * c)) / (2.0 * a), v));
+	point_at2 = vec_add(origin, vec_scale((-b + sqrt(b * b - 4 * a * c)) / (2.0 * a), v));
+	if (vec_dot(vec_subs(point_at1, hyp.h_point), vec_unit(hyp.h)) >= 0
+			&& vec_dot(vec_subs(point_at1, hyp.h_point), vec_unit(hyp.h)) <= vec_len(hyp.h))
+		return ((-b - sqrt(b * b - 4 * a * c)) / (2.0 * a));
+	else if (vec_dot(vec_subs(point_at2, hyp.h_point), vec_unit(hyp.h)) >= 0
+			&& vec_dot(vec_subs(point_at2, hyp.h_point), vec_unit(hyp.h)) <= vec_len(hyp.h))
+		return ((-b + sqrt(b * b - 4 * a * c)) / (2.0 * a));
+	return (-1);
+}
 
 float it_hit_hy(t_data *data, t_ray *ray, t_hyperboloid hp)
 {
@@ -53,8 +83,8 @@ float it_hit_hy(t_data *data, t_ray *ray, t_hyperboloid hp)
 	i = 0;
 	(void)ray;
 	//ray->normal = vec_scale(1/sphere.radius, vec_subs(ray->point_at, sphere.center));
-	//while (i < data->count.l_count)
-	//	light_hit(ray, data, hp, data->objs[2 + i++]->u_data.light);
+	while (i < data->count.l_count)
+		hyp_light_hit(ray, data, hp, data->objs[2 + i++]->u_data.light);
 	t_vec ambient_color = add_color(vec_scale(K, hp.colors), vec_scale(1 - K, data->objs[0]->u_data.ambiant.colors));
 	data->final_color = add_colors(data->final_color, ambient_color, data->objs[0]->u_data.ambiant.light_ratio);
 	return (1);

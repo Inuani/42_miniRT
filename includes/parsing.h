@@ -54,8 +54,8 @@ void	obj_array_create(t_data *d);
 // ----------------------------------------------
 
 void	exit_error(char *msg, int error);
-// void	free_tok_from_end(t_data *d);
-void	free_tok_from_end(t_tok *lst);
+// void	free_tok_from_end(t_tok *lst);
+void	free_tok(t_data *d);
 void	free_obj_list(t_object *head);
 
 // ----------------------------------------------

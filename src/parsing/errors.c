@@ -19,42 +19,43 @@ void	exit_error(char *msg, int error)
 	exit(error);
 }
 
-// void	free_tok_from_end(t_data *d)
-// {
-// 	t_tok	*tmp;
-
-// 	while (d->lst)
-// 	{
-// 		if (d->lst->prev != NULL)
-// 			tmp = d->lst->prev;
-// 		else
-// 			tmp = NULL;
-// 		free(d->lst->s);
-// 		d->lst->s = NULL;
-// 		free(d->lst);
-// 		// d->lst = NULL;
-// 		d->lst = tmp;
-// 	}
-// }
-
-void	free_tok_from_end(t_tok *lst)
+void	free_tok(t_data *d)
 {
 	t_tok	*tmp;
 
-	while (lst)
+	while (d->lst)
 	{
-		if (lst->prev != NULL)
-			tmp = lst->prev;
+		if (d->lst->next != NULL)
+			tmp = d->lst->next;
 		else
 			tmp = NULL;
-		// printf("%s\n", lst->s);
-		free(lst->s);
-		lst->s = NULL;
-		free(lst);
-		lst = NULL;
-		lst = tmp;
+		free(d->lst->s);
+		d->lst->s = NULL;
+		free(d->lst);
+		d->lst = NULL;
+		d->lst = tmp;
 	}
+	d->lst = NULL;
 }
+
+// void	free_tok_from_end(t_tok *lst)
+// {
+// 	t_tok	*tmp;
+
+// 	while (lst)
+// 	{
+// 		if (lst->prev != NULL)
+// 			tmp = lst->prev;
+// 		else
+// 			tmp = NULL;
+// 		// printf("%s\n", lst->s);
+// 		free(lst->s);
+// 		lst->s = NULL;
+// 		free(lst);
+// 		lst = NULL;
+// 		lst = tmp;
+// 	}
+// }
 
 void	free_obj_list(t_object *chaos)
 {

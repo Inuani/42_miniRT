@@ -1,16 +1,6 @@
 
 #include "../../includes/minirt.h"
 
-
-int	get_angle(t_vec normal, t_vec ray_l)
-{
-	float dot = vec_dot(normal, ray_l);
-	float magnitude_n = vec_len(normal);
-	float magnitude_l = vec_len(ray_l);
-	float angle = acos(dot / (magnitude_n * magnitude_l));
-	return (angle * 180.0 / M_PI);
-}
-
 int is_inside(t_sphere sphere, t_cam camera, t_light light)
 {
 	float distance_to_light = vec_len(vec_subs(light.pos, sphere.center));
@@ -21,15 +11,53 @@ int is_inside(t_sphere sphere, t_cam camera, t_light light)
 	return 0;
 }
 
-void	light_hit(t_ray *ray, t_data *data, t_sphere sphere, t_light light)
+void	calculate_x_y_sp(t_img *xpm, t_ray *ray, int *x, int *y)
 {
+	float	u;
+	float	v;
+	u = get_angle_0_to_1(vec_unit(ray->normal), (t_vec){1,0,0});
+	v = get_angle_0_to_1(vec_unit(ray->normal), (t_vec){0,1,0});
+	*x = u * (xpm->wdth - 1);
+	*y = (1 - v) * (xpm->hgt - 1);
+}
+
+int	get_color_pixel(t_data *d, int x, int y, t_img *xpm)
+{
+	int	pixel_color;
+	int	pixel_offset;
+
+	pixel_offset = (y * xpm->line_length) + (x * (xpm->bits_per_pixel / 8));
+	pixel_color = mlx_get_color_value(d->mlx, *(int *)(xpm->addr + pixel_offset));
+	return (pixel_color);
+}
+
+t_vec	get_sp_xpm_color(t_data *d, t_ray *ray, t_img *xpm)
+{
+	t_vec	pixel_color;
+	int		x;
+	int		y;
+
+	calculate_x_y_sp(xpm, ray, &x, &y);
+	pixel_color = decimalToRGB(get_color_pixel(d, x, y, xpm));
+	return (pixel_color);
+}
+
+
+void	light_hit(t_ray *ray, t_data *data, t_sphere *sphere, t_light light)
+{
+	
+
 	if (!light_hit_objs(data, ray, ray->point_at, light))
 		return ;
-	if (is_inside(sphere, data->objs[1]->u_data.camera, light))
+	if (is_inside(*sphere, data->objs[1]->u_data.camera, light))
 		return ;
 	ray->shiny = 100;
 	
-	phong(data, ray, light, sphere.colors);
+	// get_sp_texture_color(data, ray, &sphere);
+	// texture_color = get_sp_texture_color(data, ray, &sphere);
+	// sphere->colors = vec_add(get_sp_texture_color(data, ray, sphere), vec_unit(normal_map_color));
+	// sphere.colors = get_sp_texture_color(data, ray, &sphere);
+	phong(data, ray, light, sphere->colors);
 }
 
 float	sphere_hits(t_vec vector, t_vec v, t_sphere sphere)
@@ -56,11 +84,15 @@ float it_hit_sphere(t_data *data, t_ray *ray, t_sphere sphere)
 	int		i;
 	float	ret;
 
+	t_vec	normal_map_color;
+	
+	normal_map_color = get_sp_xpm_color(data, ray, &sphere.n_map);
+	sphere.colors = vec_add(get_sp_xpm_color(data, ray, &sphere.xpm), vec_unit(normal_map_color));
 	ret = 0;
 	i = 0;
 	ray->normal = vec_scale(1/sphere.radius, vec_subs(ray->point_at, sphere.center));
 	while (i < data->count.l_count)
-		light_hit(ray, data, sphere, data->objs[2 + i++]->u_data.light);
+		light_hit(ray, data, &sphere, data->objs[2 + i++]->u_data.light);
 	t_vec ambient_color = add_color(vec_scale(K, sphere.colors), vec_scale(1 - K, data->objs[0]->u_data.ambiant.colors));
 	data->final_color = add_colors(data->final_color, ambient_color, data->objs[0]->u_data.ambiant.light_ratio);
 	return (1);

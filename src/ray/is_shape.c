@@ -68,3 +68,23 @@ void	is_cylinder(t_data *data, t_ray *ray, t_vec *point_at, int i)
 		}
 	}
 }
+
+void	is_hyperboloid(t_data *data, t_ray *ray, t_vec *point_at, int i)
+{
+	t_cam	cam;
+	t_vec	r_point_at;
+	float	root;
+
+	cam = data->objs[1]->u_data.camera;
+	
+	root = hit_hyperboloid(ray->direction, data->objs[i]->u_data.hyperboloid, cam.pos);
+	if (root > 0)
+	{
+		r_point_at = vec_add(data->objs[1]->u_data.camera.pos, vec_scale(root, ray->direction));
+		if (is_first(r_point_at, cam, point_at, &ray->first))
+		{
+			vec_equal(&ray->point_at, &r_point_at);
+			ray->obj_n = i;
+		}
+	}
+}

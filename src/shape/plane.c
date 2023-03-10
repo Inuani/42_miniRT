@@ -55,14 +55,41 @@ void get_texture(t_data *data, t_ray *ray, t_plane *plane)
 	int	y;
 	t_vec	color;
 	(void)plane;
+// int getcolorofpixel(t_data *data, int *width, int	*height)
+// {
+// 	void	*img_data;
+// 	img_data = mlx_xpm_file_to_image(data->mlx, "images/plaque_metal.xpm", width, height);
 
-	getcolorofpixel(data, &w, &h);
-	x = ((int)ray->point_at.x % 2) / w;
-	y = ((int)ray->point_at.z % 2) / h;
+// 	printf("height : %d\n", height);
+// 	printf("width : %d\n", width);
 
-	color = decimalToRGB(getcolorofpixel(data, &w, &h));
-	plane->colors = color;
-}*/
+// 	int bpp;
+// 	int size_line;
+// 	int endian;
+// 	char *img_info = mlx_get_data_addr(img_data, &bpp, &size_line, &endian);
+// 	int x = 10;
+// 	int y = 10;
+// 	int	pixel_offset = (y * size_line) + (x * (bpp / 8));
+// 	int	pixel_color = mlx_get_color_value(data->mlx, *(int *)(img_info + pixel_offset));
+// 	return (pixel_color);
+// }
+
+// void get_texture(t_data *data, t_ray *ray, t_plane *plane)
+// {
+// 	int w;
+// 	int h;
+// 	int	x;
+// 	int	y;
+// 	t_vec	color;
+// 	(void)plane;
+
+// 	getcolorofpixel(data, &w, &h);
+// 	x = ((int)ray->point_at.x % 2) / w;
+// 	y = ((int)ray->point_at.z % 2) / h;
+
+// 	color = decimalToRGB(getcolorofpixel(data, &w, &h));
+// 	plane->colors = color;
+// }*/
 
 void	plane_light(t_data *data, t_ray *ray, t_plane plane, t_light light)
 {
@@ -84,7 +111,6 @@ void	plane_life(t_data *data, t_ray *ray, t_plane plane)
 
 	while (i < data->count.l_count)
 		plane_light(data, ray, plane, data->objs[2 + i++]->u_data.light);
-
 	t_vec ambient_color = add_color(vec_scale(K, plane.colors), vec_scale(1 - K, data->objs[0]->u_data.ambiant.colors));
 	data->final_color = add_colors(data->final_color, ambient_color, data->objs[0]->u_data.ambiant.light_ratio);
 }

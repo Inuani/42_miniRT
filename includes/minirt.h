@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:13:13 by egauthey          #+#    #+#             */
-/*   Updated: 2023/03/09 16:37:30 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/03/10 11:40:06 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ t_vec	add_colors(t_vec c1, t_vec c2, float intensity);
 //utility
 float	map2(float x, float min, float input_min);
 float	map(float x);
-int		get_angle(t_vec normal, t_vec ray_l);
+int		get_angle_degree(t_vec normal, t_vec ray_l);
+float	get_angle_0_to_1(t_vec normal, t_vec obj);
 
 //render text-tutorial
 void render_text(t_data *data);
