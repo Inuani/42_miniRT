@@ -72,5 +72,6 @@ void	print_object(t_object obj);
 # define ERR_MALLOC "Error : memory allocation."
 # define ERR_OBJ "Error : object included does not exist."
 # define ERR_PROPERTIES "Error : incorrect properties of an object"
+# define ERR_XPM_IMG "Error : incorrect xpm file"
 
 #endif

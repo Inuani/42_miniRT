@@ -21,19 +21,16 @@ int	main(int ac, char **av)
 
 	data.changed = 1;
 	data.current = 0;
-	
-	
+	// sleep(10);
+
 	mrt_parsing(av, &data);
 	initialise_viewport(&data);
 	// free (data.objs);
 	// free_obj_list(data.chaos);
 
-	int i = 0;
-	while(data.objs[i])
-	 	print_object(*data.objs[i++]);
-	
-	// init_window(&data);// --normal
-	// init_image(&data, WIDTH, HEIGHT, &data.img);
+	// int i = 0;
+	// while(data.objs[i])
+	//  	print_object(*data.objs[i++]);
 
 	//render(&data);
 	//create_thread(&data);

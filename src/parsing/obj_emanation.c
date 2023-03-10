@@ -9,7 +9,7 @@ int	calc_nb_prop(t_tok *lst)
 	tmp = lst;
 	while(tmp)
 	{
-		if (tmp->type == 1)
+		if (tmp->type == 1 || tmp->type == 2)
 			nb++;
 		tmp = tmp->next;
 	}
@@ -158,12 +158,29 @@ int	add_light(t_data *d, t_tok *lst)
 	return (1);
 }
 
-void	sp_img_init(t_data *d, t_sphere *cur)
+void	sp_img_init(t_data *d, t_tok **lst, t_sphere *cur)
 {
-	cur->xpm.img = mlx_xpm_file_to_image(d->mlx, "images/crater.xpm", &cur->xpm.wdth, &cur->xpm.hgt);
+	char	*n_img;
+	char	*n_path;
+	char	*xpm;
+
+	*lst = (*lst)->next;
+	n_path = ft_strjoin("images/", "n_");
+	if (!n_path)
+		exit_error(ERR_MALLOC, 260);
+	n_img = ft_strjoin(n_path, (*lst)->s);
+	if (!n_img)
+		exit_error(ERR_MALLOC, 260);
+	xpm = ft_strjoin("images/", (*lst)->s);
+	if (!xpm)
+		exit_error(ERR_MALLOC, 260);
+	cur->xpm.img = mlx_xpm_file_to_image(d->mlx, xpm, &cur->xpm.wdth, &cur->xpm.hgt);
 	cur->xpm.addr = mlx_get_data_addr(cur->xpm.img, &cur->xpm.bits_per_pixel, &cur->xpm.line_length, &cur->xpm.endian);
-	cur->n_map.img = mlx_xpm_file_to_image(d->mlx, "images/crater_n.xpm", &cur->n_map.wdth, &cur->n_map.hgt);
+	cur->n_map.img = mlx_xpm_file_to_image(d->mlx, n_img, &cur->n_map.wdth, &cur->n_map.hgt);
 	cur->n_map.addr = mlx_get_data_addr(cur->n_map.img, &cur->n_map.bits_per_pixel, &cur->n_map.line_length, &cur->n_map.endian);
+	free(n_path);
+	free(n_img);
+	free(xpm);
 }
 
 void	set_sp_prop(t_tok **lst, t_sphere *inst)
@@ -193,7 +210,7 @@ int	add_sphere(t_data *d, t_tok *lst)
 	int			nb;
 
 	nb = calc_nb_prop(lst);
-	if (nb != 7)
+	if (nb != 7 && nb != 8)
 		exit_error(ERR_PROPERTIES, 1);
 	set_sp_prop(&lst, &inst);
 	// lst = lst->next;
@@ -212,7 +229,11 @@ int	add_sphere(t_data *d, t_tok *lst)
 	// inst.colors.z = ft_atof(lst->s);
 	// inst.up = (t_vec) {0, 1, 0};
 	// inst.right = (t_vec) {1, 0, 0};
-	sp_img_init(d, &inst);
+	if (nb == 8)
+	{
+		sp_img_init(d, &lst, &inst);
+		
+	}
 	new = create_object(SPHERE, &inst);
 	add_object_to_list(&d->chaos, new);
 	free_tok(d);

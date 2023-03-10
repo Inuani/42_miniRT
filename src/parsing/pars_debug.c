@@ -71,7 +71,14 @@ void	print_object(t_object obj)
 	}
 	else if (obj.type == HYPERBOLOID)
 	{
-		printf("hi\n");
+		printf("Cone center: (%.1f, %.1f, %.1f)\n", obj.u_data.hyperboloid.center.x,
+			obj.u_data.hyperboloid.center.y, obj.u_data.hyperboloid.center.z);
+	printf("Cone orientation: (%.1f, %.1f, %.1f)\n", obj.u_data.hyperboloid.orient.x,
+		obj.u_data.hyperboloid.orient.y, obj.u_data.hyperboloid.orient.z);
+	printf("Cone radius: %.3f\n", obj.u_data.hyperboloid.radius);
+	printf("Cone height: %.3f\n", obj.u_data.hyperboloid.hgt);
+	printf("Cone color: (%.1f, %.1f, %.1f)\n", obj.u_data.hyperboloid.colors.x,
+		obj.u_data.hyperboloid.colors.y, obj.u_data.hyperboloid.colors.z);
 	}
 	printf("\n");
 }
