@@ -390,6 +390,7 @@ int	add_cylinder(t_data *d, t_tok *lst)
 	nb = calc_nb_prop(lst);
 	if (nb != 11 && nb != 12)
 		exit_error(ERR_PROPERTIES, 1);
+	inst.flg = 0;
 	set_cyl_prop(&lst, &inst);
 	// lst = lst->next;
 	// inst.center.x = ft_atof(lst->s);
@@ -414,10 +415,15 @@ int	add_cylinder(t_data *d, t_tok *lst)
 	// lst = lst->next;
 	// inst.colors.z = ft_atof(lst->s);
 	// inst.orient = vec_unit(inst.orient);
-	
 	if (nb == 12)
 	{
-		cy_img_init(d, &lst, &inst);
+		if (!ft_strncmp(lst->next->s, "damier", 6))
+			inst.flg = 1;
+		else
+		{
+			cy_img_init(d, &lst, &inst);
+			inst.flg = 2;
+		}
 	}
 	new = create_object(CYLINDER, &inst);
 	add_object_to_list(&d->chaos, new);

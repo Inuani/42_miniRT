@@ -140,6 +140,8 @@ t_object	*copy_obj_list_deep(const t_object *list)
 		new_node->u_data.cylinder.n_map.endian = list->u_data.cylinder.n_map.endian;
 		new_node->u_data.cylinder.n_map.wdth = list->u_data.cylinder.n_map.wdth;
 		new_node->u_data.cylinder.n_map.hgt = list->u_data.cylinder.n_map.hgt;
+
+		new_node->u_data.cylinder.flg = list->u_data.cylinder.flg;
 	}
 	else if (new_node->type == HYPERBOLOID)
 	{

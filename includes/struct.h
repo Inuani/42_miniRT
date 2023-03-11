@@ -79,6 +79,7 @@ typedef struct s_cylinder {
 	t_vec	colors;
 	t_img	xpm;
 	t_img	n_map;
+	int		flg;
 }				t_cylinder;
 
 typedef struct s_plane {

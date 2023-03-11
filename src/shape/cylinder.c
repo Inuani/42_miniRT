@@ -27,18 +27,22 @@ void	cyl_light_hit(t_ray *ray, t_data *data, t_cylinder cyl, t_light light)
 
 float	cylinder_eman(t_data *data, t_ray *ray, t_cylinder cyl)
 {
-	int	i;
-	//t_vec	normal_map_color;
-
-	//normal_map_color = get_sp_xpm_color(data, ray, &cyl.n_map);
-	//cyl.colors = vec_add(get_sp_xpm_color(data, ray, &cyl.xpm), vec_unit(normal_map_color));
-	i = 0;
-
-	t_vec dist = vec_subs(ray->point_at, cyl.center);
-	t_vec proj = vec_subs(dist, vec_scale(vec_dot(dist, cyl.orient), cyl.orient));
+	int		i;
+	t_vec	normal_map_color;
+	t_vec	dist;
+	t_vec	proj;
+	
+	dist = vec_subs(ray->point_at, cyl.center);
+	proj = vec_subs(dist, vec_scale(vec_dot(dist, cyl.orient), cyl.orient));
 	ray->normal = vec_unit(proj);
-
-	cyl.colors = calculate_x_y_ccb(ray, &cyl);
+	if (cyl.flg == 2)
+	{
+		normal_map_color = get_sp_xpm_color(data, ray, &cyl.n_map);
+		cyl.colors = vec_add(get_sp_xpm_color(data, ray, &cyl.xpm), vec_unit(normal_map_color));
+	}
+	else if (cyl.flg == 1)
+		cyl.colors = calculate_x_y_ccb(ray, &cyl);
+	i = 0;
 	while (i < data->count.l_count)
 		cyl_light_hit(ray, data, cyl, data->objs[2 + i++]->u_data.light);
 	t_vec ambient_color = add_color(vec_scale(K_LIGHT, cyl.colors), vec_scale(1 - K_LIGHT, data->objs[0]->u_data.ambiant.colors));
