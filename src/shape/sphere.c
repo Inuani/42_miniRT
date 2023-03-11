@@ -42,7 +42,7 @@ t_vec	get_sp_xpm_color(t_data *d, t_ray *ray, t_img *xpm)
 	return (pixel_color);
 }
 
-t_vec calculate_x_y_scb(t_ray *ray)
+t_vec calculate_x_y_scb(t_ray *ray, t_sphere *sphere)
 {
 	float	u;
 	float	v;
@@ -53,7 +53,7 @@ t_vec calculate_x_y_scb(t_ray *ray)
 
 	if (((int)u + (int)v) % 2 == 0)
 		return ((t_vec) {255, 255, 255});
-	return ((t_vec) {0, 0, 0});
+	return (sphere->colors);
 }
 
 void	light_hit(t_ray *ray, t_data *data, t_sphere *sphere, t_light light)
@@ -97,13 +97,14 @@ float it_hit_sphere(t_data *data, t_ray *ray, t_sphere sphere)
 	int		i;
 	float	ret;
 
-	t_vec	normal_map_color;
-	normal_map_color = get_sp_xpm_color(data, ray, &sphere.n_map);
-	sphere.colors = vec_add(get_sp_xpm_color(data, ray, &sphere.xpm), vec_unit(normal_map_color));
-	//sphere.colors = calculate_x_y_scb(ray);
+	ray->normal = vec_scale(1/sphere.radius, vec_subs(ray->point_at, sphere.center));
+
+	//t_vec	normal_map_color;
+	//normal_map_color = get_sp_xpm_color(data, ray, &sphere.n_map);
+	//sphere.colors = vec_add(get_sp_xpm_color(data, ray, &sphere.xpm), vec_unit(normal_map_color));
+	sphere.colors = calculate_x_y_scb(ray, &sphere);
 	ret = 0;
 	i = 0;
-	ray->normal = vec_scale(1/sphere.radius, vec_subs(ray->point_at, sphere.center));
 	while (i < data->count.l_count)
 		light_hit(ray, data, &sphere, data->objs[2 + i++]->u_data.light);
 	t_vec ambient_color = add_color(vec_scale(K_LIGHT, sphere.colors), vec_scale(1 - K_LIGHT, data->objs[0]->u_data.ambiant.colors));

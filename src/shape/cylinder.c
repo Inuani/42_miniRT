@@ -1,5 +1,19 @@
 # include "../../includes/minirt.h"
 
+
+t_vec calculate_x_y_ccb(t_ray *ray, t_cylinder *cyl)
+{
+	float	u;
+	float	v;
+	u = get_angle_0_to_1(vec_unit(ray->point_at), (t_vec){1,0,0});
+	v = fmod(ray->point_at.y, 1);
+
+	if (!((u + v) < 0.5 || ((u + v) > 1 && (u + v) < 1.5)))
+		return ((t_vec) {255, 255, 255});
+	return ((t_vec) cyl->colors);
+}
+
+
 void	cyl_light_hit(t_ray *ray, t_data *data, t_cylinder cyl, t_light light)
 {
 	if (!light_hit_objs(data, ray->point_at, light))
@@ -7,9 +21,6 @@ void	cyl_light_hit(t_ray *ray, t_data *data, t_cylinder cyl, t_light light)
 	// if (is_inside(cyl, data->objs[1]->u_data.camera, light))
 	// 	return ;
 
-	t_vec dist = vec_subs(ray->point_at, cyl.center);
-	t_vec proj = vec_subs(dist, vec_scale(vec_dot(dist, cyl.orient), cyl.orient));
-	ray->normal = vec_unit(proj);
 	ray->shiny = 100;
 	phong(data, ray, light, cyl.colors);
 }
@@ -20,6 +31,11 @@ float	cylinder_eman(t_data *data, t_ray *ray, t_cylinder cyl)
 
 	i = 0;
 
+	t_vec dist = vec_subs(ray->point_at, cyl.center);
+	t_vec proj = vec_subs(dist, vec_scale(vec_dot(dist, cyl.orient), cyl.orient));
+	ray->normal = vec_unit(proj);
+
+	cyl.colors = calculate_x_y_ccb(ray, &cyl);
 	while (i < data->count.l_count)
 		cyl_light_hit(ray, data, cyl, data->objs[2 + i++]->u_data.light);
 	t_vec ambient_color = add_color(vec_scale(K_LIGHT, cyl.colors), vec_scale(1 - K_LIGHT, data->objs[0]->u_data.ambiant.colors));
