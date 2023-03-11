@@ -1,39 +1,5 @@
 
 #include "../../includes/minirt.h"
-/*
-void	print_color(t_data *data, t_vec color)
-{
-	int	i;
-	int	j;
-
-	t_img *img = mlx_new_image(data->mlx, 150, 50);
-	img->addr = mlx_get_data_addr(img, &img->bits_per_pixel,
-			&img->line_length, &img->endian);
-	i = 0;
-	while (i < 50)
-	{
-		j = 0;
-		while (j < 50)
-			my_mlx_pixel_put(img, 0 + i++, 0 + j++, create_trgb(0, color.x, 0, 0));
-	}
-	i = 0;
-	while (i < 50)
-	{
-		j = 0;
-		while (j < 50)
-			my_mlx_pixel_put(img, 50 + i++, 0 + j++, create_trgb(0, 0, color.y, 0));
-	}
-	i = 0;
-	while (i < 50)
-	{
-		j = 0;
-		while (j < 50)
-			my_mlx_pixel_put(img, 100 + i++, 0 + j++, create_trgb(0, 0, 0, color.z));
-	}
-	mlx_put_image_to_window(data->mlx, data->win, img, 5, 5);
-}*/
-
-//2 + data->count.l_count + data->count.sp_count + data->count.pl_count
 
 void render_text(t_data *data)
 {

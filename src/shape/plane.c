@@ -61,7 +61,7 @@ float	plane_hit(t_plane *plane, t_vec ray_origine, t_vec ray_direction)
 // 	plane->colors = decimalToRGB(get_color_pixel(data, &w, &h, plane));
 // }
 
-t_vec calculate_x_y_pcb(t_ray ray)
+t_vec calculate_x_y_pcb(t_ray ray, t_plane *plane)
 {
 	int	x;
 	int	y;
@@ -75,7 +75,7 @@ t_vec calculate_x_y_pcb(t_ray ray)
 
 	if ((!x && !y) || (x && y))
 		return ((t_vec) {255, 255, 255});
-	return ((t_vec) {0, 0, 0});
+	return (plane->colors);
 }
 
 void	plane_light(t_data *data, t_ray *ray, t_plane plane, t_light light)
@@ -96,7 +96,7 @@ void	plane_life(t_data *data, t_ray *ray, t_plane plane)
 
 	i = 0;
 
-	plane.colors = calculate_x_y_pcb(*ray);
+	plane.colors = calculate_x_y_pcb(*ray, &plane);
 	while (i < data->count.l_count)
 		plane_light(data, ray, plane, data->objs[2 + i++]->u_data.light);
 	t_vec ambient_color = add_color(vec_scale(K_LIGHT, plane.colors), vec_scale(1 - K_LIGHT, data->objs[0]->u_data.ambiant.colors));
