@@ -100,7 +100,10 @@ float it_hit_sphere(t_data *data, t_ray *ray, t_sphere sphere)
 	if (sphere.flg == 2)
 	{
 		normal_map_color = get_sp_xpm_color(data, ray, &sphere.n_map);
-		sphere.colors = vec_add(get_sp_xpm_color(data, ray, &sphere.xpm), vec_unit(normal_map_color));
+		sphere.colors = vec_add(get_sp_xpm_color(data, ray, &sphere.xpm), normal_map_color);
+
+		// sphere.colors = add_colors(get_sp_xpm_color(data, ray, &sphere.xpm), normal_map_color, 0.05);
+		// sphere.colors = get_sp_xpm_color(data, ray, &sphere.xpm);
 	}
 	else if (sphere.flg == 1)
 		sphere.colors = calculate_x_y_scb(ray, &sphere);

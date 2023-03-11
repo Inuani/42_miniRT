@@ -13,7 +13,6 @@ t_vec calculate_x_y_ccb(t_ray *ray, t_cylinder *cyl)
 	return ((t_vec) cyl->colors);
 }
 
-
 void	cyl_light_hit(t_ray *ray, t_data *data, t_cylinder cyl, t_light light)
 {
 	if (!light_hit_objs(data, ray->point_at, light))
@@ -25,10 +24,38 @@ void	cyl_light_hit(t_ray *ray, t_data *data, t_cylinder cyl, t_light light)
 	phong(data, ray, light, cyl.colors);
 }
 
+void calculate_texture_coords(t_cylinder *cy, t_ray *ray, float *u, float *v)
+{
+	t_vec hit_pos = vec_subs(ray->point_at, cy->center);
+	float theta = atan2(hit_pos.x, hit_pos.z); // calculate the angle from the x-z plane
+	if (theta < 0) {
+		theta += 2 * M_PI;
+	}
+	*u = theta / (2 * M_PI); // map the angle to the range [0, 1]
+	*v = (hit_pos.y + cy->hgt / 2) / cy->hgt; // map the y-coordinate to the range [0, 1]
+}
+
+
+t_vec get_texture_color(t_data *d, t_cylinder *cy, float u, float v)
+{
+	int x = u * cy->xpm.wdth;
+	int y = (1 - v) * cy->xpm.hgt; // invert v coordinate to match image origin
+	return decimalToRGB(get_color_pixel(d, x, y, &cy->xpm));
+}
+
+t_vec apply_texture_color(t_data *d, t_ray *ray, t_cylinder *cy)
+{
+	t_vec	pixel_color;
+	float u, v;
+	calculate_texture_coords(cy, ray, &u, &v);
+	pixel_color = get_texture_color(d, cy, u, v);
+	return (pixel_color);
+}
+
 float	cylinder_eman(t_data *data, t_ray *ray, t_cylinder cyl)
 {
 	int		i;
-	t_vec	normal_map_color;
+	// t_vec	normal_map_color;
 	t_vec	dist;
 	t_vec	proj;
 	
@@ -37,8 +64,15 @@ float	cylinder_eman(t_data *data, t_ray *ray, t_cylinder cyl)
 	ray->normal = vec_unit(proj);
 	if (cyl.flg == 2)
 	{
-		normal_map_color = get_sp_xpm_color(data, ray, &cyl.n_map);
-		cyl.colors = vec_add(get_sp_xpm_color(data, ray, &cyl.xpm), vec_unit(normal_map_color));
+		// normal_map_color = get_cy_xpm_color(data, ray, &cyl);
+		// cyl.colors = vec_add(get_cy_xpm_color(data, ray, &cyl), vec_unit(normal_map_color));
+		
+		// cyl.colors = get_cy_xpm_color(data, ray, &cyl);
+		
+		// normal_map_color = apply_texture_color(data, ray, &cyl);
+		// cyl.colors = vec_add(apply_texture_color(data, ray, &cyl), vec_unit(normal_map_color));
+
+		cyl.colors = apply_texture_color(data, ray, &cyl);
 	}
 	else if (cyl.flg == 1)
 		cyl.colors = calculate_x_y_ccb(ray, &cyl);
@@ -102,82 +136,5 @@ void	cylinder_init(t_data *d, t_cylinder *cy)
 {
 	cy->h = vec_subs(vec_add(cy->center, vec_scale(cy->hgt, cy->orient)), cy->center);
 	cy->cam2cyl = vec_subs(d->objs[1]->u_data.camera.pos, cy->center);
-	// cyl->orient = vec_unit(cyl->orient);
 	cy->top_cyl = vec_add(cy->center, vec_scale(cy->hgt, cy->orient));
-
 }
-
-
-// OLD CYLINDER FUNCTION
-// float	hit_cylinder(t_vec ray_dir, t_cylinder cyl, t_vec origin)
-// {
-// 	float	a;
-// 	float	b;
-// 	float	c;
-// 	float	t1;
-// 	float	t2;
-// 	float	delta;
-// 	t_vec	point_at;
-
-// 	a = vec_dot(ray_dir, ray_dir) - powf(vec_dot(ray_dir, cyl.orient), 2);
-// 	b = 2.0 * ((vec_dot(ray_dir, cyl.cam2cyl)) - (vec_dot(ray_dir, cyl.orient) * vec_dot(cyl.cam2cyl, cyl.orient)));
-// 	c = vec_dot(cyl.cam2cyl, cyl.cam2cyl) - powf(vec_dot(cyl.cam2cyl, cyl.orient), 2) - powf(cyl.radius, 2.0);
-// 	delta = (b * b) - (4 * a * c);
-// 	if (delta == 0.0)
-// 	{
-// 		if (fabs(vec_dot(vec_unit(ray_dir), cyl.orient)) != 1)
-// 			return(-(b / (2.0 * a)));
-// 		else if (fabs(vec_dot(vec_unit(ray_dir), cyl.orient)) == 1)
-// 		{
-// 				t1 = (-b - sqrt(delta)) / (2.0 * a);
-// 				t2 = (-b + sqrt(delta)) / (2.0 * a);
-
-// 			if (t1 > 0.0 && (t2 < 0.0 || t1 < t2))
-// 				return (t1);
-// 			return (t2);
-// 		}
-// 	}
-// 	else if (delta > 0)
-// 	{
-// 		t1 = (-b - sqrt(delta)) / (2.0 * a);
-// 		t2 = (-b + sqrt(delta)) / (2.0 * a);
-// 		// verifier si t sont bien positif, sinon ils sont derriere la camera
-
-// 		float	t;
-// 		if (t2 < 0)
-// 			return (-1);
-// 		t = (t1 > 0 ? t1 : t2);
-// 		float max = sqrtf(powf(cyl.hgt / 2, 2) + powf(cyl.radius, 2));
-// 		point_at = vec_add(origin, vec_scale(t, ray_dir));
-// 		t_vec len = vec_subs(point_at, cyl.center);
-// 		// len = vec_subs(point_at, cyl.center);
-// 		// len = vec_subs(ray->point_at, vec_add(cyl.center, vec_scale(cyl.hgt / 2, cyl.orient)));
-// 		if (vec_len(len) > max)
-// 			t = t2;
-// 		point_at = vec_add(origin, vec_scale(t, ray_dir));
-// 		len = vec_subs(point_at, cyl.center);
-// 		// len = vec_subs(ray->point_at, vec_add(cyl.center, vec_scale(cyl.hgt / 2, cyl.orient)));
-// 		if (vec_len(len) > max)
-// 			return (-1);
-// 		return (t);
-
-	
-// 		// if (t1 > 0.0 && (t2 < 0.0 || t1 < t2))
-// 		// {
-// 		// 	ray->point_at = vec_add(origin, vec_scale(t1, ray->direction));
-// 		// 	if (vec_dot(vec_subs(ray->point_at, cyl.center), cyl.h) < 0)
-// 		// 		return -1;
-// 		// 	if (vec_dot(vec_subs(ray->point_at, cyl.center), cyl.h) > vec_dot(cyl.h, cyl.h))
-// 		// 		return -1;
-// 		// 	return (t1);
-// 		// }
-// 		// printf("ici\n");
-// 		// ray->point_at = vec_add(origin, vec_scale(t2, ray->direction));
-// 		// // if (vec_dot(vec_subs(ray->point_at, cyl.center), cyl.h) < 0)
-// 		// // 	return (-1);
-// 		// // if (vec_dot(vec_subs(ray->point_at, cyl.center), cyl.h) > vec_dot(cyl.h, cyl.h))
-// 		// // 	return (-1);
-// 		// return (t2);
-// 	}
-// 	return (-1.0);
-// }
