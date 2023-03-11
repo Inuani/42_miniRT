@@ -1,6 +1,18 @@
 
 #include "../../includes/minirt.h"
 
+t_vec calculate_x_y_hcb(t_ray *ray, t_hyperboloid *cyl)
+{
+	float	u;
+	float	v;
+	u = get_angle_0_to_1(vec_unit(ray->point_at), (t_vec){1,0,0});
+	v = fmod(ray->point_at.y, 1);
+
+	if (!((u + v) < 0.5 || ((u + v) > 1 && (u + v) < 1.5)))
+		return ((t_vec) {255, 255, 255});
+	return ((t_vec) cyl->colors);
+}
+
 int is_inside_hyp(t_ray *ray, t_hyperboloid hyp)
 {
 	t_vec	h_point = vec_add(hyp.center, vec_scale(hyp.hgt, hyp.orient));
@@ -66,6 +78,7 @@ float it_hit_hy(t_data *data, t_ray *ray, t_hyperboloid hp)
 
 	ret = 0;
 	i = 0;
+	hp.colors = calculate_x_y_hcb(ray, &hp);
 	while (i < data->count.l_count)
 		hyp_light_hit(ray, data, hp, data->objs[2 + i++]->u_data.light);
 	t_vec ambient_color = add_color(vec_scale(K_LIGHT, hp.colors), vec_scale(1 - K_LIGHT, data->objs[0]->u_data.ambiant.colors));

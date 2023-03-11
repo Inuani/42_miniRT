@@ -58,6 +58,8 @@ THDS_SRC = $(addprefix $(THDS_DIR),	threads.c \
 REND_SRC = $(addprefix $(REND_DIR),	render.c \
 									handle_window.c \
 									handle_keys.c \
+									handle_keys2.c \
+									handle_keys3.c \
 									trgb.c \
 									ftoa.c \
 									)
