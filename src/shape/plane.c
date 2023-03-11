@@ -96,7 +96,7 @@ void	plane_life(t_data *data, t_ray *ray, t_plane plane)
 
 	i = 0;
 
-	//plane.colors = calculate_x_y_pcb(*ray);
+	plane.colors = calculate_x_y_pcb(*ray);
 	while (i < data->count.l_count)
 		plane_light(data, ray, plane, data->objs[2 + i++]->u_data.light);
 	t_vec ambient_color = add_color(vec_scale(K_LIGHT, plane.colors), vec_scale(1 - K_LIGHT, data->objs[0]->u_data.ambiant.colors));

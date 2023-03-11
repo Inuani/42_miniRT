@@ -100,9 +100,35 @@ void render_text(t_data *data)
 		mlx_string_put(data->mlx, data->win, WIDTH/2 + 100, HEIGHT - HEIGHT/55, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.orient.z, str));
 		//print_color(data, data->objs[data->current]->u_data.plane.colors);
 	}
-	else
+	else if (data->current < 2 + data->count.l_count + data->count.sp_count + data->count.pl_count + data->count.cy_count)
 	{
+		if (data->changed)
+			printf("\nYou are on a cylinder.\nUse W E to increase coords components\nA S D to decrease them.\nU I O and J K L to change the orientation\n7 8 9 to increase colors components\n4 5 6 to decrease them\n\n");
 		mlx_string_put(data->mlx, data->win, WIDTH/2 - WIDTH/30, HEIGHT - HEIGHT/19, 0xFFFFFF, "You are on a cylinder");
+		mlx_string_put(data->mlx, data->win, WIDTH/2 + 20- WIDTH/20 -80, HEIGHT - HEIGHT/30, 0xFFFFFF, "cylinder center coords : ");
+		mlx_string_put(data->mlx, data->win, WIDTH/2 + 10, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.point.x, str));
+		mlx_string_put(data->mlx, data->win, WIDTH/2 + 60, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.point.y, str));
+		mlx_string_put(data->mlx, data->win, WIDTH/2 + 110, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.point.z, str));
+		mlx_string_put(data->mlx, data->win, WIDTH/2 - 140, HEIGHT - HEIGHT/55, 0xFFFFFF, "cylinder orientation : ");
+		mlx_string_put(data->mlx, data->win, WIDTH/2, HEIGHT - HEIGHT/55, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.orient.x, str));
+		mlx_string_put(data->mlx, data->win, WIDTH/2 + 50, HEIGHT - HEIGHT/55, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.orient.y, str));
+		mlx_string_put(data->mlx, data->win, WIDTH/2 + 100, HEIGHT - HEIGHT/55, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.orient.z, str));
+		mlx_string_put(data->mlx, data->win, WIDTH/2 - WIDTH/30, HEIGHT - HEIGHT/19, 0xFFFFFF, "You are on a cylinder");
+	}
+	else if (data->current < 2 + data->count.l_count + data->count.sp_count + data->count.pl_count + data->count.cy_count + data->count.hy_count)
+	{
+		if (data->changed)
+			printf("\nYou are on a cone.\nUse W E to increase coords components\nA S D to decrease them.\nU I O and J K L to change the orientation\n7 8 9 to increase colors components\n4 5 6 to decrease them\n\n");
+		mlx_string_put(data->mlx, data->win, WIDTH/2 - WIDTH/30, HEIGHT - HEIGHT/19, 0xFFFFFF, "You are on a cone");
+		mlx_string_put(data->mlx, data->win, WIDTH/2 + 20- WIDTH/20 -80, HEIGHT - HEIGHT/30, 0xFFFFFF, "cone center coords : ");
+		mlx_string_put(data->mlx, data->win, WIDTH/2 + 10, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.point.x, str));
+		mlx_string_put(data->mlx, data->win, WIDTH/2 + 60, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.point.y, str));
+		mlx_string_put(data->mlx, data->win, WIDTH/2 + 110, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.point.z, str));
+		mlx_string_put(data->mlx, data->win, WIDTH/2 - 140, HEIGHT - HEIGHT/55, 0xFFFFFF, "cone orientation : ");
+		mlx_string_put(data->mlx, data->win, WIDTH/2, HEIGHT - HEIGHT/55, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.orient.x, str));
+		mlx_string_put(data->mlx, data->win, WIDTH/2 + 50, HEIGHT - HEIGHT/55, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.orient.y, str));
+		mlx_string_put(data->mlx, data->win, WIDTH/2 + 100, HEIGHT - HEIGHT/55, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.orient.z, str));
+		mlx_string_put(data->mlx, data->win, WIDTH/2 - WIDTH/30, HEIGHT - HEIGHT/19, 0xFFFFFF, "You are on a cone");
 	}
 	data->changed = 0;
 }
