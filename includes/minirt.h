@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:13:13 by egauthey          #+#    #+#             */
-/*   Updated: 2023/03/10 16:27:39 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/03/11 18:35:59 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,16 @@ void	init_image(t_data *data, int width, int height, t_img *img);
 int		close_win(void);
 
 // handle keys
+void	handle_ambient(int key, t_data *data);
+void	handle_camera(int key, t_data *data);
+void	handle_lights(int key, t_data *data);
+void	handle_stuff(int key, t_data *data);
+int 	event_handler(int key, t_data *data);
+void	handle_hyperboloids(int key, t_data *data);
+void	handle_cylinders(int key, t_data *data);
+void	handle_planes(int key, t_data *data);
 int		event_handler(int key, t_data *data);
+void	handle_spheres(int key, t_data *data);
 
 // ray
 int		ray_color(t_ray *ray, t_data *data);

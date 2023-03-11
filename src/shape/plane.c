@@ -48,18 +48,19 @@ float	plane_hit(t_plane *plane, t_vec ray_origine, t_vec ray_direction)
 	return t;
 }
 
-// void get_texture(t_data *data, t_ray *ray, t_plane *plane)
-// {
-// 	int w;
-// 	int h;
-// 	int	x;
-// 	int	y;
+t_vec get_texture(t_data *data, t_ray ray, t_img *xpm)
+{
+	int	x;
+	int	y;
 
-// 	getcolorofpixel(data, &w, &h);
-// 	x = ((int)ray->point_at.x % 2) / w;
-// 	y = ((int)ray->point_at.z % 2) / h;
-// 	plane->colors = decimalToRGB(get_color_pixel(data, &w, &h, plane));
-// }
+	if (ray.point_at.x < 0)
+		ray.point_at.x = -ray.point_at.x;
+	if (ray.point_at.z < 0)
+		ray.point_at.z = -ray.point_at.z;
+	x = fmod(ray.point_at.x, 1) * xpm->wdth;
+	y = fmod(ray.point_at.z, 1) * xpm->hgt;
+	return (decimalToRGB(get_color_pixel(data, x, y, xpm)));
+}
 
 t_vec calculate_x_y_pcb(t_ray ray, t_plane *plane)
 {
@@ -93,13 +94,13 @@ void	plane_light(t_data *data, t_ray *ray, t_plane plane, t_light light)
 void	plane_life(t_data *data, t_ray *ray, t_plane plane)
 {
 	int		i;
-
+	t_vec	normal_map_color;
 	i = 0;
 
 	if (plane.flg == 2)
 	{
-		// normal_map_color = get_sp_xpm_color(data, ray, &sphere.n_map);
-		// sphere.colors = vec_add(get_sp_xpm_color(data, ray, &sphere.xpm), vec_unit(normal_map_color));
+		normal_map_color = get_texture(data, *ray, &plane.n_map);
+		plane.colors = vec_add(get_texture(data, *ray, &plane.xpm), vec_unit(normal_map_color));
 	}
 	else if (plane.flg == 1)
 		plane.colors = calculate_x_y_pcb(*ray, &plane);
