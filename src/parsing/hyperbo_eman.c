@@ -18,6 +18,24 @@ void	get_hyperboloid(t_data *d)
 	}
 }
 
+void	hyp_img_init(t_data *d, t_tok **lst, t_hyperboloid *cur)
+{
+	char	*n_img;
+	char	*n_path;
+	char	*xpm;
+
+	n_img = NULL;
+	n_path = NULL;
+	xpm = NULL;
+	*lst = (*lst)->next;
+	set_xpm_path(&n_img, &n_path, &xpm, &(*lst)->s);
+	cur->xpm.img = mlx_xpm_file_to_image(d->mlx, xpm, &cur->xpm.wdth, &cur->xpm.hgt);
+	cur->xpm.addr = mlx_get_data_addr(cur->xpm.img, &cur->xpm.bits_per_pixel, &cur->xpm.line_length, &cur->xpm.endian);
+	free(n_path);
+	free(n_img);
+	free(xpm);
+}
+
 void	set_hp_prop(t_tok **lst, t_hyperboloid *inst)
 {
 	*lst = (*lst)->next;
@@ -52,9 +70,20 @@ int	add_hyperboloid(t_data *d, t_tok *lst)
 	int				nb;
 
 	nb = calc_nb_prop(lst);
-	if (nb != 11)
+	if (nb != 11 && nb != 12)
 		exit_error(ERR_PROPERTIES, 1);
+	inst.flg = 0;
 	set_hp_prop(&lst, &inst);
+	if (nb == 12)
+	{
+		if (!ft_strncmp(lst->next->s, "damier", 6))
+			inst.flg = 1;
+		else
+		{
+			hyp_img_init(d, &lst, &inst);
+			inst.flg = 2;
+		}
+	}
 	new = create_object(HYPERBOLOID, &inst);
 	add_object_to_list(&d->chaos, new);
 	free_tok(d);

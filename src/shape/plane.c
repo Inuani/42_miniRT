@@ -94,13 +94,14 @@ void	plane_light(t_data *data, t_ray *ray, t_plane plane, t_light light)
 void	plane_life(t_data *data, t_ray *ray, t_plane plane)
 {
 	int		i;
-	t_vec	normal_map_color;
+	// t_vec	normal_map_color;
 	i = 0;
 
 	if (plane.flg == 2)
 	{
-		normal_map_color = get_texture(data, *ray, &plane.n_map);
-		plane.colors = vec_add(get_texture(data, *ray, &plane.xpm), vec_unit(normal_map_color));
+		// normal_map_color = get_texture(data, *ray, &plane.n_map);
+		// plane.colors = vec_add(get_texture(data, *ray, &plane.xpm), vec_unit(normal_map_color));
+		plane.colors = get_texture(data, *ray, &plane.xpm);
 	}
 	else if (plane.flg == 1)
 		plane.colors = calculate_x_y_pcb(*ray, &plane);

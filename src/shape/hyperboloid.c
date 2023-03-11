@@ -71,17 +71,55 @@ float	hit_hyperboloid(t_vec v, t_hyperboloid hyp, t_vec origin)
 	return (-1);
 }
 
-float it_hit_hy(t_data *data, t_ray *ray, t_hyperboloid hp)
+void get_u_v_hy(t_hyperboloid *hy, t_ray *ray, float *u, float *v)
+{
+	t_vec	hit_vec;
+	float	theta;
+	
+	hit_vec = vec_subs(ray->point_at, hy->center);
+	theta = atan2(hit_vec.x, hit_vec.z);
+	if (theta < 0)
+		theta += 2 * M_PI;
+	*u = theta / (2 * M_PI);
+	*v = (hit_vec.y + hy->hgt / 2) / hy->hgt;
+}
+
+t_vec get_x_y_color_hy(t_data *d, t_hyperboloid *hy, float u, float v)
+{
+	int	x;
+	int	y;
+
+	x = u * hy->xpm.wdth;
+	y = (1 - v) * hy->xpm.hgt;
+	return (decimalToRGB(get_color_pixel(d, x, y, &hy->xpm)));
+}
+
+t_vec	set_hy_xpm_color(t_data *d, t_ray *ray, t_hyperboloid *hy)
+{
+	t_vec	pixel_color;
+	float	u;
+	float	v;
+
+	get_u_v_hy(hy, ray, &u, &v);
+	pixel_color = get_x_y_color_hy(d, hy, u, v);
+	return (pixel_color);
+}
+
+float it_hit_hy(t_data *data, t_ray *ray, t_hyperboloid hy)
 {
 	int		i;
 	float	ret;
+	t_vec	ambient_color;
 
 	ret = 0;
 	i = 0;
-	hp.colors = calculate_x_y_hcb(ray, &hp);
+	if (hy.flg == 2)
+		hy.colors = set_hy_xpm_color(data, ray, &hy);
+	else if (hy.flg == 1)
+		hy.colors = calculate_x_y_hcb(ray, &hy);
 	while (i < data->count.l_count)
-		hyp_light_hit(ray, data, hp, data->objs[2 + i++]->u_data.light);
-	t_vec ambient_color = add_color(vec_scale(K_LIGHT, hp.colors), vec_scale(1 - K_LIGHT, data->objs[0]->u_data.ambiant.colors));
+		hyp_light_hit(ray, data, hy, data->objs[2 + i++]->u_data.light);
+	ambient_color = add_color(vec_scale(K_LIGHT, hy.colors), vec_scale(1 - K_LIGHT, data->objs[0]->u_data.ambiant.colors));
 	data->final_color = add_colors(data->final_color, ambient_color, data->objs[0]->u_data.ambiant.light_ratio);
 	return (1);
 }

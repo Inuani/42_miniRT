@@ -24,38 +24,43 @@ void	cyl_light_hit(t_ray *ray, t_data *data, t_cylinder cyl, t_light light)
 	phong(data, ray, light, cyl.colors);
 }
 
-void calculate_texture_coords(t_cylinder *cy, t_ray *ray, float *u, float *v)
+void get_u_v_cy(t_cylinder *cy, t_ray *ray, float *u, float *v)
 {
-	t_vec hit_pos = vec_subs(ray->point_at, cy->center);
-	float theta = atan2(hit_pos.x, hit_pos.z); // calculate the angle from the x-z plane
-	if (theta < 0) {
+	t_vec	hit_vec;
+	float	theta;
+	
+	hit_vec = vec_subs(ray->point_at, cy->center);
+	theta = atan2(hit_vec.x, hit_vec.z);
+	if (theta < 0)
 		theta += 2 * M_PI;
-	}
-	*u = theta / (2 * M_PI); // map the angle to the range [0, 1]
-	*v = (hit_pos.y + cy->hgt / 2) / cy->hgt; // map the y-coordinate to the range [0, 1]
+	*u = theta / (2 * M_PI);
+	*v = (hit_vec.y + cy->hgt / 2) / cy->hgt;
 }
 
-
-t_vec get_texture_color(t_data *d, t_cylinder *cy, float u, float v)
+t_vec get_x_y_color_cy(t_data *d, t_cylinder *cy, float u, float v)
 {
-	int x = u * cy->xpm.wdth;
-	int y = (1 - v) * cy->xpm.hgt; // invert v coordinate to match image origin
-	return decimalToRGB(get_color_pixel(d, x, y, &cy->xpm));
+	int	x;
+	int	y;
+
+	x = u * cy->xpm.wdth;
+	y = (1 - v) * cy->xpm.hgt;
+	return (decimalToRGB(get_color_pixel(d, x, y, &cy->xpm)));
 }
 
-t_vec apply_texture_color(t_data *d, t_ray *ray, t_cylinder *cy)
+t_vec	set_cy_xpm_color(t_data *d, t_ray *ray, t_cylinder *cy)
 {
 	t_vec	pixel_color;
-	float u, v;
-	calculate_texture_coords(cy, ray, &u, &v);
-	pixel_color = get_texture_color(d, cy, u, v);
+	float	u;
+	float	v;
+
+	get_u_v_cy(cy, ray, &u, &v);
+	pixel_color = get_x_y_color_cy(d, cy, u, v);
 	return (pixel_color);
 }
 
 float	cylinder_eman(t_data *data, t_ray *ray, t_cylinder cyl)
 {
 	int		i;
-	// t_vec	normal_map_color;
 	t_vec	dist;
 	t_vec	proj;
 	
@@ -63,17 +68,7 @@ float	cylinder_eman(t_data *data, t_ray *ray, t_cylinder cyl)
 	proj = vec_subs(dist, vec_scale(vec_dot(dist, cyl.orient), cyl.orient));
 	ray->normal = vec_unit(proj);
 	if (cyl.flg == 2)
-	{
-		// normal_map_color = get_cy_xpm_color(data, ray, &cyl);
-		// cyl.colors = vec_add(get_cy_xpm_color(data, ray, &cyl), vec_unit(normal_map_color));
-		
-		// cyl.colors = get_cy_xpm_color(data, ray, &cyl);
-		
-		// normal_map_color = apply_texture_color(data, ray, &cyl);
-		// cyl.colors = vec_add(apply_texture_color(data, ray, &cyl), vec_unit(normal_map_color));
-
-		cyl.colors = apply_texture_color(data, ray, &cyl);
-	}
+		cyl.colors = set_cy_xpm_color(data, ray, &cyl);
 	else if (cyl.flg == 1)
 		cyl.colors = calculate_x_y_ccb(ray, &cyl);
 	i = 0;

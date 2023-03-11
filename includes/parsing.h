@@ -113,7 +113,7 @@ void	print_object(t_object obj);
 
 # define ERR_OPEN "Open error "
 # define ERR_CLOSE "Close error "
-# define ERR_FILE "Error : file corrupted."
+# define ERR_FILE "Error : file corrupted "
 # define ERR_MALLOC "Error : memory allocation."
 # define ERR_OBJ "Error : object included does not exist."
 # define ERR_PROPERTIES "Error : incorrect properties of an object"
