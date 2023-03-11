@@ -158,22 +158,47 @@ int	add_light(t_data *d, t_tok *lst)
 	return (1);
 }
 
+void	set_xpm_path(char **n_img, char **n_path, char **xpm, char **img)
+{
+	*n_path = ft_strjoin("images/", "n_");
+	if (!*n_path)
+		exit_error(ERR_MALLOC, 260);
+	*n_img = ft_strjoin(*n_path, *img);
+	if (!n_img)
+		exit_error(ERR_MALLOC, 260);
+	*xpm = ft_strjoin("images/", *img);
+	if (!xpm)
+		exit_error(ERR_MALLOC, 260);
+	if (access(*xpm, F_OK) != 0)
+		exit_error(ERR_XPM_IMG, 1);
+	if (access(*n_img, F_OK) != 0)
+		exit_error(ERR_XPM_IMG, 1);
+}
+
 void	sp_img_init(t_data *d, t_tok **lst, t_sphere *cur)
 {
 	char	*n_img;
 	char	*n_path;
 	char	*xpm;
 
+	n_img = NULL;
+	n_path = NULL;
+	xpm = NULL;
 	*lst = (*lst)->next;
-	n_path = ft_strjoin("images/", "n_");
-	if (!n_path)
-		exit_error(ERR_MALLOC, 260);
-	n_img = ft_strjoin(n_path, (*lst)->s);
-	if (!n_img)
-		exit_error(ERR_MALLOC, 260);
-	xpm = ft_strjoin("images/", (*lst)->s);
-	if (!xpm)
-		exit_error(ERR_MALLOC, 260);
+	set_xpm_path(&n_img, &n_path, &xpm, &(*lst)->s);
+	// n_path = ft_strjoin("images/", "n_");
+	// if (!n_path)
+	// 	exit_error(ERR_MALLOC, 260);
+	// n_img = ft_strjoin(n_path, (*lst)->s);
+	// if (!n_img)
+	// 	exit_error(ERR_MALLOC, 260);
+	// xpm = ft_strjoin("images/", (*lst)->s);
+	// if (!xpm)
+	// 	exit_error(ERR_MALLOC, 260);
+	// if (access(xpm, F_OK) != 0)
+	// 	exit_error(ERR_XPM_IMG, 1);
+	// if (access(n_img, F_OK) != 0)
+	// 	exit_error(ERR_XPM_IMG, 1);
 	cur->xpm.img = mlx_xpm_file_to_image(d->mlx, xpm, &cur->xpm.wdth, &cur->xpm.hgt);
 	cur->xpm.addr = mlx_get_data_addr(cur->xpm.img, &cur->xpm.bits_per_pixel, &cur->xpm.line_length, &cur->xpm.endian);
 	cur->n_map.img = mlx_xpm_file_to_image(d->mlx, n_img, &cur->n_map.wdth, &cur->n_map.hgt);
@@ -212,6 +237,7 @@ int	add_sphere(t_data *d, t_tok *lst)
 	nb = calc_nb_prop(lst);
 	if (nb != 7 && nb != 8)
 		exit_error(ERR_PROPERTIES, 1);
+	inst.flg = 0;
 	set_sp_prop(&lst, &inst);
 	// lst = lst->next;
 	// inst.center.x = ft_atof(lst->s);
@@ -231,9 +257,15 @@ int	add_sphere(t_data *d, t_tok *lst)
 	// inst.right = (t_vec) {1, 0, 0};
 	if (nb == 8)
 	{
-		sp_img_init(d, &lst, &inst);
-		
+		if (!ft_strncmp(lst->next->s, "damier", 6))
+			inst.flg = 1;
+		else
+		{
+			sp_img_init(d, &lst, &inst);
+			inst.flg = 2;
+		}
 	}
+	// printf("flg : %d\n", inst.flg);
 	new = create_object(SPHERE, &inst);
 	add_object_to_list(&d->chaos, new);
 	free_tok(d);
@@ -302,6 +334,26 @@ int	add_plane(t_data *d, t_tok *lst)
 	return (1);
 }
 
+void	cy_img_init(t_data *d, t_tok **lst, t_cylinder *cur)
+{
+	char	*n_img;
+	char	*n_path;
+	char	*xpm;
+
+	n_img = NULL;
+	n_path = NULL;
+	xpm = NULL;
+	*lst = (*lst)->next;
+	set_xpm_path(&n_img, &n_path, &xpm, &(*lst)->s);
+	cur->xpm.img = mlx_xpm_file_to_image(d->mlx, xpm, &cur->xpm.wdth, &cur->xpm.hgt);
+	cur->xpm.addr = mlx_get_data_addr(cur->xpm.img, &cur->xpm.bits_per_pixel, &cur->xpm.line_length, &cur->xpm.endian);
+	cur->n_map.img = mlx_xpm_file_to_image(d->mlx, n_img, &cur->n_map.wdth, &cur->n_map.hgt);
+	cur->n_map.addr = mlx_get_data_addr(cur->n_map.img, &cur->n_map.bits_per_pixel, &cur->n_map.line_length, &cur->n_map.endian);
+	free(n_path);
+	free(n_img);
+	free(xpm);
+}
+
 void	set_cyl_prop(t_tok **lst, t_cylinder *inst)
 {
 	*lst = (*lst)->next;
@@ -336,7 +388,7 @@ int	add_cylinder(t_data *d, t_tok *lst)
 	int			nb;
 
 	nb = calc_nb_prop(lst);
-	if (nb != 11)
+	if (nb != 11 && nb != 12)
 		exit_error(ERR_PROPERTIES, 1);
 	set_cyl_prop(&lst, &inst);
 	// lst = lst->next;
@@ -362,6 +414,11 @@ int	add_cylinder(t_data *d, t_tok *lst)
 	// lst = lst->next;
 	// inst.colors.z = ft_atof(lst->s);
 	// inst.orient = vec_unit(inst.orient);
+	
+	if (nb == 12)
+	{
+		cy_img_init(d, &lst, &inst);
+	}
 	new = create_object(CYLINDER, &inst);
 	add_object_to_list(&d->chaos, new);
 	free_tok(d);
@@ -452,7 +509,10 @@ void	what_obj(t_data *d, char *obj)
 	else if (!ft_strncmp(obj, "pl", 2) && obj[2] == 0)
 		d->count.pl_count += add_plane(d, d->lst);
 	else if (!ft_strncmp(obj, "cy", 2) && obj[2] == 0)
+	{
+		
 		d->count.cy_count += add_cylinder(d, d->lst);
+	}
 	else if (!ft_strncmp(obj, "hy", 2) && obj[2] == 0)
 		d->count.hy_count += add_hyperboloid(d, d->lst);
 	else

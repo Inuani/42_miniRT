@@ -17,40 +17,16 @@ void	cyl_light_hit(t_ray *ray, t_data *data, t_cylinder cyl, t_light light)
 float	cylinder_eman(t_data *data, t_ray *ray, t_cylinder cyl)
 {
 	int	i;
+	t_vec	normal_map_color;
 
+	normal_map_color = get_sp_xpm_color(data, ray, &cyl.n_map);
+	cyl.colors = vec_add(get_sp_xpm_color(data, ray, &cyl.xpm), vec_unit(normal_map_color));
 	i = 0;
-
 	while (i < data->count.l_count)
 		cyl_light_hit(ray, data, cyl, data->objs[2 + i++]->u_data.light);
 	t_vec ambient_color = add_color(vec_scale(K_LIGHT, cyl.colors), vec_scale(1 - K_LIGHT, data->objs[0]->u_data.ambiant.colors));
 	data->final_color = add_colors(data->final_color, ambient_color, data->objs[0]->u_data.ambiant.light_ratio);
 	return(0);
-
-	// t_cam	cam;
-	// float	hot_or_not;
-
-	// cam = data->objs[1]->u_data.camera;
-	// hot_or_not = hit_cylinder(ray, cyl, cam.pos);
-	// // printf("hot or not : %f\n", hot_or_not);
-	
-	// if (hot_or_not < 0)
-	// 	return (-1);
-	// // cyl.h = vec_subs(vec_add(cyl.center, vec_scale(cyl.hgt, cyl.orient)), cyl.center);
-
-	// // printf("---------\n");
-	// // printf("ray point at\n");
-	// // printf_vec(ray->point_at);
-	// // printf("vec len: %f\n\n", vec_len(cyl.h));
-	// // printf("vec cyl.h :\n");
-	// // printf_vec(cyl.h);
-
-	// // ray->point_at = vec_add(cam.pos, vec_scale(hot_or_not, ray->direction));
-	// // if (vec_dot(vec_subs(ray->point_at, cyl.center), cyl.h) < 0)
-	// // 	return -1;
-	// // // if (vec_dot(vec_subs(ray->point_at, cyl.center), cyl.h) > vec_len(cyl.h))
-	// // if (vec_dot(vec_subs(ray->point_at, cyl.center), cyl.h) > vec_dot(cyl.h, cyl.h))
-	// // 	return -1;
-	// return(0);
 }
 
 float	hit_cylinder(t_vec ray_dir, t_cylinder cy, t_vec origin, t_vec ori2cy)

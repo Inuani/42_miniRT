@@ -47,6 +47,7 @@ typedef struct s_sphere {
 	t_vec	colors;
 	t_img	xpm;
 	t_img	n_map;
+	int		flg;
 }				t_sphere;
 
 typedef struct s_hyperboloid {
@@ -76,6 +77,8 @@ typedef struct s_cylinder {
 	float	radius;
 	float	hgt;
 	t_vec	colors;
+	t_img	xpm;
+	t_img	n_map;
 }				t_cylinder;
 
 typedef struct s_plane {

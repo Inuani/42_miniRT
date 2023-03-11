@@ -97,6 +97,8 @@ t_object	*copy_obj_list_deep(const t_object *list)
 		new_node->u_data.sphere.n_map.endian = list->u_data.sphere.n_map.endian;
 		new_node->u_data.sphere.n_map.wdth = list->u_data.sphere.n_map.wdth;
 		new_node->u_data.sphere.n_map.hgt = list->u_data.sphere.n_map.hgt;
+
+		new_node->u_data.sphere.flg = list->u_data.sphere.flg;
 	}
 	else if (new_node->type == PLANE)
 	{
@@ -123,6 +125,22 @@ t_object	*copy_obj_list_deep(const t_object *list)
 		new_node->u_data.cylinder.colors.z = list->u_data.cylinder.colors.z;
 		new_node->u_data.cylinder.radius = list->u_data.cylinder.radius;
 		new_node->u_data.cylinder.hgt = list->u_data.cylinder.hgt;
+
+		new_node->u_data.cylinder.xpm.img = list->u_data.cylinder.xpm.img;
+		new_node->u_data.cylinder.xpm.addr = list->u_data.cylinder.xpm.addr;
+		new_node->u_data.cylinder.xpm.bits_per_pixel = list->u_data.cylinder.xpm.bits_per_pixel;
+		new_node->u_data.cylinder.xpm.line_length = list->u_data.cylinder.xpm.line_length;
+		new_node->u_data.cylinder.xpm.endian = list->u_data.cylinder.xpm.endian;
+		new_node->u_data.cylinder.xpm.wdth = list->u_data.cylinder.xpm.wdth;
+		new_node->u_data.cylinder.xpm.hgt = list->u_data.cylinder.xpm.hgt;
+
+		new_node->u_data.cylinder.n_map.img = list->u_data.cylinder.n_map.img;
+		new_node->u_data.cylinder.n_map.addr = list->u_data.cylinder.n_map.addr;
+		new_node->u_data.cylinder.n_map.bits_per_pixel = list->u_data.cylinder.n_map.bits_per_pixel;
+		new_node->u_data.cylinder.n_map.line_length = list->u_data.cylinder.n_map.line_length;
+		new_node->u_data.cylinder.n_map.endian = list->u_data.cylinder.n_map.endian;
+		new_node->u_data.cylinder.n_map.wdth = list->u_data.cylinder.n_map.wdth;
+		new_node->u_data.cylinder.n_map.hgt = list->u_data.cylinder.n_map.hgt;
 	}
 	else if (new_node->type == HYPERBOLOID)
 	{
