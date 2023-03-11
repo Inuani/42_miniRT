@@ -25,4 +25,10 @@ int		    is_inside(t_sphere sphere, t_cam camera, t_light light);
 // viewport
 void	initialise_viewport(t_data *data);
 
+//texture
+t_vec	get_sp_xpm_color(t_data *d, t_ray *ray, t_img *xpm);
+int		get_color_pixel(t_data *d, int x, int y, t_img *xpm);
+void	calculate_x_y_sp(t_img *xpm, t_ray *ray, int *x, int *y);
+
+
 #endif
