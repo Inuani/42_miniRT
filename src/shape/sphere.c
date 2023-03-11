@@ -103,7 +103,7 @@ float it_hit_sphere(t_data *data, t_ray *ray, t_sphere sphere)
 		sphere.colors = vec_add(get_sp_xpm_color(data, ray, &sphere.xpm), vec_unit(normal_map_color));
 	}
 	else if (sphere.flg == 1)
-		sphere.colors = calculate_x_y_scb(ray);
+		sphere.colors = calculate_x_y_scb(ray, &sphere);
 	ret = 0;
 	i = 0;
 	while (i < data->count.l_count)

@@ -28,10 +28,10 @@ void	cyl_light_hit(t_ray *ray, t_data *data, t_cylinder cyl, t_light light)
 float	cylinder_eman(t_data *data, t_ray *ray, t_cylinder cyl)
 {
 	int	i;
-	t_vec	normal_map_color;
+	//t_vec	normal_map_color;
 
-	normal_map_color = get_sp_xpm_color(data, ray, &cyl.n_map);
-	cyl.colors = vec_add(get_sp_xpm_color(data, ray, &cyl.xpm), vec_unit(normal_map_color));
+	//normal_map_color = get_sp_xpm_color(data, ray, &cyl.n_map);
+	//cyl.colors = vec_add(get_sp_xpm_color(data, ray, &cyl.xpm), vec_unit(normal_map_color));
 	i = 0;
 
 	t_vec dist = vec_subs(ray->point_at, cyl.center);
