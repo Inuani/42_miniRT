@@ -111,12 +111,17 @@ t_vec	vec_unit(t_vec vec);
 t_vec	vec_div_float(t_vec vec, float nb);
 void	vec_equal(t_vec *vec1, t_vec *vec2);
 
-
 //threads
 t_object	*copy_obj_list_deep(const t_object *list);
 void		init_thread_data(t_data *th_d, t_data *d);
 void		create_thread(t_data *data);
 void		*render_thr(void *data);
+//deep_copy.c
+void	plane_deep_copy(t_object *new_node, const t_object *list);
+void	cylinder_deep_copy(t_object *new_node, const t_object *list);
+void	hyperboloid_deep_copy(t_object *new_node, const t_object *list);
+void	sphere_deep_copy(t_object *new_node, const t_object *list);
+void	light_deep_copy(t_object *new_node, const t_object *list);
 
 //debug
 int		print_key(int key, t_data *data);

@@ -53,6 +53,7 @@ VEC_SRC = $(addprefix $(VEC_DIR),	vec_utils.c \
 									)
 
 THDS_SRC = $(addprefix $(THDS_DIR),	threads.c \
+									deep_copy.c \
 									)
 
 REND_SRC = $(addprefix $(REND_DIR),	render.c \

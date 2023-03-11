@@ -31,8 +31,6 @@ void	cy_img_init(t_data *d, t_tok **lst, t_cylinder *cur)
 	set_xpm_path(&n_img, &n_path, &xpm, &(*lst)->s);
 	cur->xpm.img = mlx_xpm_file_to_image(d->mlx, xpm, &cur->xpm.wdth, &cur->xpm.hgt);
 	cur->xpm.addr = mlx_get_data_addr(cur->xpm.img, &cur->xpm.bits_per_pixel, &cur->xpm.line_length, &cur->xpm.endian);
-	// cur->n_map.img = mlx_xpm_file_to_image(d->mlx, n_img, &cur->n_map.wdth, &cur->n_map.hgt);
-	// cur->n_map.addr = mlx_get_data_addr(cur->n_map.img, &cur->n_map.bits_per_pixel, &cur->n_map.line_length, &cur->n_map.endian);
 	free(n_path);
 	free(n_img);
 	free(xpm);
@@ -62,7 +60,7 @@ void	set_cyl_prop(t_tok **lst, t_cylinder *inst)
 	inst->colors.y = ft_atof((*lst)->s);
 	*lst = (*lst)->next;
 	inst->colors.z = ft_atof((*lst)->s);
-	inst->orient = vec_unit(inst->orient);
+	// inst->orient = vec_unit(inst->orient);
 }
 
 int	add_cylinder(t_data *d, t_tok *lst)
@@ -80,12 +78,13 @@ int	add_cylinder(t_data *d, t_tok *lst)
 	{
 		if (!ft_strncmp(lst->next->s, "damier", 6))
 			inst.flg = 1;
-		else
+		else if (ft_strncmp(lst->next->s, "hyper", 5))
 		{
 			cy_img_init(d, &lst, &inst);
 			inst.flg = 2;
 		}
 	}
+	inst.orient = (lst->next && !ft_strncmp(lst->next->s, "hyper", 5)) ? inst.orient : vec_unit(inst.orient);
 	new = create_object(CYLINDER, &inst);
 	add_object_to_list(&d->chaos, new);
 	free_tok(d);

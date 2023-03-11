@@ -94,16 +94,16 @@ float it_hit_sphere(t_data *data, t_ray *ray, t_sphere sphere)
 {
 	int		i;
 	float	ret;
-	t_vec	normal_map_color;
+	// t_vec	normal_map_color;
 
 	ray->normal = vec_scale(1/sphere.radius, vec_subs(ray->point_at, sphere.center));
 	if (sphere.flg == 2)
 	{
-		normal_map_color = get_sp_xpm_color(data, ray, &sphere.n_map);
-		sphere.colors = vec_add(get_sp_xpm_color(data, ray, &sphere.xpm), normal_map_color);
+		// normal_map_color = get_sp_xpm_color(data, ray, &sphere.n_map);
+		// sphere.colors = vec_add(get_sp_xpm_color(data, ray, &sphere.xpm), normal_map_color);
 
 		// sphere.colors = add_colors(get_sp_xpm_color(data, ray, &sphere.xpm), normal_map_color, 0.05);
-		// sphere.colors = get_sp_xpm_color(data, ray, &sphere.xpm);
+		sphere.colors = get_sp_xpm_color(data, ray, &sphere.xpm);
 	}
 	else if (sphere.flg == 1)
 		sphere.colors = calculate_x_y_scb(ray, &sphere);

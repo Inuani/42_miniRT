@@ -19,23 +19,4 @@ void	exit_error(char *msg, int error)
 	exit(error);
 }
 
-// void	free_tok_from_end(t_tok *lst)
-// {
-// 	t_tok	*tmp;
-
-// 	while (lst)
-// 	{
-// 		if (lst->prev != NULL)
-// 			tmp = lst->prev;
-// 		else
-// 			tmp = NULL;
-// 		// printf("%s\n", lst->s);
-// 		free(lst->s);
-// 		lst->s = NULL;
-// 		free(lst);
-// 		lst = NULL;
-// 		lst = tmp;
-// 	}
-// }
-
 

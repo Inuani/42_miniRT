@@ -1,10 +1,6 @@
 
 #include "../../includes/minirt.h"
 
-//WIDTH / 6;
-//HEIGH / 4;
-
-
 void	create_thread(t_data *data)
 {
 	int	i;
@@ -50,17 +46,6 @@ void	camera_deep_copy(t_object *new_node, const t_object *list)
 	new_node->u_data.camera.fov = list->u_data.camera.fov;
 }
 
-void	light_deep_copy(t_object *new_node, const t_object *list)
-{
-	new_node->u_data.light.pos.x = list->u_data.light.pos.x;
-	new_node->u_data.light.pos.y = list->u_data.light.pos.y;
-	new_node->u_data.light.pos.z = list->u_data.light.pos.z;
-	new_node->u_data.light.colors.x = list->u_data.light.colors.x;
-	new_node->u_data.light.colors.y = list->u_data.light.colors.y;
-	new_node->u_data.light.colors.z = list->u_data.light.colors.z;
-	new_node->u_data.light.light_ratio = list->u_data.light.light_ratio;
-}
-
 t_object	*copy_obj_list_deep(const t_object *list)
 {
 	t_object	*new_node;
@@ -75,155 +60,19 @@ t_object	*copy_obj_list_deep(const t_object *list)
 	if (list->next != NULL)
 		new_node->next = copy_obj_list_deep(list->next);
 	if (new_node->type == AMBIANT)
-	{
 		ambient_deep_copy(new_node, list);
-		// new_node->u_data.ambiant.light_ratio = list->u_data.ambiant.light_ratio;
-		// new_node->u_data.ambiant.colors.x = list->u_data.ambiant.colors.x;
-		// new_node->u_data.ambiant.colors.y = list->u_data.ambiant.colors.y;
-		// new_node->u_data.ambiant.colors.z = list->u_data.ambiant.colors.z;
-	}
 	else if (new_node->type == CAMERA)
-	{
 		camera_deep_copy(new_node, list);
-		// new_node->u_data.camera.pos.x = list->u_data.camera.pos.x;
-		// new_node->u_data.camera.pos.y = list->u_data.camera.pos.y; 
-		// new_node->u_data.camera.pos.z = list->u_data.camera.pos.z;
-		// new_node->u_data.camera.orient.x = list->u_data.camera.orient.x;
-		// new_node->u_data.camera.orient.y = list->u_data.camera.orient.y; 
-		// new_node->u_data.camera.orient.z = list->u_data.camera.orient.z;
-		// new_node->u_data.camera.up.x = list->u_data.camera.up.x;
-		// new_node->u_data.camera.up.y = list->u_data.camera.up.y; 
-		// new_node->u_data.camera.up.z = list->u_data.camera.up.z;
-		// new_node->u_data.camera.right.x = list->u_data.camera.right.x;
-		// new_node->u_data.camera.right.y = list->u_data.camera.right.y; 
-		// new_node->u_data.camera.right.z = list->u_data.camera.right.z;
-		// new_node->u_data.camera.fov = list->u_data.camera.fov;
-	}
 	else if (new_node->type == LIGHT)
-	{
 		light_deep_copy(new_node, list);
-		// new_node->u_data.light.pos.x = list->u_data.light.pos.x;
-		// new_node->u_data.light.pos.y = list->u_data.light.pos.y;
-		// new_node->u_data.light.pos.z = list->u_data.light.pos.z;
-		// new_node->u_data.light.colors.x = list->u_data.light.colors.x;
-		// new_node->u_data.light.colors.y = list->u_data.light.colors.y;
-		// new_node->u_data.light.colors.z = list->u_data.light.colors.z;
-		// new_node->u_data.light.light_ratio = list->u_data.light.light_ratio;
-	}
 	else if (new_node->type == SPHERE)
-	{
-		new_node->u_data.sphere.center.x = list->u_data.sphere.center.x;
-		new_node->u_data.sphere.center.y = list->u_data.sphere.center.y;
-		new_node->u_data.sphere.center.z = list->u_data.sphere.center.z;
-		new_node->u_data.sphere.radius = list->u_data.sphere.radius;
-		new_node->u_data.sphere.colors.x = list->u_data.sphere.colors.x;
-		new_node->u_data.sphere.colors.y = list->u_data.sphere.colors.y;
-		new_node->u_data.sphere.colors.z = list->u_data.sphere.colors.z;
-		
-		new_node->u_data.sphere.xpm.img = list->u_data.sphere.xpm.img;
-		new_node->u_data.sphere.xpm.addr = list->u_data.sphere.xpm.addr;
-		new_node->u_data.sphere.xpm.bits_per_pixel = list->u_data.sphere.xpm.bits_per_pixel;
-		new_node->u_data.sphere.xpm.line_length = list->u_data.sphere.xpm.line_length;
-		new_node->u_data.sphere.xpm.endian = list->u_data.sphere.xpm.endian;
-		new_node->u_data.sphere.xpm.wdth = list->u_data.sphere.xpm.wdth;
-		new_node->u_data.sphere.xpm.hgt = list->u_data.sphere.xpm.hgt;
-
-		new_node->u_data.sphere.n_map.img = list->u_data.sphere.n_map.img;
-		new_node->u_data.sphere.n_map.addr = list->u_data.sphere.n_map.addr;
-		new_node->u_data.sphere.n_map.bits_per_pixel = list->u_data.sphere.n_map.bits_per_pixel;
-		new_node->u_data.sphere.n_map.line_length = list->u_data.sphere.n_map.line_length;
-		new_node->u_data.sphere.n_map.endian = list->u_data.sphere.n_map.endian;
-		new_node->u_data.sphere.n_map.wdth = list->u_data.sphere.n_map.wdth;
-		new_node->u_data.sphere.n_map.hgt = list->u_data.sphere.n_map.hgt;
-
-		new_node->u_data.sphere.flg = list->u_data.sphere.flg;
-	}
+		sphere_deep_copy(new_node, list);
 	else if (new_node->type == PLANE)
-	{
-		new_node->u_data.plane.point.x = list->u_data.plane.point.x;
-		new_node->u_data.plane.point.y = list->u_data.plane.point.y;
-		new_node->u_data.plane.point.z = list->u_data.plane.point.z;
-		new_node->u_data.plane.orient.x = list->u_data.plane.orient.x;
-		new_node->u_data.plane.orient.y = list->u_data.plane.orient.y;
-		new_node->u_data.plane.orient.z = list->u_data.plane.orient.z;
-		new_node->u_data.plane.colors.x = list->u_data.plane.colors.x;
-		new_node->u_data.plane.colors.y = list->u_data.plane.colors.y;
-		new_node->u_data.plane.colors.z = list->u_data.plane.colors.z;
-
-		new_node->u_data.plane.xpm.img = list->u_data.plane.xpm.img;
-		new_node->u_data.plane.xpm.addr = list->u_data.plane.xpm.addr;
-		new_node->u_data.plane.xpm.bits_per_pixel = list->u_data.plane.xpm.bits_per_pixel;
-		new_node->u_data.plane.xpm.line_length = list->u_data.plane.xpm.line_length;
-		new_node->u_data.plane.xpm.endian = list->u_data.plane.xpm.endian;
-		new_node->u_data.plane.xpm.wdth = list->u_data.plane.xpm.wdth;
-		new_node->u_data.plane.xpm.hgt = list->u_data.plane.xpm.hgt;
-
-		// new_node->u_data.plane.n_map.img = list->u_data.plane.n_map.img;
-		// new_node->u_data.plane.n_map.addr = list->u_data.plane.n_map.addr;
-		// new_node->u_data.plane.n_map.bits_per_pixel = list->u_data.plane.n_map.bits_per_pixel;
-		// new_node->u_data.plane.n_map.line_length = list->u_data.plane.n_map.line_length;
-		// new_node->u_data.plane.n_map.endian = list->u_data.plane.n_map.endian;
-		// new_node->u_data.plane.n_map.wdth = list->u_data.plane.n_map.wdth;
-		// new_node->u_data.plane.n_map.hgt = list->u_data.plane.n_map.hgt;
-
-		new_node->u_data.plane.flg = list->u_data.plane.flg;
-	}
+		plane_deep_copy(new_node, list);
 	else if (new_node->type == CYLINDER)
-	{
-		new_node->u_data.cylinder.center.x = list->u_data.cylinder.center.x;
-		new_node->u_data.cylinder.center.y = list->u_data.cylinder.center.y;
-		new_node->u_data.cylinder.center.z = list->u_data.cylinder.center.z;
-		new_node->u_data.cylinder.orient.x = list->u_data.cylinder.orient.x;
-		new_node->u_data.cylinder.orient.y = list->u_data.cylinder.orient.y;
-		new_node->u_data.cylinder.orient.z = list->u_data.cylinder.orient.z;
-		new_node->u_data.cylinder.colors.x = list->u_data.cylinder.colors.x;
-		new_node->u_data.cylinder.colors.y = list->u_data.cylinder.colors.y;
-		new_node->u_data.cylinder.colors.z = list->u_data.cylinder.colors.z;
-		new_node->u_data.cylinder.radius = list->u_data.cylinder.radius;
-		new_node->u_data.cylinder.hgt = list->u_data.cylinder.hgt;
-
-		new_node->u_data.cylinder.xpm.img = list->u_data.cylinder.xpm.img;
-		new_node->u_data.cylinder.xpm.addr = list->u_data.cylinder.xpm.addr;
-		new_node->u_data.cylinder.xpm.bits_per_pixel = list->u_data.cylinder.xpm.bits_per_pixel;
-		new_node->u_data.cylinder.xpm.line_length = list->u_data.cylinder.xpm.line_length;
-		new_node->u_data.cylinder.xpm.endian = list->u_data.cylinder.xpm.endian;
-		new_node->u_data.cylinder.xpm.wdth = list->u_data.cylinder.xpm.wdth;
-		new_node->u_data.cylinder.xpm.hgt = list->u_data.cylinder.xpm.hgt;
-
-		// new_node->u_data.cylinder.n_map.img = list->u_data.cylinder.n_map.img;
-		// new_node->u_data.cylinder.n_map.addr = list->u_data.cylinder.n_map.addr;
-		// new_node->u_data.cylinder.n_map.bits_per_pixel = list->u_data.cylinder.n_map.bits_per_pixel;
-		// new_node->u_data.cylinder.n_map.line_length = list->u_data.cylinder.n_map.line_length;
-		// new_node->u_data.cylinder.n_map.endian = list->u_data.cylinder.n_map.endian;
-		// new_node->u_data.cylinder.n_map.wdth = list->u_data.cylinder.n_map.wdth;
-		// new_node->u_data.cylinder.n_map.hgt = list->u_data.cylinder.n_map.hgt;
-
-		new_node->u_data.cylinder.flg = list->u_data.cylinder.flg;
-	}
+		cylinder_deep_copy(new_node, list);
 	else if (new_node->type == HYPERBOLOID)
-	{
-		new_node->u_data.hyperboloid.center.x = list->u_data.hyperboloid.center.x;
-		new_node->u_data.hyperboloid.center.y = list->u_data.hyperboloid.center.y;
-		new_node->u_data.hyperboloid.center.z = list->u_data.hyperboloid.center.z;
-		new_node->u_data.hyperboloid.orient.x = list->u_data.hyperboloid.orient.x;
-		new_node->u_data.hyperboloid.orient.y = list->u_data.hyperboloid.orient.y;
-		new_node->u_data.hyperboloid.orient.z = list->u_data.hyperboloid.orient.z;
-		new_node->u_data.hyperboloid.colors.x = list->u_data.hyperboloid.colors.x;
-		new_node->u_data.hyperboloid.colors.y = list->u_data.hyperboloid.colors.y;
-		new_node->u_data.hyperboloid.colors.z = list->u_data.hyperboloid.colors.z;
-		new_node->u_data.hyperboloid.radius = list->u_data.hyperboloid.radius;
-		new_node->u_data.hyperboloid.hgt = list->u_data.hyperboloid.hgt;
-
-		new_node->u_data.hyperboloid.xpm.img = list->u_data.hyperboloid.xpm.img;
-		new_node->u_data.hyperboloid.xpm.addr = list->u_data.hyperboloid.xpm.addr;
-		new_node->u_data.hyperboloid.xpm.bits_per_pixel = list->u_data.hyperboloid.xpm.bits_per_pixel;
-		new_node->u_data.hyperboloid.xpm.line_length = list->u_data.hyperboloid.xpm.line_length;
-		new_node->u_data.hyperboloid.xpm.endian = list->u_data.hyperboloid.xpm.endian;
-		new_node->u_data.hyperboloid.xpm.wdth = list->u_data.hyperboloid.xpm.wdth;
-		new_node->u_data.hyperboloid.xpm.hgt = list->u_data.hyperboloid.xpm.hgt;
-
-		new_node->u_data.hyperboloid.flg = list->u_data.hyperboloid.flg;
-	}
+		hyperboloid_deep_copy(new_node, list);
 	return (new_node);
 }
 

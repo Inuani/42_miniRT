@@ -174,17 +174,4 @@ typedef struct s_data
 	int			fin;
 }				t_data;
 
-// typedef struct s_texture
-// {
-	
-// 	t_img	xpm_img;
-// 	int		pixel_offset;
-// 	int		pixel_color;
-// 	int		x;
-// 	int		y;
-// 	float	u;
-// 	float	v;
-// 	t_vec	rgb;
-// }			t_texture;
-
 #endif
