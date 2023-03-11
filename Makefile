@@ -34,6 +34,12 @@ PARS_SRC = $(addprefix $(PARS_DIR),	mrt_parsing.c \
 									tok_list_utils.c \
 									obj_emanation.c \
 									obj_array_creation.c \
+									cyl_eman.c \
+									sphere_eman.c \
+									plane_eman.c \
+									light_eman.c \
+									hyperbo_eman.c \
+									tok_utils.c \
 									)
 
 SHAPE_SRC = $(addprefix $(SHAPE_DIR),	plane.c \

@@ -25,6 +25,42 @@ void	create_thread(t_data *data)
 	free(data->thread_id);
 }
 
+void	ambient_deep_copy(t_object *new_node, const t_object *list)
+{
+	new_node->u_data.ambiant.light_ratio = list->u_data.ambiant.light_ratio;
+	new_node->u_data.ambiant.colors.x = list->u_data.ambiant.colors.x;
+	new_node->u_data.ambiant.colors.y = list->u_data.ambiant.colors.y;
+	new_node->u_data.ambiant.colors.z = list->u_data.ambiant.colors.z;
+}
+
+void	camera_deep_copy(t_object *new_node, const t_object *list)
+{
+	new_node->u_data.camera.pos.x = list->u_data.camera.pos.x;
+	new_node->u_data.camera.pos.y = list->u_data.camera.pos.y; 
+	new_node->u_data.camera.pos.z = list->u_data.camera.pos.z;
+	new_node->u_data.camera.orient.x = list->u_data.camera.orient.x;
+	new_node->u_data.camera.orient.y = list->u_data.camera.orient.y; 
+	new_node->u_data.camera.orient.z = list->u_data.camera.orient.z;
+	new_node->u_data.camera.up.x = list->u_data.camera.up.x;
+	new_node->u_data.camera.up.y = list->u_data.camera.up.y; 
+	new_node->u_data.camera.up.z = list->u_data.camera.up.z;
+	new_node->u_data.camera.right.x = list->u_data.camera.right.x;
+	new_node->u_data.camera.right.y = list->u_data.camera.right.y; 
+	new_node->u_data.camera.right.z = list->u_data.camera.right.z;
+	new_node->u_data.camera.fov = list->u_data.camera.fov;
+}
+
+void	light_deep_copy(t_object *new_node, const t_object *list)
+{
+	new_node->u_data.light.pos.x = list->u_data.light.pos.x;
+	new_node->u_data.light.pos.y = list->u_data.light.pos.y;
+	new_node->u_data.light.pos.z = list->u_data.light.pos.z;
+	new_node->u_data.light.colors.x = list->u_data.light.colors.x;
+	new_node->u_data.light.colors.y = list->u_data.light.colors.y;
+	new_node->u_data.light.colors.z = list->u_data.light.colors.z;
+	new_node->u_data.light.light_ratio = list->u_data.light.light_ratio;
+}
+
 t_object	*copy_obj_list_deep(const t_object *list)
 {
 	t_object	*new_node;
@@ -40,36 +76,39 @@ t_object	*copy_obj_list_deep(const t_object *list)
 		new_node->next = copy_obj_list_deep(list->next);
 	if (new_node->type == AMBIANT)
 	{
-		new_node->u_data.ambiant.light_ratio = list->u_data.ambiant.light_ratio;
-		new_node->u_data.ambiant.colors.x = list->u_data.ambiant.colors.x;
-		new_node->u_data.ambiant.colors.y = list->u_data.ambiant.colors.y;
-		new_node->u_data.ambiant.colors.z = list->u_data.ambiant.colors.z;
+		ambient_deep_copy(new_node, list);
+		// new_node->u_data.ambiant.light_ratio = list->u_data.ambiant.light_ratio;
+		// new_node->u_data.ambiant.colors.x = list->u_data.ambiant.colors.x;
+		// new_node->u_data.ambiant.colors.y = list->u_data.ambiant.colors.y;
+		// new_node->u_data.ambiant.colors.z = list->u_data.ambiant.colors.z;
 	}
 	else if (new_node->type == CAMERA)
 	{
-		new_node->u_data.camera.pos.x = list->u_data.camera.pos.x;
-		new_node->u_data.camera.pos.y = list->u_data.camera.pos.y; 
-		new_node->u_data.camera.pos.z = list->u_data.camera.pos.z;
-		new_node->u_data.camera.orient.x = list->u_data.camera.orient.x;
-		new_node->u_data.camera.orient.y = list->u_data.camera.orient.y; 
-		new_node->u_data.camera.orient.z = list->u_data.camera.orient.z;
-		new_node->u_data.camera.up.x = list->u_data.camera.up.x;
-		new_node->u_data.camera.up.y = list->u_data.camera.up.y; 
-		new_node->u_data.camera.up.z = list->u_data.camera.up.z;
-		new_node->u_data.camera.right.x = list->u_data.camera.right.x;
-		new_node->u_data.camera.right.y = list->u_data.camera.right.y; 
-		new_node->u_data.camera.right.z = list->u_data.camera.right.z;
-		new_node->u_data.camera.fov = list->u_data.camera.fov;
+		camera_deep_copy(new_node, list);
+		// new_node->u_data.camera.pos.x = list->u_data.camera.pos.x;
+		// new_node->u_data.camera.pos.y = list->u_data.camera.pos.y; 
+		// new_node->u_data.camera.pos.z = list->u_data.camera.pos.z;
+		// new_node->u_data.camera.orient.x = list->u_data.camera.orient.x;
+		// new_node->u_data.camera.orient.y = list->u_data.camera.orient.y; 
+		// new_node->u_data.camera.orient.z = list->u_data.camera.orient.z;
+		// new_node->u_data.camera.up.x = list->u_data.camera.up.x;
+		// new_node->u_data.camera.up.y = list->u_data.camera.up.y; 
+		// new_node->u_data.camera.up.z = list->u_data.camera.up.z;
+		// new_node->u_data.camera.right.x = list->u_data.camera.right.x;
+		// new_node->u_data.camera.right.y = list->u_data.camera.right.y; 
+		// new_node->u_data.camera.right.z = list->u_data.camera.right.z;
+		// new_node->u_data.camera.fov = list->u_data.camera.fov;
 	}
 	else if (new_node->type == LIGHT)
 	{
-		new_node->u_data.light.pos.x = list->u_data.light.pos.x;
-		new_node->u_data.light.pos.y = list->u_data.light.pos.y;
-		new_node->u_data.light.pos.z = list->u_data.light.pos.z;
-		new_node->u_data.light.colors.x = list->u_data.light.colors.x;
-		new_node->u_data.light.colors.y = list->u_data.light.colors.y;
-		new_node->u_data.light.colors.z = list->u_data.light.colors.z;
-		new_node->u_data.light.light_ratio = list->u_data.light.light_ratio;
+		light_deep_copy(new_node, list);
+		// new_node->u_data.light.pos.x = list->u_data.light.pos.x;
+		// new_node->u_data.light.pos.y = list->u_data.light.pos.y;
+		// new_node->u_data.light.pos.z = list->u_data.light.pos.z;
+		// new_node->u_data.light.colors.x = list->u_data.light.colors.x;
+		// new_node->u_data.light.colors.y = list->u_data.light.colors.y;
+		// new_node->u_data.light.colors.z = list->u_data.light.colors.z;
+		// new_node->u_data.light.light_ratio = list->u_data.light.light_ratio;
 	}
 	else if (new_node->type == SPHERE)
 	{
@@ -110,6 +149,24 @@ t_object	*copy_obj_list_deep(const t_object *list)
 		new_node->u_data.plane.colors.x = list->u_data.plane.colors.x;
 		new_node->u_data.plane.colors.y = list->u_data.plane.colors.y;
 		new_node->u_data.plane.colors.z = list->u_data.plane.colors.z;
+
+		new_node->u_data.plane.xpm.img = list->u_data.plane.xpm.img;
+		new_node->u_data.plane.xpm.addr = list->u_data.plane.xpm.addr;
+		new_node->u_data.plane.xpm.bits_per_pixel = list->u_data.plane.xpm.bits_per_pixel;
+		new_node->u_data.plane.xpm.line_length = list->u_data.plane.xpm.line_length;
+		new_node->u_data.plane.xpm.endian = list->u_data.plane.xpm.endian;
+		new_node->u_data.plane.xpm.wdth = list->u_data.plane.xpm.wdth;
+		new_node->u_data.plane.xpm.hgt = list->u_data.plane.xpm.hgt;
+
+		new_node->u_data.plane.n_map.img = list->u_data.plane.n_map.img;
+		new_node->u_data.plane.n_map.addr = list->u_data.plane.n_map.addr;
+		new_node->u_data.plane.n_map.bits_per_pixel = list->u_data.plane.n_map.bits_per_pixel;
+		new_node->u_data.plane.n_map.line_length = list->u_data.plane.n_map.line_length;
+		new_node->u_data.plane.n_map.endian = list->u_data.plane.n_map.endian;
+		new_node->u_data.plane.n_map.wdth = list->u_data.plane.n_map.wdth;
+		new_node->u_data.plane.n_map.hgt = list->u_data.plane.n_map.hgt;
+
+		new_node->u_data.plane.flg = list->u_data.plane.flg;
 	}
 	else if (new_node->type == CYLINDER)
 	{

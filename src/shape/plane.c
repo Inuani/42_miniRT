@@ -96,7 +96,13 @@ void	plane_life(t_data *data, t_ray *ray, t_plane plane)
 
 	i = 0;
 
-	plane.colors = calculate_x_y_pcb(*ray, &plane);
+	if (plane.flg == 2)
+	{
+		// normal_map_color = get_sp_xpm_color(data, ray, &sphere.n_map);
+		// sphere.colors = vec_add(get_sp_xpm_color(data, ray, &sphere.xpm), vec_unit(normal_map_color));
+	}
+	else if (plane.flg == 1)
+		plane.colors = calculate_x_y_pcb(*ray, &plane);
 	while (i < data->count.l_count)
 		plane_light(data, ray, plane, data->objs[2 + i++]->u_data.light);
 	t_vec ambient_color = add_color(vec_scale(K_LIGHT, plane.colors), vec_scale(1 - K_LIGHT, data->objs[0]->u_data.ambiant.colors));

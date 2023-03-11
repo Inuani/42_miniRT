@@ -19,25 +19,6 @@ void	exit_error(char *msg, int error)
 	exit(error);
 }
 
-void	free_tok(t_data *d)
-{
-	t_tok	*tmp;
-
-	while (d->lst)
-	{
-		if (d->lst->next != NULL)
-			tmp = d->lst->next;
-		else
-			tmp = NULL;
-		free(d->lst->s);
-		d->lst->s = NULL;
-		free(d->lst);
-		d->lst = NULL;
-		d->lst = tmp;
-	}
-	d->lst = NULL;
-}
-
 // void	free_tok_from_end(t_tok *lst)
 // {
 // 	t_tok	*tmp;
@@ -57,19 +38,4 @@ void	free_tok(t_data *d)
 // 	}
 // }
 
-void	free_obj_list(t_object *chaos)
-{
-	t_object	*tmp;
 
-	while (chaos)
-	{
-		if (chaos->next != NULL)
-			tmp = chaos->next;
-		else
-			tmp = NULL;
-		free(chaos);
-		chaos = NULL;
-		if (tmp != NULL)
-			chaos = tmp;
-	}
-}

@@ -46,17 +46,34 @@ t_object	*get_last_object(t_object *lst)
 	return (lst);
 }
 
-int	nb_objects(t_object *lst)
+void	free_obj_list(t_object *chaos)
 {
 	t_object	*tmp;
-	int			i;
 
-	tmp = lst;
-	i = 0;
-	while (tmp)
+	while (chaos)
 	{
-		tmp = tmp->next;
-		i++;
+		if (chaos->next != NULL)
+			tmp = chaos->next;
+		else
+			tmp = NULL;
+		free(chaos);
+		chaos = NULL;
+		if (tmp != NULL)
+			chaos = tmp;
 	}
-	return (i);
 }
+
+// int	nb_objects(t_object *lst)
+// {
+// 	t_object	*tmp;
+// 	int			i;
+
+// 	tmp = lst;
+// 	i = 0;
+// 	while (tmp)
+// 	{
+// 		tmp = tmp->next;
+// 		i++;
+// 	}
+// 	return (i);
+// }

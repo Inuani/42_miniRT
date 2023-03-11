@@ -86,6 +86,9 @@ typedef struct s_plane {
 	t_vec	point;
 	t_vec	orient;
 	t_vec	colors;
+	t_img	xpm;
+	t_img	n_map;
+	int		flg;
 }				t_plane;
 
 typedef struct s_viewport

@@ -2,21 +2,6 @@
 
 //check for potential double A or double C that gives back error
 
-int	calc_nb_obj(t_object *chaos)
-{
-	t_object	*tmp;
-	int			nb;
-
-	nb = 0;
-	tmp = chaos;
-	while(tmp)
-	{
-		nb++;
-		tmp = tmp->next;
-	}
-	return (nb);
-}
-
 void	get_camera(t_data *d)
 {
 	t_object	*tmp;
@@ -47,94 +32,19 @@ void	get_ambiant(t_data *d)
 	}
 }
 
-void	get_light(t_data *d)
+int	calc_nb_obj(t_object *chaos)
 {
 	t_object	*tmp;
-	int	i;
+	int			nb;
 
-	tmp = d->chaos;
-	i = 2;
+	nb = 0;
+	tmp = chaos;
 	while(tmp)
 	{
-		if (tmp->type == LIGHT)
-		{
-			d->objs[i] = tmp;
-			i++;
-		}
+		nb++;
 		tmp = tmp->next;
 	}
-}
-
-void	get_sphere(t_data *d)
-{
-	t_object	*tmp;
-	int	i;
-
-	i = 2 + d->count.l_count;
-	tmp = d->chaos;
-	while(tmp)
-	{
-		if (tmp->type == SPHERE)
-		{
-			d->objs[i] = tmp;
-			i++;
-		}
-		tmp = tmp->next;
-	}
-}
-
-void	get_plane(t_data *d)
-{
-	t_object	*tmp;
-	int	i;
-
-	i = 2 + d->count.l_count + d->count.sp_count;
-	tmp = d->chaos;
-	while(tmp)
-	{
-		if (tmp->type == PLANE)
-		{
-			d->objs[i] = tmp;
-			i++;
-		}
-		tmp = tmp->next;
-	}
-}
-
-void	get_cylindre(t_data *d)
-{
-	t_object	*tmp;
-	int	i;
-
-	tmp = d->chaos;
-	i = 2 + d->count.l_count + d->count.sp_count + d->count.pl_count;
-	while(tmp)
-	{
-		if (tmp->type == CYLINDER)
-		{
-			d->objs[i] = tmp;
-			i++;
-		}
-		tmp = tmp->next;
-	}
-}
-
-void	get_hyperboloid(t_data *d)
-{
-	t_object	*tmp;
-	int	i;
-
-	tmp = d->chaos;
-	i = 2 + d->count.l_count + d->count.sp_count + d->count.pl_count + d->count.cy_count;
-	while(tmp)
-	{
-		if (tmp->type == HYPERBOLOID)
-		{
-			d->objs[i] = tmp;
-			i++;
-		}
-		tmp = tmp->next;
-	}
+	return (nb);
 }
 
 void	obj_array_create(t_data *d)
