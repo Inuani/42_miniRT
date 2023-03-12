@@ -14,7 +14,7 @@ void	handle_hyperboloids_p2(int key, t_hyperboloid *obj)
 		obj->orient.z -= 0.1;
 	else if (key == N_SEVEN && obj->colors.x < 246)
 		obj->colors.x += 10;
-	else if (key == N_EIGHT &&obj->colors.y < 246)
+	else if (key == N_EIGHT && obj->colors.y < 246)
 		obj->colors.y += 10;
 	else if (key == N_NINE && obj->colors.z < 246)
 		obj->colors.z += 10;
@@ -51,7 +51,6 @@ void	handle_hyperboloids(int key, t_data *data)
 		handle_hyperboloids_p2(key, obj);
 }
 
-
 void	handle_cylinders_p2(int key, t_cylinder *obj)
 {
 	if (key == J && obj->orient.x >= -0.9)
@@ -62,7 +61,7 @@ void	handle_cylinders_p2(int key, t_cylinder *obj)
 		obj->orient.z -= 0.1;
 	else if (key == N_SEVEN && obj->colors.x < 246)
 		obj->colors.x += 10;
-	else if (key == N_EIGHT &&obj->colors.y < 246)
+	else if (key == N_EIGHT && obj->colors.y < 246)
 		obj->colors.y += 10;
 	else if (key == N_NINE && obj->colors.z < 246)
 		obj->colors.z += 10;
@@ -99,11 +98,11 @@ void	handle_cylinders(int key, t_data *data)
 		obj->orient.z += 0.1;
 	else
 		handle_cylinders_p2(key, obj);
-
-	//obj->orient = vec_unit(obj->orient);
+	if (obj->flg != 3)
+		obj->orient = vec_unit(obj->orient);
 }
 
-void handle_stuff(int key, t_data *data)
+void	handle_stuff(int key, t_data *data)
 {
 	if (data->current == 0)
 		handle_ambient(key, data);
@@ -114,12 +113,12 @@ void handle_stuff(int key, t_data *data)
 	else if (data->current < 2 + data->count.l_count + data->count.sp_count)
 		handle_spheres(key, data);
 	else if (data->current < 2 + data->count.l_count + data->count.sp_count
-			 + data->count.pl_count)
+		+ data->count.pl_count)
 		handle_planes(key, data);
 	else if (data->current < 2 + data->count.l_count + data->count.sp_count
-			 + data->count.pl_count + data->count.cy_count)
+		+ data->count.pl_count + data->count.cy_count)
 		handle_cylinders(key, data);
 	else if (data->current < 2 + data->count.l_count + data->count.sp_count
-			 + data->count.pl_count + data->count.cy_count + data->count.hy_count)
+		+ data->count.pl_count + data->count.cy_count + data->count.hy_count)
 		handle_hyperboloids(key, data);
 }

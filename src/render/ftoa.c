@@ -1,7 +1,7 @@
 
 #include "../../includes/minirt.h"
 
-void	reverse(char* str, int len)
+void	reverse(char *str, int len)
 {
 	int	i;
 	int	j;
@@ -10,7 +10,8 @@ void	reverse(char* str, int len)
 	temp = 0;
 	i = 0;
 	j = len - 1;
-	while (i < j) {
+	while (i < j)
+	{
 		temp = str[i];
 		str[i] = str[j];
 		str[j] = temp;
@@ -38,9 +39,9 @@ void	putneg(char *str)
 	str[i] = '\0';
 }
 
-int	intToStr(int x, char str[], int d)
+int	int_to_str(int x, char str[], int d)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (x < 0)
@@ -57,14 +58,18 @@ int	intToStr(int x, char str[], int d)
 	return (i);
 }
 
-char	*floatToString(float n, char* res)
+char	*fts(float n, char *res)
 {
-	int ipart = (int)n;
-	float fpart = n - (float)ipart;
-	int i = intToStr(ipart, res, 0);
+	int		ipart;
+	float	fpart;
+	int		i;
+
+	ipart = (int)n;
+	fpart = n - (float)ipart;
+	i = int_to_str(ipart, res, 0);
 	res[i] = '.';
 	fpart = fpart * pow(10, 1);
-	intToStr((int)fpart, res + i + 1, 1);
+	int_to_str((int)fpart, res + i + 1, 1);
 	if (n < 0)
 		putneg(res);
 	return (res);

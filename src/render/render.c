@@ -1,111 +1,35 @@
 
 #include "../../includes/minirt.h"
 
-void render_text(t_data *data)
+void	render_text(t_data *data)
 {
-	char str[32];
 	if (data->current == 0)
-	{
-		if (data->changed)
-			printf("\nYou are on ambient light.\nUse I to increase light, K to decrease.\n7 8 9 to increase colors components\n4 5 6 to decrease them\n\n");
-		mlx_string_put(data->mlx, data->win, WIDTH/2 - WIDTH/30, HEIGHT - HEIGHT/19, 0xFFFFFF, "You are on ambient");
-		mlx_string_put(data->mlx, data->win, WIDTH/2 - 80, HEIGHT - HEIGHT/30, 0xFFFFFF, "light intensity : ");
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 60, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[0]->u_data.ambiant.light_ratio, str));
-		//print_color(data, data->objs[0]->u_data.ambiant.colors);
-	}
+		ambient_text(data);
 	else if (data->current == 1)
-	{
-		if (data->changed)
-			printf("\nYou are on camera.\nUse P to increase FOV, ; to decrease.\nQ W E to increase coords components\nA S D to decrease them\nU I O and J K L to change the orientation\n\n");
-		mlx_string_put(data->mlx, data->win, WIDTH/2 - WIDTH/30, HEIGHT - HEIGHT/19, 0xFFFFFF, "You are on camera");
-		mlx_string_put(data->mlx, data->win, WIDTH/2 - WIDTH/20, HEIGHT - HEIGHT/30, 0xFFFFFF, "cam coords : ");
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 10, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[1]->u_data.camera.pos.x, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 50, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[1]->u_data.camera.pos.y, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 90, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[1]->u_data.camera.pos.z, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 - 75, HEIGHT - HEIGHT/55, 0xFFFFFF, "cam FOV : ");
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 10, HEIGHT - HEIGHT/55, 0xFFFFFF, floatToString(data->objs[1]->u_data.camera.fov, str));
-	}
+		camera_text(data);
 	else if (data->current < 2 + data->count.l_count)
-	{
-		if (data->changed)
-			printf("\nYou are on a light.\nUse I to increase light, K to decrease.\nQ W E to increase coords components\nA S D to decrease them\n7 8 9 to increase colors components\n4 5 6 to decrease them\n\n");
-		mlx_string_put(data->mlx, data->win, WIDTH/2 - WIDTH/30, HEIGHT - HEIGHT/19, 0xFFFFFF, "You are on a light");
-		mlx_string_put(data->mlx, data->win, WIDTH/2 - WIDTH/20 -20, HEIGHT - HEIGHT/30, 0xFFFFFF, "light coords : ");
-		mlx_string_put(data->mlx, data->win, WIDTH/2, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.light.pos.x, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 40, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.light.pos.y, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 90, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.light.pos.z, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 - 80, HEIGHT - HEIGHT/55, 0xFFFFFF, "light intensity : ");
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 50, HEIGHT - HEIGHT/55, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.light.light_ratio, str));
-		//print_color(data, data->objs[data->current]->u_data.light.colors);
-	}
+		light_text(data);
 	else if (data->current < 2 + data->count.l_count + data->count.sp_count)
-	{
-		if (data->changed)
-			printf("\nYou are on a sphere.\nUse I to increase radius, K to decrease.\nQ W E to increase coords components\nA S D to decrease them\n7 8 9 to increase colors components\n4 5 6 to decrease them\n\n");
-		mlx_string_put(data->mlx, data->win, WIDTH/2 - WIDTH/30, HEIGHT - HEIGHT/19, 0xFFFFFF, "You are on a sphere");
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 20- WIDTH/20 -80, HEIGHT - HEIGHT/30, 0xFFFFFF, "sphere center coords : ");
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 10, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.sphere.center.x, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 60, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.sphere.center.y, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 110, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.sphere.center.z, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 - 70, HEIGHT - HEIGHT/55, 0xFFFFFF, "sphere radius : ");
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 50, HEIGHT - HEIGHT/55, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.sphere.radius, str));
-		//print_color(data, data->objs[data->current]->u_data.sphere.colors);
-	}
-	else if (data->current < 2 + data->count.l_count + data->count.sp_count + data->count.pl_count)
-	{
-		if (data->changed)
-			printf("\nYou are on a plane.\nUse W E to increase coords components\nA S D to decrease them.\nU I O and J K L to change the orientation\n7 8 9 to increase colors components\n4 5 6 to decrease them\n\n");
-		mlx_string_put(data->mlx, data->win, WIDTH/2 - WIDTH/30, HEIGHT - HEIGHT/19, 0xFFFFFF, "You are on a plane");
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 20- WIDTH/20 -80, HEIGHT - HEIGHT/30, 0xFFFFFF, "plane center coords : ");
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 10, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.point.x, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 60, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.point.y, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 110, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.point.z, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 - 140, HEIGHT - HEIGHT/55, 0xFFFFFF, "plane orientation : ");
-		mlx_string_put(data->mlx, data->win, WIDTH/2, HEIGHT - HEIGHT/55, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.orient.x, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 50, HEIGHT - HEIGHT/55, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.orient.y, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 100, HEIGHT - HEIGHT/55, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.orient.z, str));
-		//print_color(data, data->objs[data->current]->u_data.plane.colors);
-	}
-	else if (data->current < 2 + data->count.l_count + data->count.sp_count + data->count.pl_count + data->count.cy_count)
-	{
-		if (data->changed)
-			printf("\nYou are on a cylinder.\nUse W E to increase coords components\nA S D to decrease them.\nU I O and J K L to change the orientation\n7 8 9 to increase colors components\n4 5 6 to decrease them\n\n");
-		mlx_string_put(data->mlx, data->win, WIDTH/2 - WIDTH/30, HEIGHT - HEIGHT/19, 0xFFFFFF, "You are on a cylinder");
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 20- WIDTH/20 -80, HEIGHT - HEIGHT/30, 0xFFFFFF, "cylinder center coords : ");
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 10, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.point.x, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 60, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.point.y, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 110, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.point.z, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 - 140, HEIGHT - HEIGHT/55, 0xFFFFFF, "cylinder orientation : ");
-		mlx_string_put(data->mlx, data->win, WIDTH/2, HEIGHT - HEIGHT/55, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.orient.x, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 50, HEIGHT - HEIGHT/55, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.orient.y, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 100, HEIGHT - HEIGHT/55, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.orient.z, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 - WIDTH/30, HEIGHT - HEIGHT/19, 0xFFFFFF, "You are on a cylinder");
-	}
-	else if (data->current < 2 + data->count.l_count + data->count.sp_count + data->count.pl_count + data->count.cy_count + data->count.hy_count)
-	{
-		if (data->changed)
-			printf("\nYou are on a cone.\nUse W E to increase coords components\nA S D to decrease them.\nU I O and J K L to change the orientation\n7 8 9 to increase colors components\n4 5 6 to decrease them\n\n");
-		mlx_string_put(data->mlx, data->win, WIDTH/2 - WIDTH/30, HEIGHT - HEIGHT/19, 0xFFFFFF, "You are on a cone");
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 20- WIDTH/20 -80, HEIGHT - HEIGHT/30, 0xFFFFFF, "cone center coords : ");
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 10, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.point.x, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 60, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.point.y, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 110, HEIGHT - HEIGHT/30, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.point.z, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 - 140, HEIGHT - HEIGHT/55, 0xFFFFFF, "cone orientation : ");
-		mlx_string_put(data->mlx, data->win, WIDTH/2, HEIGHT - HEIGHT/55, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.orient.x, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 50, HEIGHT - HEIGHT/55, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.orient.y, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 + 100, HEIGHT - HEIGHT/55, 0xFFFFFF, floatToString(data->objs[data->current]->u_data.plane.orient.z, str));
-		mlx_string_put(data->mlx, data->win, WIDTH/2 - WIDTH/30, HEIGHT - HEIGHT/19, 0xFFFFFF, "You are on a cone");
-	}
+		sphere_text(data);
+	else if (data->current < 2 + data->count.l_count + data->count.sp_count
+		+ data->count.pl_count)
+		plane_text(data);
+	else if (data->current < 2 + data->count.l_count + data->count.sp_count
+		+ data->count.pl_count + data->count.cy_count)
+		cylinder_text(data);
+	else if (data->current < 2 + data->count.l_count + data->count.sp_count
+		+ data->count.pl_count + data->count.cy_count + data->count.hy_count)
+		hyperboloid_text(data);
 	data->changed = 0;
 }
 
-void render(t_data *data)
+/*
+void	render(t_data *data)
 {
 	int		i;
 	int		j;
 	float	u;
 	float	v;
-	//int spp = 0;
 
 	i = -1;
 	j = HEIGHT;
@@ -122,52 +46,50 @@ void render(t_data *data)
 	}
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
 	render_text(data);
-}
+}*/
 
-void *render_thr(void *dataV)
+void	render_loop(t_data *th_data, t_img *img, int ti)
 {
+	t_ray	ray;
 	int		i;
 	int		j;
 	float	u;
 	float	v;
-	t_img img;
-	t_data	*data  = (t_data*)dataV;
-	t_data	th_data;
-	
 
-	pthread_mutex_lock(&data->lock);
-	init_thread_data(&th_data, data);
-	int ti = data->thread_i;
-	pthread_mutex_unlock(&data->lock);
 	i = -1;
-	init_image(data, WIDTH, HEIGHT/THREADS, &img);
-	j = HEIGHT - HEIGHT/THREADS * ti;
-	while (j-- > HEIGHT/THREADS * (THREADS - 1 - ti))
+	j = HEIGHT - HEIGHT / THREADS * ti;
+	while (j-- > HEIGHT / THREADS * (THREADS - 1 - ti))
 	{
-		//if (j < 10 || j > 1050)
-		//printf("%d\n", j);
 		while (++i < WIDTH)
 		{
-		//	while (spp < data->vp->samplespp)
-		//	{
-			//u = ((float)(i) + rand_double(i)) / (float)(WIDTH - 1);
-			//v = ((float)(j) + rand_double(j)) / (float)(HEIGHT - 1);
 			u = (float)(i) / (float)(WIDTH - 1);
 			v = (float)(j) / (float)(HEIGHT - 1);
-			//pthread_mutex_lock(&data->lock);
-			t_ray ray = create_ray(&th_data.objs[1]->u_data.camera, th_data.vp, u, v);
-			(void)ray;
-			my_mlx_pixel_put(&img, i, j % (HEIGHT/THREADS), ray_color(&ray, &th_data));
-			//pthread_mutex_unlock(&data->lock);
-		//		spp++;
-		//	}
-		//	spp = 0;
+			ray = create_ray(&th_data->objs[1]->u_data.camera,
+					th_data->vp, u, v);
+			my_mlx_pixel_put(img, i, j % (HEIGHT / THREADS),
+				ray_color(&ray, th_data));
 		}
 		i = -1;
-		//printf("%d\n", i);
 	}
+}
+
+void	*render_thr(void *dataV)
+{
+	int		ti;
+	t_img	img;
+	t_data	*data;
+	t_data	th_data;
+
+	data = (t_data *)dataV;
 	pthread_mutex_lock(&data->lock);
-	mlx_put_image_to_window(data->mlx, data->win, img.img, 0, HEIGHT - HEIGHT/THREADS * (ti + 1));
+	init_thread_data(&th_data, data);
+	ti = data->thread_i;
+	pthread_mutex_unlock(&data->lock);
+	init_image(data, WIDTH, HEIGHT / THREADS, &img);
+	render_loop(&th_data, &img, ti);
+	pthread_mutex_lock(&data->lock);
+	mlx_put_image_to_window(data->mlx, data->win, img.img, 0,
+		HEIGHT - HEIGHT / THREADS * (ti + 1));
 	data->fin++;
 	pthread_mutex_unlock(&data->lock);
 	free (th_data.objs);
@@ -176,3 +98,42 @@ void *render_thr(void *dataV)
 	pthread_join(data->thread_id[data->thread_i], NULL);
 	return (0);
 }
+
+// void	*render_thr(void *dataV)
+// {
+// 	int		i;
+// 	int		j;
+// 	float	u;
+// 	float	v;
+// 	t_img	img;
+// 	t_data	*data  = (t_data*)dataV;
+// 	t_data	th_data;
+// 	pthread_mutex_lock(&data->lock);
+// 	init_thread_data(&th_data, data);
+// 	int ti = data->thread_i;
+// 	pthread_mutex_unlock(&data->lock);
+// 	i = -1;
+// 	init_image(data, WIDTH, HEIGHT/THREADS, &img);
+// 	j = HEIGHT - HEIGHT/THREADS * ti;
+// 	while (j-- > HEIGHT/THREADS * (THREADS - 1 - ti))
+// 	{
+// 		while (++i < WIDTH)
+// 		{
+// 			u = (float)(i) / (float)(WIDTH - 1);
+// 			v = (float)(j) / (float)(HEIGHT - 1);
+// 			t_ray ray = create_ray(&th_data.objs[1]->u_data.camera, th_data.vp, u, v);
+// 			(void)ray;
+// 			my_mlx_pixel_put(&img, i, j % (HEIGHT/THREADS), ray_color(&ray, &th_data));
+// 		}
+// 		i = -1;
+// 	}
+// 	pthread_mutex_lock(&data->lock);
+// 	mlx_put_image_to_window(data->mlx, data->win, img.img, 0, HEIGHT - HEIGHT/THREADS * (ti + 1));
+// 	data->fin++;
+// 	pthread_mutex_unlock(&data->lock);
+// 	free (th_data.objs);
+// 	free_obj_list(th_data.chaos);
+// 	free(th_data.vp);
+// 	pthread_join(data->thread_id[data->thread_i], NULL);
+// 	return (0);
+// }

@@ -38,7 +38,7 @@ t_vec	get_sp_xpm_color(t_data *d, t_ray *ray, t_img *xpm)
 	int		y;
 
 	calculate_x_y_sp(xpm, ray, &x, &y);
-	pixel_color = decimalToRGB(get_color_pixel(d, x, y, xpm));
+	pixel_color = decimal_to_rgb(get_color_pixel(d, x, y, xpm));
 	return (pixel_color);
 }
 

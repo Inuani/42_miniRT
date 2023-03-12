@@ -91,7 +91,7 @@ t_vec get_x_y_color_hy(t_data *d, t_hyperboloid *hy, float u, float v)
 
 	x = u * hy->xpm.wdth;
 	y = (1 - v) * hy->xpm.hgt;
-	return (decimalToRGB(get_color_pixel(d, x, y, &hy->xpm)));
+	return (decimal_to_rgb(get_color_pixel(d, x, y, &hy->xpm)));
 }
 
 t_vec	set_hy_xpm_color(t_data *d, t_ray *ray, t_hyperboloid *hy)

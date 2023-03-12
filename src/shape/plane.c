@@ -8,7 +8,6 @@ float inverse_map(float x)
 	return (0.0 +  ((1.0 - 0.0) / (float)(90.0 - 0)) * (y - 0));
 }
 
-
 void	phong_plane(t_data *data, t_ray *ray, t_light light, t_vec obj_color)
 {
 	t_vec	R;
@@ -59,7 +58,7 @@ t_vec get_texture(t_data *data, t_ray ray, t_img *xpm)
 		ray.point_at.z = -ray.point_at.z;
 	x = fmod(ray.point_at.x, 1) * xpm->wdth;
 	y = fmod(ray.point_at.z, 1) * xpm->hgt;
-	return (decimalToRGB(get_color_pixel(data, x, y, xpm)));
+	return (decimal_to_rgb(get_color_pixel(data, x, y, xpm)));
 }
 
 t_vec calculate_x_y_pcb(t_ray ray, t_plane *plane)
