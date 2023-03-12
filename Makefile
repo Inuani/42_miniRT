@@ -49,6 +49,7 @@ SHAPE_SRC = $(addprefix $(SHAPE_DIR),	plane.c \
 
 VEC_SRC = $(addprefix $(VEC_DIR),	vec_utils.c \
 									vec_utils2.c \
+									angle_utils.c \
 									)
 
 THDS_SRC = $(addprefix $(THDS_DIR),	threads.c \
@@ -62,6 +63,8 @@ REND_SRC = $(addprefix $(REND_DIR),	render.c \
 									handle_keys3.c \
 									trgb.c \
 									ftoa.c \
+									tutorial.c \
+									tutorial2.c \
 									)
 
 RAY_SRC = $(addprefix $(RAY_DIR),	rays.c \
