@@ -1,27 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   obj_list_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: egauthey <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/21 18:51:04 by egauthey          #+#    #+#             */
+/*   Updated: 2022/11/21 18:51:06 by egauthey         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minirt.h"
 
 t_object	*create_object(t_type type, void *data)
 {
 	t_object	*new;
-	
+
 	new = malloc(sizeof(t_object));
 	if (!new)
 		return (NULL);
 	new->type = type;
 	if (type == AMBIANT)
-		new->u_data.ambiant = *(t_ambiant*)data;
+		new->u_data.ambiant = *(t_ambiant *)data;
 	else if (type == CAMERA)
-		new->u_data.camera = *(t_cam*)data;
+		new->u_data.camera = *(t_cam *)data;
 	else if (type == LIGHT)
-		new->u_data.light = *(t_light*)data;
+		new->u_data.light = *(t_light *)data;
 	else if (type == SPHERE)
-		new->u_data.sphere = *(t_sphere*)data;
+		new->u_data.sphere = *(t_sphere *)data;
 	else if (type == PLANE)
-		new->u_data.plane = *(t_plane*)data;
+		new->u_data.plane = *(t_plane *)data;
 	else if (type == CYLINDER)
-		new->u_data.cylinder = *(t_cylinder*)data;
+		new->u_data.cylinder = *(t_cylinder *)data;
 	else if (type == HYPERBOLOID)
-		new->u_data.hyperboloid = *(t_hyperboloid*)data;
+		new->u_data.hyperboloid = *(t_hyperboloid *)data;
 	new->next = NULL;
 	return (new);
 }
@@ -62,18 +74,3 @@ void	free_obj_list(t_object *chaos)
 			chaos = tmp;
 	}
 }
-
-// int	nb_objects(t_object *lst)
-// {
-// 	t_object	*tmp;
-// 	int			i;
-
-// 	tmp = lst;
-// 	i = 0;
-// 	while (tmp)
-// 	{
-// 		tmp = tmp->next;
-// 		i++;
-// 	}
-// 	return (i);
-// }

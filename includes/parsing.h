@@ -103,13 +103,6 @@ void	obj_array_create(t_data *d);
 void	exit_error(char *msg, int error);
 // void	free_tok_from_end(t_tok *lst);
 
-// ----------------------------------------------
-// pars_debug.c
-// ----------------------------------------------
-
-
-void	print_token(t_tok **lst);
-void	print_object(t_object obj);
 
 # define ERR_OPEN "Open error "
 # define ERR_CLOSE "Close error "

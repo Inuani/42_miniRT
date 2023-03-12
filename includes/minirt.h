@@ -127,6 +127,8 @@ void	light_deep_copy(t_object *new_node, const t_object *list);
 int		print_key(int key, t_data *data);
 void	printf_vec(t_vec vec);
 void	print_new_list(t_data *d);
+void	print_token(t_tok **lst);
+// void	print_object(t_object obj);
 
 //render
 char	*floatToString(float n, char* res);

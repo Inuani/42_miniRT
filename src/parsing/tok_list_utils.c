@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tok_list_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: egauthey <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/21 18:51:04 by egauthey          #+#    #+#             */
+/*   Updated: 2022/11/21 18:51:06 by egauthey         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minirt.h"
 
 t_tok	*tok_lstnew(char *s, int t)
@@ -40,7 +52,7 @@ t_tok	*tok_last(t_tok *lst)
 int	tok_lst_size(t_tok *lst)
 {
 	t_tok	*tmp;
-	int			i;
+	int		i;
 
 	tmp = lst;
 	i = 0;

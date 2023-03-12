@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tok_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: egauthey <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/21 18:51:04 by egauthey          #+#    #+#             */
+/*   Updated: 2022/11/21 18:51:06 by egauthey         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minirt.h"
 
 void	create_obj_tok(t_data *d, char *line, int *i)
@@ -25,7 +37,8 @@ void	create_prop_tok(t_data *d, char *line, int *i)
 	t_tok	*new;
 
 	j = *i;
-	while (line[*i] && (ft_isdigit(line[*i]) || line[*i] == '.' || line[*i] == '-'))
+	while (line[*i] && (ft_isdigit(line[*i])
+			|| line[*i] == '.' || line[*i] == '-'))
 		*i += 1;
 	prop = ft_substr(line, j, *i - j);
 	if (!prop)
