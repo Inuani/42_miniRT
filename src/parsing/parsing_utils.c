@@ -55,20 +55,27 @@ int	calc_nb_prop(t_tok *lst)
 	return (nb);
 }
 
-void	set_xpm_path(char **n_img, char **n_path, char **xpm, char **img)
+// void	set_xpm_path(char **n_img, char **n_path, char **xpm, char **img)
+// {
+// 	*n_path = ft_strjoin("images/", "n_");
+// 	if (!*n_path)
+// 		exit_error(ERR_MALLOC, 260);
+// 	*n_img = ft_strjoin(*n_path, *img);
+// 	if (!n_img)
+// 		exit_error(ERR_MALLOC, 260);
+// 	*xpm = ft_strjoin("images/", *img);
+// 	if (!xpm)
+// 		exit_error(ERR_MALLOC, 260);
+// 	if (access(*xpm, F_OK) != 0)
+// 		exit_error(ERR_XPM_IMG, 1);
+// }
+
+void	set_xpm_path(char **xpm, char **img)
 {
-	*n_path = ft_strjoin("images/", "n_");
-	if (!*n_path)
-		exit_error(ERR_MALLOC, 260);
-	*n_img = ft_strjoin(*n_path, *img);
-	if (!n_img)
-		exit_error(ERR_MALLOC, 260);
 	*xpm = ft_strjoin("images/", *img);
 	if (!xpm)
 		exit_error(ERR_MALLOC, 260);
 	if (access(*xpm, F_OK) != 0)
-		exit_error(ERR_XPM_IMG, 1);
-	if (access(*n_img, F_OK) != 0)
 		exit_error(ERR_XPM_IMG, 1);
 }
 

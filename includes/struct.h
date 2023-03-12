@@ -46,7 +46,8 @@ typedef struct s_sphere {
 	t_vec	right;
 	t_vec	colors;
 	t_img	xpm;
-	t_img	n_map;
+	// t_img	n_map;
+	int		*pix_arr;
 	int		flg;
 }				t_sphere;
 
@@ -63,6 +64,7 @@ typedef struct s_hyperboloid {
 	float	v_h;
 	float	w_h;
 	t_img	xpm;
+	int		*pix_arr;
 	int		flg;
 }				t_hyperboloid;
 
@@ -80,6 +82,7 @@ typedef struct s_cylinder {
 	float	hgt;
 	t_vec	colors;
 	t_img	xpm;
+	int		*pix_arr;
 	// t_img	n_map;
 	int		flg;
 }				t_cylinder;
@@ -89,6 +92,7 @@ typedef struct s_plane {
 	t_vec	orient;
 	t_vec	colors;
 	t_img	xpm;
+	int		*pix_arr;
 	// t_img	n_map;
 	int		flg;
 }				t_plane;

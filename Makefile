@@ -42,8 +42,11 @@ PARS_SRC = $(addprefix $(PARS_DIR),	mrt_parsing.c \
 									)
 
 SHAPE_SRC = $(addprefix $(SHAPE_DIR),	plane.c \
+										plane_utils.c \
 										cylinder.c \
+										cylinder_utils.c \
 										hyperboloid.c \
+										hyp_utils.c \
 										sphere.c \
 										)
 
@@ -71,8 +74,6 @@ RAY_SRC = $(addprefix $(RAY_DIR),	rays.c \
 									)
 
 SRC =	main.c \
-		init_objs.c \
-		rand.c \
 		debug.c \
 
 OBJ := $(SRC:%.c=%.o)

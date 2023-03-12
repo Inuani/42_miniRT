@@ -20,19 +20,20 @@ void	get_hyperboloid(t_data *d)
 
 void	hyp_img_init(t_data *d, t_tok **lst, t_hyperboloid *cur)
 {
-	char	*n_img;
-	char	*n_path;
+	// char	*n_img;
+	// char	*n_path;
 	char	*xpm;
 
-	n_img = NULL;
-	n_path = NULL;
+	// n_img = NULL;
+	// n_path = NULL;
 	xpm = NULL;
 	*lst = (*lst)->next;
-	set_xpm_path(&n_img, &n_path, &xpm, &(*lst)->s);
+	set_xpm_path(&xpm, &(*lst)->s);
 	cur->xpm.img = mlx_xpm_file_to_image(d->mlx, xpm, &cur->xpm.wdth, &cur->xpm.hgt);
 	cur->xpm.addr = mlx_get_data_addr(cur->xpm.img, &cur->xpm.bits_per_pixel, &cur->xpm.line_length, &cur->xpm.endian);
-	free(n_path);
-	free(n_img);
+	cur->pix_arr = set_pixel_color_array(d, &cur->xpm, cur->xpm.hgt, cur->xpm.wdth);
+	// free(n_path);
+	// free(n_img);
 	free(xpm);
 }
 

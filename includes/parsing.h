@@ -58,8 +58,10 @@ void	get_light(t_data *d);
 int		is_space(int c);
 void	skip_space(char *line, int *i);
 float	ft_atof(const char *str);
-void	set_xpm_path(char **n_img, char **n_path, char **xpm, char **img);
+// void	set_xpm_path(char **n_img, char **n_path, char **xpm, char **img);
+void	set_xpm_path(char **xpm, char **img);
 int		calc_nb_prop(t_tok *lst);
+int		*set_pixel_color_array(t_data *d, t_img *xpm, int hgt, int wdt);
 
 // ----------------------------------------------
 // tok_utils.c

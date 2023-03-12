@@ -31,14 +31,14 @@ int	get_color_pixel(t_data *d, int x, int y, t_img *xpm)
 	return (pixel_color);
 }
 
-t_vec	get_sp_xpm_color(t_data *d, t_ray *ray, t_img *xpm)
+t_vec	get_sp_xpm_color(t_ray *ray, t_sphere *sp)
 {
 	t_vec	pixel_color;
 	int		x;
 	int		y;
 
-	calculate_x_y_sp(xpm, ray, &x, &y);
-	pixel_color = decimalToRGB(get_color_pixel(d, x, y, xpm));
+	calculate_x_y_sp(&sp->xpm, ray, &x, &y);
+	pixel_color = decimalToRGB(sp->pix_arr[y * sp->xpm.wdth + x]);
 	return (pixel_color);
 }
 
@@ -63,11 +63,6 @@ void	light_hit(t_ray *ray, t_data *data, t_sphere *sphere, t_light light)
 	if (is_inside(*sphere, data->objs[1]->u_data.camera, light))
 		return ;
 	ray->shiny = 100;
-	
-	// get_sp_texture_color(data, ray, &sphere);
-	// texture_color = get_sp_texture_color(data, ray, &sphere);
-	// sphere->colors = vec_add(get_sp_texture_color(data, ray, sphere), vec_unit(normal_map_color));
-	// sphere.colors = get_sp_texture_color(data, ray, &sphere);
 	phong(data, ray, light, sphere->colors);
 }
 
@@ -75,9 +70,9 @@ float	sphere_hits(t_vec vector, t_vec v, t_sphere sphere)
 {
 	float		det;
 
-	float a = vec_dot(vector, vector); //can simplify
+	float a = vec_dot(vector, vector);
 	float half_b = vec_dot(v, vector);
-	float c = vec_dot(v, v) - (sphere.radius * sphere.radius); //can simplify
+	float c = vec_dot(v, v) - (sphere.radius * sphere.radius);
 	det = half_b*half_b - a*c;
 
 	if (det < 0)
@@ -85,7 +80,7 @@ float	sphere_hits(t_vec vector, t_vec v, t_sphere sphere)
 	float t1 = (-half_b - sqrt(det)) / a;
 	float t2 = (-half_b + sqrt(det)) / a;
 
-	if (t1 > 0.0 && (t2 < 0.0 || t1 < t2)) //change in function of camera
+	if (t1 > 0.0 && (t2 < 0.0 || t1 < t2))
 		return (t1);
 	return (t2);
 }
@@ -103,7 +98,7 @@ float it_hit_sphere(t_data *data, t_ray *ray, t_sphere sphere)
 		// sphere.colors = vec_add(get_sp_xpm_color(data, ray, &sphere.xpm), normal_map_color);
 
 		// sphere.colors = add_colors(get_sp_xpm_color(data, ray, &sphere.xpm), normal_map_color, 0.05);
-		sphere.colors = get_sp_xpm_color(data, ray, &sphere.xpm);
+		sphere.colors = get_sp_xpm_color(ray, &sphere);
 	}
 	else if (sphere.flg == 1)
 		sphere.colors = calculate_x_y_scb(ray, &sphere);
