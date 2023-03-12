@@ -12,7 +12,7 @@ void	handle_planes_p2(int key, t_plane *obj)
 		obj->orient.z -= 0.1;
 	else if (key == N_SEVEN && obj->colors.x < 246)
 		obj->colors.x += 10;
-	else if (key == N_EIGHT &&obj->colors.y < 246)
+	else if (key == N_EIGHT && obj->colors.y < 246)
 		obj->colors.y += 10;
 	else if (key == N_NINE && obj->colors.z < 246)
 		obj->colors.z += 10;
@@ -49,7 +49,6 @@ void	handle_planes(int key, t_data *data)
 		obj->orient.z += 0.1;
 	else
 		handle_planes_p2(key, obj);
-
 	obj->orient = vec_unit(obj->orient);
 }
 
@@ -96,15 +95,9 @@ void	handle_spheres(int key, t_data *data)
 
 int	event_handler(int key, t_data *data)
 {
-	(void) data;
 	if (key == 53)
-	{
-		free (data->objs);
-		free_obj_list(data->chaos);
-		free(data->vp);
 		exit(0);
-	}
-	else if (key == 123) //maybe wrong
+	else if (key == 123)
 	{
 		if (data -> current == 0)
 			data->current = data->count.total - 1;
@@ -112,7 +105,7 @@ int	event_handler(int key, t_data *data)
 			data->current--;
 		data->changed = 1;
 	}
-	else if (key == 124) //maybe wrong
+	else if (key == 124)
 	{
 		if (data -> current == data->count.total - 1)
 			data->current = 0;
@@ -121,7 +114,6 @@ int	event_handler(int key, t_data *data)
 		data->changed = 1;
 	}
 	handle_stuff(key, data);
-	//render(data);
 	create_thread(data);
 	return (0);
 }

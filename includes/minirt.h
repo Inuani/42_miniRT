@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:13:13 by egauthey          #+#    #+#             */
-/*   Updated: 2023/03/11 18:35:59 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/03/12 14:51:41 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	light_hit(t_ray *ray, t_data *data, t_sphere *sphere, t_light light);
 
 //color
 int		get_color_pixel(t_data *d, int x, int y, t_img *xpm);
-t_vec	decimalToRGB(int color);
+t_vec	decimal_to_rgb(int color);
 int		create_trgb(int t, int r, int g, int b);
 t_vec	add_color(t_vec c1, t_vec c2);
 t_vec	add_colors(t_vec c1, t_vec c2, float intensity);
@@ -55,7 +55,14 @@ int		get_angle_degree(t_vec normal, t_vec ray_l);
 float	get_angle_0_to_1(t_vec normal, t_vec obj);
 
 //render text-tutorial
-void render_text(t_data *data);
+void	render_text(t_data *data);
+void	ambient_text(t_data *data);
+void	camera_text(t_data *data);
+void	light_text(t_data *data);
+void	cylinder_text(t_data *data);
+void	sphere_text(t_data *data);
+void	plane_text(t_data *data);
+void	hyperboloid_text(t_data *data);
 
 // rand
 // int		fast_rand(int seed);
@@ -131,6 +138,6 @@ void	print_token(t_tok **lst);
 // void	print_object(t_object obj);
 
 //render
-char	*floatToString(float n, char* res);
+char	*fts(float n, char* res);
 
 #endif

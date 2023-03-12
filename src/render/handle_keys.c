@@ -6,22 +6,12 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:05:42 by lskraber          #+#    #+#             */
-/*   Updated: 2023/03/11 18:34:27 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/03/12 14:08:22 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minirt.h"
 #include "../../includes/keys.h"
-
-
-	// inst.orient = vec_unit(inst.orient);
-	// if (!inst.orient.x && !inst.orient.z)
-	// 	inst.up = vec_cross(inst.orient, (t_vec) {0, 0, 1});
-	// else
-	// 	inst.up = (t_vec) {0, 1, 0};
-	// inst.up = vec_unit(inst.up);
-	// inst.right = vec_cross(inst.orient, inst.up);
-	// inst.right = vec_unit(inst.right);
 
 void	handle_lights_p2(int key, t_light *light)
 {
@@ -45,7 +35,7 @@ void	handle_lights_p2(int key, t_light *light)
 
 void	handle_lights(int key, t_data *data)
 {
-	t_light *light;
+	t_light	*light;
 
 	light = &data->objs[data->current]->u_data.light;
 	if (key == Q)
@@ -78,23 +68,21 @@ void	handle_camera_p2(int key, t_data *data, t_cam *cam)
 		cam->fov += 10;
 	else if (key == POINT_COMMA && cam->fov >= 10)
 		cam->fov -= 10;
-
 	cam->orient = vec_unit(cam->orient);
-	if (!cam->orient.x && !cam->orient.z)	//problem here
-		cam->up = vec_cross(cam->orient, (t_vec) {0, 0, 1});
+	if (!cam->orient.x && !cam->orient.z)
+		cam->up = vec_cross(cam->orient, (t_vec){0, 0, 1});
 	else
-		cam->up = (t_vec) {0, 1, 0};
+		cam->up = (t_vec){0, 1, 0};
 	cam->up = vec_unit(cam->up);
 	cam->right = vec_cross(cam->orient, cam->up);
 	cam->right = vec_unit(cam->right);
-
 	data->vp->viewp_wdt = tan(cam->fov / 2 * M_PI / 180.0) * 2;
 	data->vp->viewp_hgt = data->vp->viewp_wdt / (data->vp->aspect_ratio);
 }
 
 void	handle_camera(int key, t_data *data)
 {
-	t_cam *cam;
+	t_cam	*cam;
 
 	cam = &data->objs[1]->u_data.camera;
 	if (key == Q)
@@ -115,13 +103,11 @@ void	handle_camera(int key, t_data *data)
 		cam->orient.y += 0.1;
 	else
 		handle_camera_p2(key, data, cam);
-
 }
 
 void	handle_ambient(int key, t_data *data)
 {
-
-	t_ambiant *ambient;
+	t_ambiant	*ambient;
 
 	ambient = &data->objs[0]->u_data.ambiant;
 	if (key == I && ambient->light_ratio <= 0.9)
