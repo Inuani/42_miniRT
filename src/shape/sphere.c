@@ -21,16 +21,6 @@ void	calculate_x_y_sp(t_img *xpm, t_ray *ray, int *x, int *y)
 	*y = (1 - v) * (xpm->hgt - 1);
 }
 
-int	get_color_pixel(t_data *d, int x, int y, t_img *xpm)
-{
-	int	pixel_color;
-	int	pixel_offset;
-
-	pixel_offset = (y * xpm->line_length) + (x * (xpm->bits_per_pixel / 8));
-	pixel_color = mlx_get_color_value(d->mlx, *(int *)(xpm->addr + pixel_offset));
-	return (pixel_color);
-}
-
 t_vec	get_sp_xpm_color(t_ray *ray, t_sphere *sp)
 {
 	t_vec	pixel_color;
@@ -38,7 +28,7 @@ t_vec	get_sp_xpm_color(t_ray *ray, t_sphere *sp)
 	int		y;
 
 	calculate_x_y_sp(&sp->xpm, ray, &x, &y);
-	pixel_color = decimalToRGB(sp->pix_arr[y * sp->xpm.wdth + x]);
+	pixel_color = decimal_to_rgb(sp->pix_arr[y * sp->xpm.wdth + x]);
 	return (pixel_color);
 }
 

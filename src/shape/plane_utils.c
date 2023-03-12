@@ -29,7 +29,7 @@ t_vec calculate_x_y_pcb(t_ray ray, t_plane *plane)
 // 		ray.point_at.z = -ray.point_at.z;
 // 	x = fmod(ray.point_at.x, 1) * xpm->wdth;
 // 	y = fmod(ray.point_at.z, 1) * xpm->hgt;
-// 	return (decimalToRGB(get_color_pixel(data, x, y, xpm)));
+// 	return (decimal_to_rgb(get_color_pixel(data, x, y, xpm)));
 // }
 
 t_vec get_texture(t_data *data, t_ray ray, t_plane *pl)
@@ -44,7 +44,7 @@ t_vec get_texture(t_data *data, t_ray ray, t_plane *pl)
 		ray.point_at.z = -ray.point_at.z;
 	x = fmod(ray.point_at.x, 1) * pl->xpm.wdth;
 	y = fmod(ray.point_at.z, 1) * pl->xpm.hgt;
-	return (decimalToRGB(pl->pix_arr[y * pl->xpm.wdth + x]));
+	return (decimal_to_rgb(pl->pix_arr[y * pl->xpm.wdth + x]));
 }
 
 

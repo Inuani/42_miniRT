@@ -53,8 +53,7 @@ t_vec get_x_y_color_cy(t_data *d, t_cylinder *cy, float u, float v)
 
 	x = u * cy->xpm.wdth;
 	y = (1 - v) * cy->xpm.hgt;
-	// return (decimalToRGB(get_color_pixel(d, x, y, &cy->xpm)));
-	return (decimalToRGB(get_color_pixel_cy(d, x, y, cy)));
+	return (decimal_to_rgb(get_color_pixel_cy(d, x, y, cy)));
 }
 
 t_vec	set_cy_xpm_color(t_data *d, t_ray *ray, t_cylinder *cy)
