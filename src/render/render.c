@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:05:42 by lskraber          #+#    #+#             */
-/*   Updated: 2023/03/12 14:08:22 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/03/13 14:11:02 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ void	*render_thr(void *dataV)
 	free (th_data.objs);
 	free_obj_list(th_data.chaos);
 	free(th_data.vp);
-	pthread_join(data->thread_id[data->thread_i], NULL);
 	return (0);
 }
 
