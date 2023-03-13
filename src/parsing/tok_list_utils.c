@@ -63,21 +63,3 @@ int	tok_lst_size(t_tok *lst)
 	}
 	return (i);
 }
-
-// t_tok	*remove_tok(t_tok **lst, t_tok *tok_to_remove)
-// {
-// 	if (!(*lst) || !tok_to_remove)
-// 		return (NULL);
-// 	if (*lst == tok_to_remove)
-// 		*lst = tok_to_remove->next;
-// 	if (tok_to_remove->next != NULL)
-// 		tok_to_remove->next->prev = tok_to_remove->prev;
-// 	if (tok_to_remove->prev != NULL)
-// 		tok_to_remove->prev->next = tok_to_remove->next;
-// 	if (tok_to_remove->s != NULL)
-// 		free(tok_to_remove->s);
-// 	free(tok_to_remove);
-// 	if (*lst == NULL)
-// 		return (NULL);
-// 	return (*lst);
-// }

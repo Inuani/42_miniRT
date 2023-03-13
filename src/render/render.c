@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/22 15:05:42 by lskraber          #+#    #+#             */
+/*   Updated: 2023/03/12 14:08:22 by lskraber         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../includes/minirt.h"
 
@@ -121,14 +132,17 @@ void	*render_thr(void *dataV)
 // 		{
 // 			u = (float)(i) / (float)(WIDTH - 1);
 // 			v = (float)(j) / (float)(HEIGHT - 1);
-// 			t_ray ray = create_ray(&th_data.objs[1]->u_data.camera, th_data.vp, u, v);
+// 			t_ray ray = create_ray(
+	// &th_data.objs[1]->u_data.camera, th_data.vp, u, v);
 // 			(void)ray;
-// 			my_mlx_pixel_put(&img, i, j % (HEIGHT/THREADS), ray_color(&ray, &th_data));
+// 			my_mlx_pixel_put(&img,
+// i, j % (HEIGHT/THREADS), ray_color(&ray, &th_data));
 // 		}
 // 		i = -1;
 // 	}
 // 	pthread_mutex_lock(&data->lock);
-// 	mlx_put_image_to_window(data->mlx, data->win, img.img, 0, HEIGHT - HEIGHT/THREADS * (ti + 1));
+// 	mlx_put_image_to_window(data->mlx,
+// data->win, img.img, 0, HEIGHT - HEIGHT/THREADS * (ti + 1));
 // 	data->fin++;
 // 	pthread_mutex_unlock(&data->lock);
 // 	free (th_data.objs);

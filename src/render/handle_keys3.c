@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_keys3.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/22 15:05:42 by lskraber          #+#    #+#             */
+/*   Updated: 2023/03/12 14:08:22 by lskraber         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../includes/minirt.h"
-#include "../../includes/keys.h"
+// #include "../../includes/keys.h"
 
 void	handle_planes_p2(int key, t_plane *obj)
 {

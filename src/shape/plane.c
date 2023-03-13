@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   plane.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/22 15:05:42 by lskraber          #+#    #+#             */
+/*   Updated: 2023/03/12 14:08:22 by lskraber         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../includes/minirt.h"
 
-float inverse_map(float x)
+float	inverse_map(float x)
 {
 	float	y;
+
 	y = fabs(1 - x);
-	return (0.0 +  ((1.0 - 0.0) / (float)(90.0 - 0)) * (y - 0));
+	return (0.0 + ((1.0 - 0.0) / (float)(90.0 - 0)) * (y - 0));
 }
 
 float	plane_hit(t_plane *plane, t_vec ray_origine, t_vec ray_direction)
@@ -18,8 +30,8 @@ float	plane_hit(t_plane *plane, t_vec ray_origine, t_vec ray_direction)
 	denom = vec_dot(ray_direction, plane->orient);
 	t = numer / denom;
 	if (t < 0)
-		return -1;
-	return t;
+		return (-1);
+	return (t);
 }
 
 void	plane_light(t_data *data, t_ray *ray, t_plane plane, t_light light)
@@ -33,7 +45,8 @@ void	plane_light(t_data *data, t_ray *ray, t_plane plane, t_light light)
 
 void	plane_life(t_data *data, t_ray *ray, t_plane plane)
 {
-	int	i;
+	int		i;
+	t_vec	ambient_color;
 
 	i = 0;
 	if (plane.flg == 2)
@@ -42,6 +55,8 @@ void	plane_life(t_data *data, t_ray *ray, t_plane plane)
 		plane.colors = calculate_x_y_pcb(*ray, &plane);
 	while (i < data->count.l_count)
 		plane_light(data, ray, plane, data->objs[2 + i++]->u_data.light);
-	t_vec ambient_color = add_color(vec_scale(K_LIGHT, plane.colors), vec_scale(1 - K_LIGHT, data->objs[0]->u_data.ambiant.colors));
-	data->final_color = add_colors(data->final_color, ambient_color, data->objs[0]->u_data.ambiant.light_ratio);
+	ambient_color = add_color(vec_scale(K_LIGHT, plane.colors),
+			vec_scale(1 - K_LIGHT, data->objs[0]->u_data.ambiant.colors));
+	data->final_color = add_colors(data->final_color,
+			ambient_color, data->objs[0]->u_data.ambiant.light_ratio);
 }

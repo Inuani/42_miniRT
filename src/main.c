@@ -10,28 +10,37 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/minirt.h"
+#include "../includes/minirt.h"
 
 int	main(int ac, char **av)
 {
-	(void)ac;
 	t_data	data;
 
+	(void)ac;
 	data.changed = 1;
 	data.current = 0;
-
 	mrt_parsing(av, &data);
-	
-	// int i = 0;
-	// while(data.objs[i])
-	//  	print_object(*data.objs[i++]);
-
-	//render(&data);
 	create_thread(&data);
 	mlx_hook(data.win, 17, 1L << 2, close_win, &data);
 	mlx_key_hook(data.win, event_handler, &data);
-	//mlx_key_hook(data.win, print_key, &data);
 	mlx_loop(data.mlx);
 	return (0);
 }
 
+	// (void)ac;
+	// t_data	data;
+
+	// data.changed = 1;
+	// data.current = 0;
+	// mrt_parsing(av, &data);
+	// // int i = 0;
+	// // while(data.objs[i])
+	// //  	print_object(*data.objs[i++]);
+
+	// //render(&data);
+	// create_thread(&data);
+	// mlx_hook(data.win, 17, 1L << 2, close_win, &data);
+	// mlx_key_hook(data.win, event_handler, &data);
+	// //mlx_key_hook(data.win, print_key, &data);
+	// mlx_loop(data.mlx);
+	// return (0);

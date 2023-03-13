@@ -10,17 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/minirt.h"
+#include "../../includes/minirt.h"
 
-t_vec calculate_x_y_ccb(t_ray *ray, t_cylinder *cyl)
+t_vec	calculate_x_y_ccb(t_ray *ray, t_cylinder *cyl)
 {
 	float	u;
 	float	v;
-	u = get_angle_0_to_1(vec_unit(ray->point_at), (t_vec){1,0,0});
-	v = fmod(ray->point_at.y, 1);
 
+	u = get_angle_0_to_1(vec_unit(ray->point_at), (t_vec){1, 0, 0});
+	v = fmod(ray->point_at.y, 1);
 	if (!((u + v) < 0.5 || ((u + v) > 1 && (u + v) < 1.5)))
-		return ((t_vec) {255, 255, 255});
+		return ((t_vec){255, 255, 255});
 	return ((t_vec) cyl->colors);
 }
 
@@ -46,7 +46,7 @@ int	get_color_pixel_cy(t_data *d, int x, int y, t_cylinder *cy)
 	return (pixel_color);
 }
 
-t_vec get_x_y_color_cy(t_data *d, t_cylinder *cy, float u, float v)
+t_vec	get_x_y_color_cy(t_data *d, t_cylinder *cy, float u, float v)
 {
 	int	x;
 	int	y;

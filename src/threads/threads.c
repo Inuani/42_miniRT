@@ -24,10 +24,12 @@ void	create_thread(t_data *data)
 	{
 		data->thread_i = i;
 		pthread_create(&data->thread_id[i], NULL, render_thr, data);
-		usleep(100);
+		usleep(300);
 		i++;
 	}
-	while (data->fin != 12) {}
+	while (data->fin != 12)
+	{
+	}
 	render_text(data);
 	free(data->thread_id);
 }
@@ -43,16 +45,16 @@ void	ambient_deep_copy(t_object *new_node, const t_object *list)
 void	camera_deep_copy(t_object *new_node, const t_object *list)
 {
 	new_node->u_data.camera.pos.x = list->u_data.camera.pos.x;
-	new_node->u_data.camera.pos.y = list->u_data.camera.pos.y; 
+	new_node->u_data.camera.pos.y = list->u_data.camera.pos.y;
 	new_node->u_data.camera.pos.z = list->u_data.camera.pos.z;
 	new_node->u_data.camera.orient.x = list->u_data.camera.orient.x;
-	new_node->u_data.camera.orient.y = list->u_data.camera.orient.y; 
+	new_node->u_data.camera.orient.y = list->u_data.camera.orient.y;
 	new_node->u_data.camera.orient.z = list->u_data.camera.orient.z;
 	new_node->u_data.camera.up.x = list->u_data.camera.up.x;
-	new_node->u_data.camera.up.y = list->u_data.camera.up.y; 
+	new_node->u_data.camera.up.y = list->u_data.camera.up.y;
 	new_node->u_data.camera.up.z = list->u_data.camera.up.z;
 	new_node->u_data.camera.right.x = list->u_data.camera.right.x;
-	new_node->u_data.camera.right.y = list->u_data.camera.right.y; 
+	new_node->u_data.camera.right.y = list->u_data.camera.right.y;
 	new_node->u_data.camera.right.z = list->u_data.camera.right.z;
 	new_node->u_data.camera.fov = list->u_data.camera.fov;
 }
@@ -61,8 +63,6 @@ t_object	*copy_obj_list_deep(const t_object *list)
 {
 	t_object	*new_node;
 
-	if (list == NULL)
-		return (NULL);
 	new_node = malloc(sizeof(t_object));
 	if (!new_node)
 		return (NULL);
@@ -99,3 +99,6 @@ void	init_thread_data(t_data *th_d, t_data *d)
 	obj_array_create(th_d);
 	initialise_viewport(th_d);
 }
+
+// if (list == NULL)
+// 		return (NULL);

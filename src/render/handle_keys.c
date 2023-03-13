@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/minirt.h"
-#include "../../includes/keys.h"
+// #include "../../includes/keys.h"
 
 void	handle_lights_p2(int key, t_light *light)
 {

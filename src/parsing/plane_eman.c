@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   plane_eman.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: egauthey <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/21 18:51:04 by egauthey          #+#    #+#             */
+/*   Updated: 2022/11/21 18:51:06 by egauthey         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minirt.h"
 
 void	get_plane(t_data *d)
 {
 	t_object	*tmp;
-	int	i;
+	int			i;
 
 	i = 2 + d->count.l_count + d->count.sp_count;
 	tmp = d->chaos;
-	while(tmp)
+	while (tmp)
 	{
 		if (tmp->type == PLANE)
 		{
@@ -20,23 +32,19 @@ void	get_plane(t_data *d)
 
 void	pl_img_init(t_data *d, t_tok **lst, t_plane *cur)
 {
-	// char	*n_img;
-	// char	*n_path;
 	char	*xpm;
 
-	// n_img = NULL;
-	// n_path = NULL;
 	xpm = NULL;
 	*lst = (*lst)->next;
 	set_xpm_path(&xpm, &(*lst)->s);
-	cur->xpm.img = mlx_xpm_file_to_image(d->mlx, xpm, &cur->xpm.wdth, &cur->xpm.hgt);
-	cur->xpm.addr = mlx_get_data_addr(cur->xpm.img, &cur->xpm.bits_per_pixel, &cur->xpm.line_length, &cur->xpm.endian);
-	cur->pix_arr = set_pixel_color_array(d, &cur->xpm, cur->xpm.hgt, cur->xpm.wdth);
-	// free(n_path);
-	// free(n_img);
+	cur->xpm.img = mlx_xpm_file_to_image(d->mlx, xpm,
+			&cur->xpm.wdth, &cur->xpm.hgt);
+	cur->xpm.addr = mlx_get_data_addr(cur->xpm.img,
+			&cur->xpm.bits_per_pixel, &cur->xpm.line_length, &cur->xpm.endian);
+	cur->pix_arr = set_pixel_color_array(d,
+			&cur->xpm, cur->xpm.hgt, cur->xpm.wdth);
 	free(xpm);
 }
-
 
 void	set_plane_prop(t_tok **lst, t_plane *inst)
 {
@@ -59,6 +67,7 @@ void	set_plane_prop(t_tok **lst, t_plane *inst)
 	*lst = (*lst)->next;
 	inst->colors.z = ft_atof((*lst)->s);
 	inst->orient = vec_unit(inst->orient);
+	inst->pix_arr = NULL;
 }
 
 int	add_plane(t_data *d, t_tok *lst)

@@ -44,13 +44,15 @@ int	*set_pixel_color_array(t_data *d, t_img *xpm, int hgt, int wdt)
 		x = 0;
 		while (x < wdt)
 		{
-			pixel_offset = (y * xpm->line_length) + (x * (xpm->bits_per_pixel / 8));
-			pix_arr[y * wdt + x] = mlx_get_color_value(d->mlx, *(int *)(xpm->addr + pixel_offset));
+			pixel_offset = (y * xpm->line_length)
+				+ (x * (xpm->bits_per_pixel / 8));
+			pix_arr[y * wdt + x] = mlx_get_color_value(d->mlx,
+					*(int *)(xpm->addr + pixel_offset));
 			x++;
 		}
 		y++;
 	}
-	return(pix_arr);
+	return (pix_arr);
 }
 
 void	cy_img_init(t_data *d, t_tok **lst, t_cylinder *cur)
@@ -65,7 +67,8 @@ void	cy_img_init(t_data *d, t_tok **lst, t_cylinder *cur)
 			xpm, &cur->xpm.wdth, &cur->xpm.hgt);
 	cur->xpm.addr = mlx_get_data_addr(cur->xpm.img,
 			&cur->xpm.bits_per_pixel, &cur->xpm.line_length, &cur->xpm.endian);
-	cur->pix_arr = set_pixel_color_array(d, &cur->xpm, cur->xpm.hgt, cur->xpm.wdth);
+	cur->pix_arr = set_pixel_color_array(d,
+			&cur->xpm, cur->xpm.hgt, cur->xpm.wdth);
 	free(xpm);
 }
 
@@ -94,6 +97,7 @@ void	set_cyl_prop(t_tok **lst, t_cylinder *inst)
 	inst->colors.y = ft_atof((*lst)->s);
 	*lst = (*lst)->next;
 	inst->colors.z = ft_atof((*lst)->s);
+	inst->pix_arr = NULL;
 }
 
 int	add_cylinder(t_data *d, t_tok *lst)

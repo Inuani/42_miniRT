@@ -1,7 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   struct.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: egauthey <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/21 18:51:04 by egauthey          #+#    #+#             */
+/*   Updated: 2022/11/21 18:51:06 by egauthey         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef STRUCT_H
 # define STRUCT_H
-
-// # include "object_type.h"
 
 typedef struct s_img {
 	void	*img;
@@ -46,10 +56,11 @@ typedef struct s_sphere {
 	t_vec	right;
 	t_vec	colors;
 	t_img	xpm;
-	// t_img	n_map;
 	int		*pix_arr;
 	int		flg;
 }				t_sphere;
+
+	// t_img	n_map;
 
 typedef struct s_hyperboloid {
 	t_vec	orient;
@@ -83,7 +94,6 @@ typedef struct s_cylinder {
 	t_vec	colors;
 	t_img	xpm;
 	int		*pix_arr;
-	// t_img	n_map;
 	int		flg;
 }				t_cylinder;
 
@@ -93,7 +103,6 @@ typedef struct s_plane {
 	t_vec	colors;
 	t_img	xpm;
 	int		*pix_arr;
-	// t_img	n_map;
 	int		flg;
 }				t_plane;
 
@@ -160,22 +169,22 @@ typedef struct s_count {
 
 typedef struct s_data
 {
-	pthread_t	*thread_id;
+	pthread_t		*thread_id;
 	pthread_mutex_t	lock;
-	int			thread_i;
-	void		*mlx;
-	void		*win;
-	t_img		img;
-	t_viewport	*vp;
-	t_tok		*lst;
-	t_count		count;
-	t_object	*chaos;
-	t_object	**objs;
-	int			current;
-	int			changed;
-	t_vec		final_color;
-	t_vec		point_at;
-	int			fin;
+	int				thread_i;
+	void			*mlx;
+	void			*win;
+	t_img			img;
+	t_viewport		*vp;
+	t_tok			*lst;
+	t_count			count;
+	t_object		*chaos;
+	t_object		**objs;
+	int				current;
+	int				changed;
+	t_vec			final_color;
+	t_vec			point_at;
+	int				fin;
 }				t_data;
 
 #endif

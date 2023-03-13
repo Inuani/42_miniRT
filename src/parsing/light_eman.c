@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   light_eman.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: egauthey <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/21 18:51:04 by egauthey          #+#    #+#             */
+/*   Updated: 2022/11/21 18:51:06 by egauthey         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minirt.h"
 
 void	get_light(t_data *d)
 {
 	t_object	*tmp;
-	int	i;
+	int			i;
 
 	tmp = d->chaos;
 	i = 2;
-	while(tmp)
+	while (tmp)
 	{
 		if (tmp->type == LIGHT)
 		{

@@ -48,6 +48,7 @@ SHAPE_SRC = $(addprefix $(SHAPE_DIR),	plane.c \
 										hyperboloid.c \
 										hyp_utils.c \
 										sphere.c \
+										sphere_utils.c \
 										)
 
 VEC_SRC = $(addprefix $(VEC_DIR),	vec_utils.c \

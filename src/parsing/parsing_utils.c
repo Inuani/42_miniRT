@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: egauthey <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/21 18:51:04 by egauthey          #+#    #+#             */
+/*   Updated: 2022/11/21 18:51:06 by egauthey         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minirt.h"
 
 int	is_space(int c)
@@ -7,7 +19,7 @@ int	is_space(int c)
 
 void	skip_space(char *line, int *i)
 {
-	while(line[*i] && is_space(line[*i]))
+	while (line[*i] && is_space(line[*i]))
 		*i += 1;
 }
 
@@ -33,7 +45,7 @@ float	ft_atof(const char *str)
 		while (*str && ft_isdigit(*str))
 		{
 			nb = nb + (*str++ - '0') / div;
-			div *= 10; 
+			div *= 10;
 		}
 	}
 	return (nb * neg);
@@ -46,13 +58,22 @@ int	calc_nb_prop(t_tok *lst)
 
 	nb = 0;
 	tmp = lst;
-	while(tmp)
+	while (tmp)
 	{
 		if (tmp->type == 1 || tmp->type == 2)
 			nb++;
 		tmp = tmp->next;
 	}
 	return (nb);
+}
+
+void	set_xpm_path(char **xpm, char **img)
+{
+	*xpm = ft_strjoin("images/", *img);
+	if (!xpm)
+		exit_error(ERR_MALLOC, 260);
+	if (access(*xpm, F_OK) != 0)
+		exit_error(ERR_XPM_IMG, 1);
 }
 
 // void	set_xpm_path(char **n_img, char **n_path, char **xpm, char **img)
@@ -69,13 +90,3 @@ int	calc_nb_prop(t_tok *lst)
 // 	if (access(*xpm, F_OK) != 0)
 // 		exit_error(ERR_XPM_IMG, 1);
 // }
-
-void	set_xpm_path(char **xpm, char **img)
-{
-	*xpm = ft_strjoin("images/", *img);
-	if (!xpm)
-		exit_error(ERR_MALLOC, 260);
-	if (access(*xpm, F_OK) != 0)
-		exit_error(ERR_XPM_IMG, 1);
-}
-

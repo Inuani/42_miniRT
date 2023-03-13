@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   obj_array_creation.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: egauthey <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/21 18:51:04 by egauthey          #+#    #+#             */
+/*   Updated: 2022/11/21 18:51:06 by egauthey         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minirt.h"
 
 //check for potential double A or double C that gives back error
@@ -7,7 +19,7 @@ void	get_camera(t_data *d)
 	t_object	*tmp;
 
 	tmp = d->chaos;
-	while(tmp)
+	while (tmp)
 	{
 		if (tmp->type == CAMERA)
 		{
@@ -22,7 +34,7 @@ void	get_ambiant(t_data *d)
 	t_object	*tmp;
 
 	tmp = d->chaos;
-	while(tmp)
+	while (tmp)
 	{
 		if (tmp->type == AMBIANT)
 		{
@@ -39,7 +51,7 @@ int	calc_nb_obj(t_object *chaos)
 
 	nb = 0;
 	tmp = chaos;
-	while(tmp)
+	while (tmp)
 	{
 		nb++;
 		tmp = tmp->next;
@@ -53,7 +65,7 @@ void	obj_array_create(t_data *d)
 
 	i = 0;
 	d->count.total = calc_nb_obj(d->chaos);
-	d->objs = malloc(sizeof(t_object*) * (d->count.total + 1));
+	d->objs = malloc(sizeof(t_object *) * (d->count.total + 1));
 	get_ambiant(d);
 	get_camera(d);
 	get_light(d);
@@ -63,4 +75,3 @@ void	obj_array_create(t_data *d)
 	get_hyperboloid(d);
 	d->objs[d->count.total] = NULL;
 }
-

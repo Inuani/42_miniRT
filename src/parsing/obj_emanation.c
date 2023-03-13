@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   obj_emanation.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: egauthey <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/21 18:51:04 by egauthey          #+#    #+#             */
+/*   Updated: 2022/11/21 18:51:06 by egauthey         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minirt.h"
 
 void	add_ambiant(t_data *d, t_tok *lst)
@@ -13,7 +25,7 @@ void	add_ambiant(t_data *d, t_tok *lst)
 	inst.light_ratio = ft_atof(lst->s);
 	lst = lst->next;
 	inst.colors.x = ft_atof(lst->s);
-	lst = lst->next;;
+	lst = lst->next;
 	inst.colors.y = ft_atof(lst->s);
 	lst = lst->next;
 	inst.colors.z = ft_atof(lst->s);
@@ -40,9 +52,9 @@ void	set_camera_prop(t_tok **lst, t_cam *inst)
 	inst->fov = ft_atof((*lst)->s);
 	inst->orient = vec_unit(inst->orient);
 	if (!inst->orient.x && !inst->orient.z)
-		inst->up = vec_cross(inst->orient, (t_vec) {0, 0, 1});
+		inst->up = vec_cross(inst->orient, (t_vec){0, 0, 1});
 	else
-		inst->up = (t_vec) {0, 1, 0};
+		inst->up = (t_vec){0, 1, 0};
 	inst->up = vec_unit(inst->up);
 	inst->right = vec_cross(inst->orient, inst->up);
 	inst->right = vec_unit(inst->right);
@@ -54,8 +66,6 @@ void	add_camera(t_data *d, t_tok *lst)
 	t_cam		inst;
 	int			nb;
 
-	//TRANSFORMER LE VECTEUR ORIENTATION EN VECTEUR UNITAIRE.
-	// OU BIEN (plutot) RETOURNER UNE ERREUR SI CE N EST PAS UN.
 	nb = calc_nb_prop(lst);
 	if (nb != 7)
 		exit_error(ERR_PROPERTIES, 1);
@@ -90,7 +100,7 @@ void	obj_eman(t_data *d)
 	t_tok	*tmp;
 
 	tmp = d->lst;
-	while(tmp)
+	while (tmp)
 	{
 		if (tmp->type == 0)
 		{
