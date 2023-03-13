@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:05:42 by lskraber          #+#    #+#             */
-/*   Updated: 2023/03/13 12:28:34 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/03/13 13:53:02 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@ t_vec	calculate_x_y_pcb(t_ray ray, t_plane *plane)
 	int	x;
 	int	y;
 
+	if (!plane->orient.x && !plane->orient.y)
+		ray.point_at.z = ray.point_at.y;
 	if (ray.point_at.x < 0)
-		ray.point_at.x -= 1;
-	if (ray.point_at.y < 0)
-		ray.point_at.y -= 1;
+		ray.point_at.x *= -1;
+	if (ray.point_at.z < 0)
+		ray.point_at.z *= -1;
 	x = ((int)ray.point_at.x % 2);
 	y = ((int)ray.point_at.z % 2);
 	if ((!x && !y) || (x && y))
@@ -48,6 +50,8 @@ t_vec	get_texture(t_data *data, t_ray ray, t_plane *pl)
 	int	y;
 
 	(void)data;
+	if (!pl->orient.x && !pl->orient.y)
+		ray.point_at.z = ray.point_at.y;
 	if (ray.point_at.x < 0)
 		ray.point_at.x = -ray.point_at.x;
 	if (ray.point_at.z < 0)
