@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   deep_copy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egauthey <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 18:51:04 by egauthey          #+#    #+#             */
-/*   Updated: 2022/11/21 18:51:06 by egauthey         ###   ########.fr       */
+/*   Updated: 2023/03/13 12:39:30 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,18 +93,20 @@ void	hyperboloid_deep_copy(t_object *new_node, const t_object *list)
 	new_node->u_data.hyperboloid.xpm.hgt = list->u_data.hyperboloid.xpm.hgt;
 	new_node->u_data.hyperboloid.flg = list->u_data.hyperboloid.flg;
 	new_node->u_data.hyperboloid.pix_arr = list->u_data.hyperboloid.pix_arr;
-}
 
 	// int	arr_size = list->u_data.hyperboloid.xpm.hgt
-		// * list->u_data.hyperboloid.xpm.wdth;
+	// 	* list->u_data.hyperboloid.xpm.wdth;
 	// new_node->u_data.hyperboloid.pix_arr = malloc(sizeof(int) * arr_size);
 	// int i = 0;
 	// while (i < arr_size)
 	// {
 	// 	new_node->u_data.hyperboloid.pix_arr[i]
-			// = list->u_data.hyperboloid.pix_arr[i];
+	// 		= list->u_data.hyperboloid.pix_arr[i];
 	// 	i++;
 	// }
+}
+
+
 
 void	sphere_deep_copy(t_object *new_node, const t_object *list)
 {
@@ -124,9 +126,8 @@ void	sphere_deep_copy(t_object *new_node, const t_object *list)
 	new_node->u_data.sphere.xpm.hgt = list->u_data.sphere.xpm.hgt;
 	new_node->u_data.sphere.flg = list->u_data.sphere.flg;
 	new_node->u_data.sphere.pix_arr = list->u_data.sphere.pix_arr;
-}
-
-// int	arr_size = list->u_data.sphere.xpm.hgt
+	
+	// int	arr_size = list->u_data.sphere.xpm.hgt
 	// 	* list->u_data.sphere.xpm.wdth;
 	// new_node->u_data.sphere.pix_arr = malloc(sizeof(int) * arr_size);
 	// int i = 0;
@@ -136,3 +137,6 @@ void	sphere_deep_copy(t_object *new_node, const t_object *list)
 	// 		= list->u_data.sphere.pix_arr[i];
 	// 	i++;
 	// }
+}
+
+

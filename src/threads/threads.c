@@ -24,12 +24,15 @@ void	create_thread(t_data *data)
 	{
 		data->thread_i = i;
 		pthread_create(&data->thread_id[i], NULL, render_thr, data);
-		usleep(300);
+		usleep(500);
 		i++;
 	}
+	pthread_mutex_destroy(&data->lock);
 	while (data->fin != 12)
 	{
 	}
+	while (--i >= 0)
+		pthread_join(data->thread_id[i], NULL);
 	render_text(data);
 	free(data->thread_id);
 }

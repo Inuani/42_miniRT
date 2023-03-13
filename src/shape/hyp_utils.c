@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:05:42 by lskraber          #+#    #+#             */
-/*   Updated: 2023/03/12 14:08:22 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/03/13 14:39:08 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,13 @@ void	get_u_v_hy(t_hyperboloid *hy, t_ray *ray, float *u, float *v)
 
 int	get_color_pixel(t_data *d, int x, int y, t_img *xpm)
 {
+	(void)d;
 	int	pixel_color;
 	int	pixel_offset;
 
 	pixel_offset = (y * xpm->line_length) + (x * (xpm->bits_per_pixel / 8));
 	pixel_color = mlx_get_color_value(d->mlx,
-			*(int *)(xpm->addr + pixel_offset));
+			* (int *)(xpm->addr + pixel_offset)); //16711680
 	return (pixel_color);
 }
 
@@ -54,6 +55,11 @@ t_vec	get_x_y_color_hy(t_data *d, t_hyperboloid *hy, float u, float v)
 	(void)d;
 	x = u * hy->xpm.wdth;
 	y = (1 - v) * hy->xpm.hgt;
+	if ((y * hy->xpm.wdth + x) > hy->xpm.wdth * hy->xpm.hgt)
+	{
+		x = hy->xpm.wdth - 1;
+		y = hy->xpm.hgt - 1;
+	}
 	return (decimal_to_rgb(hy->pix_arr[y * hy->xpm.wdth + x]));
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egauthey <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 18:51:04 by egauthey          #+#    #+#             */
-/*   Updated: 2022/11/21 18:51:06 by egauthey         ###   ########.fr       */
+/*   Updated: 2023/03/13 14:36:33 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,10 @@ t_vec	get_x_y_color_cy(t_data *d, t_cylinder *cy, float u, float v)
 	int	x;
 	int	y;
 
+	(void)d;
 	x = u * cy->xpm.wdth;
 	y = (1 - v) * cy->xpm.hgt;
-	return (decimal_to_rgb(get_color_pixel_cy(d, x, y, cy)));
+	return (decimal_to_rgb(cy->pix_arr[y * cy->xpm.wdth + x]));
 }
 
 t_vec	set_cy_xpm_color(t_data *d, t_ray *ray, t_cylinder *cy)
