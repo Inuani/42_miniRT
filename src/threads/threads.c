@@ -27,7 +27,6 @@ void	create_thread(t_data *data)
 		usleep(5000);
 		i++;
 	}
-	pthread_mutex_destroy(&data->lock);
 	while (data->fin != 12)
 	{
 	}
