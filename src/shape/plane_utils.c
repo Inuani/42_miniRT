@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:05:42 by lskraber          #+#    #+#             */
-/*   Updated: 2023/03/12 14:08:22 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/03/13 12:28:34 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,24 +59,16 @@ t_vec	get_texture(t_data *data, t_ray ray, t_plane *pl)
 
 void	phong_plane(t_data *data, t_ray *ray, t_light light, t_vec obj_color)
 {
-	t_vec	dir;
-	float	ln2;
 	float	i_d;
-	float	i_s;
-	t_vec	diffuse_color;
 	t_vec	vector;
-	// t_vec	r;
+	t_vec	diffuse_color;
 
-	vector = vec_subs(light.pos, ray->point_at);
+	vector = vec_subs(ray->point_at, light.pos);
 	vector = vec_unit(vector);
-	ln2 = 2 * vec_dot(vector, ray->normal);
-	// r = vec_subs(vec_scale(ln2, ray->normal), vector);
-	dir = ray->direction;
 	i_d = vec_dot(vector, ray->normal) * light.light_ratio;
-	i_s = 0;
 	if (i_d < 0)
 		i_d = -i_d;
-	diffuse_color = add_color(vec_scale(K_LIGHT, obj_color), vec_scale(1 - K_LIGHT, light.colors));
+	diffuse_color = add_color(vec_scale(K_LIGHT, obj_color),
+			vec_scale(1 - K_LIGHT, light.colors));
 	data->final_color = add_colors(data->final_color, diffuse_color, i_d);
-	data->final_color = add_colors(data->final_color, light.colors, i_s);
 }
