@@ -52,8 +52,13 @@ t_vec	get_x_y_color_cy(t_data *d, t_cylinder *cy, float u, float v)
 	int	y;
 
 	(void)d;
-	x = u * cy->xpm.wdth;
-	y = (1 - v) * cy->xpm.hgt;
+	x = (int)(u * cy->xpm.wdth);
+	y = (int)((1 - v) * cy->xpm.hgt);
+	if ((y * cy->xpm.wdth + x) > cy->xpm.wdth * cy->xpm.hgt)
+	{
+		x = cy->xpm.wdth - 1;
+		y = cy->xpm.hgt - 1;
+	}
 	return (decimal_to_rgb(cy->pix_arr[y * cy->xpm.wdth + x]));
 }
 
