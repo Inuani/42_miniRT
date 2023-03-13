@@ -83,13 +83,14 @@ void	free_array_xpm(t_object *chaos)
 	while (tmp)
 	{
 		if (tmp->type == SPHERE && tmp->u_data.sphere.pix_arr != NULL)
-				free(tmp->u_data.sphere.pix_arr);
+			free(tmp->u_data.sphere.pix_arr);
 		else if (tmp->type == PLANE && tmp->u_data.plane.pix_arr != NULL)
-				free(tmp->u_data.plane.pix_arr);
+			free(tmp->u_data.plane.pix_arr);
 		else if (tmp->type == CYLINDER && tmp->u_data.cylinder.pix_arr != NULL)
-				free(tmp->u_data.cylinder.pix_arr);
-		else if (tmp->type == HYPERBOLOID && tmp->u_data.hyperboloid.pix_arr != NULL)
-				free(tmp->u_data.hyperboloid.pix_arr);
+			free(tmp->u_data.cylinder.pix_arr);
+		else if (tmp->type == HYPERBOLOID
+			&& tmp->u_data.hyperboloid.pix_arr != NULL)
+			free(tmp->u_data.hyperboloid.pix_arr);
 		tmp = tmp->next;
 	}
 }

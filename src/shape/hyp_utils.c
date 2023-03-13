@@ -27,13 +27,13 @@ void	get_u_v_hy(t_hyperboloid *hy, t_ray *ray, float *u, float *v)
 
 int	get_color_pixel(t_data *d, int x, int y, t_img *xpm)
 {
-	(void)d;
 	int	pixel_color;
 	int	pixel_offset;
 
+	(void)d;
 	pixel_offset = (y * xpm->line_length) + (x * (xpm->bits_per_pixel / 8));
 	pixel_color = mlx_get_color_value(d->mlx,
-			* (int *)(xpm->addr + pixel_offset)); //16711680
+			*(int *)(xpm->addr + pixel_offset));
 	return (pixel_color);
 }
 

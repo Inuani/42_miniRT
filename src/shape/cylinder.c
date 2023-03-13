@@ -93,3 +93,51 @@ float	hit_cylinder(t_vec ray_dir, t_cylinder cy, t_vec origin, t_vec ori2cy)
 		return (cyl_intersec_delta(ray_dir, &cy, origin));
 	return (-1.0);
 }
+
+// float	hit_cylinder(t_vec ray_dir, t_cylinder cy, t_vec origin, t_vec ori2cy)
+// {
+// 	float	t1;
+// 	float	t2;
+// 	float	t;
+// 	float	max;
+// 	t_vec	len;
+// 	t_vec	point_at;
+
+// 	cy.a = vec_dot(ray_dir, ray_dir) - powf(vec_dot(ray_dir, cy.orient), 2);
+// 	cy.b = 2.0 * ((vec_dot(ray_dir, ori2cy)) - (vec_dot(ray_dir, cy.orient) * vec_dot(ori2cy, cy.orient)));
+// 	cy.c = vec_dot(ori2cy, ori2cy) - powf(vec_dot(ori2cy, cy.orient), 2) - powf(cy.radius, 2.0);
+// 	cy.delta = (cy.b * cy.b) - (4 * cy.a * cy.c);
+// 	if (cy.delta == 0.0)
+// 	{
+// 		if (fabs(vec_dot(vec_unit(ray_dir), cy.orient)) != 1)
+// 			return(-(cy.b / (2.0 * cy.a)));
+// 		else if (fabs(vec_dot(vec_unit(ray_dir), cy.orient)) == 1)
+// 		{
+// 				t1 = (-cy.b - sqrt(cy.delta)) / (2.0 * cy.a);
+// 				t2 = (-cy.b + sqrt(cy.delta)) / (2.0 * cy.a);
+
+// 			if (t1 > 0.0 && (t2 < 0.0 || t1 < t2))
+// 				return (t1);
+// 			return (t2);
+// 		}
+// 	}
+// 	else if (cy.delta > 0)
+// 	{
+// 		t1 = (-cy.b - sqrt(cy.delta)) / (2.0 * cy.a);
+// 		t2 = (-cy.b + sqrt(cy.delta)) / (2.0 * cy.a);
+// 		if (t2 < 0)
+// 			return (-1);
+// 		t = (t1 > 0 ? t1 : t2);
+// 		max = sqrtf(powf(cy.hgt / 2, 2) + powf(cy.radius, 2));
+// 		point_at = vec_add(origin, vec_scale(t, ray_dir));
+// 		len = vec_subs(point_at, cy.center);
+// 		if (vec_len(len) > max)
+// 			t = t2;
+// 		point_at = vec_add(origin, vec_scale(t, ray_dir));
+// 		len = vec_subs(point_at, cy.center);
+// 		if (vec_len(len) > max)
+// 			return (-1);
+// 		return (t);
+// 	}
+// 	return (-1.0);
+// }

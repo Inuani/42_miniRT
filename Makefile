@@ -22,9 +22,9 @@ MLX = libs/mlx
 INC = -I.includes/
 
 LIBFLAGS = -Llibs/libft -lft -Llibs/mlx -lmlx -framework OpenGL -framework AppKit
-#-fsanitize=address -fno-omit-frame-pointer
+#-fsanitize=thread -fno-omit-frame-pointer
 CFLAGS = -Wall -Wextra -Werror
-FSANI = -g3 -fsanitize=thread
+FSANI = -g3 -fsanitize=address
 
 PARS_SRC = $(addprefix $(PARS_DIR),	mrt_parsing.c \
 									parsing_utils.c \

@@ -24,7 +24,7 @@ void	create_thread(t_data *data)
 	{
 		data->thread_i = i;
 		pthread_create(&data->thread_id[i], NULL, render_thr, data);
-		usleep(500);
+		usleep(5000);
 		i++;
 	}
 	pthread_mutex_destroy(&data->lock);

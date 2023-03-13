@@ -40,10 +40,12 @@ void	read_rt_file(char **av, t_data *d)
 {
 	int		fd;
 	char	*line;
-
+	if (!ft_strncmp(av[1], "scenes", 7) || !ft_strncmp(av[1], "scenes/", 8))
+		exit_error("miniRT error ", 1);
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
 		exit_error(ERR_OPEN, 1);
+	printf("fd : %d", fd);
 	line = get_next_line(fd);
 	parse_line(line, d);
 	while (line)
