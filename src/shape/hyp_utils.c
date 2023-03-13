@@ -6,7 +6,7 @@
 /*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:05:42 by lskraber          #+#    #+#             */
-/*   Updated: 2023/03/13 14:39:08 by lskraber         ###   ########.fr       */
+/*   Updated: 2023/03/13 18:18:53 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ t_vec	calculate_x_y_hcb(t_ray *ray, t_hyperboloid *cyl)
 	float	v;
 
 	u = get_angle_0_to_1(vec_unit(ray->point_at), (t_vec){1, 0, 0});
+	if (ray->point_at.y < 0)
+		ray->point_at.y *= -1;
 	v = fmod(ray->point_at.y, 1);
 	if (!((u + v) < 0.5 || ((u + v) > 1 && (u + v) < 1.5)))
 		return ((t_vec){255, 255, 255});
