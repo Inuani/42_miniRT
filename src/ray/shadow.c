@@ -77,7 +77,7 @@ int	shadow_cylinder(t_data *data, int i, t_vec point_at, t_light light)
 	ret = 0;
 	l2int = vec_subs(point_at, light.pos);
 	l2cyl = vec_subs(light.pos, data->objs[i]->u_data.cylinder.center);
-	root = hit_cylinder(l2int, data->objs[i]->u_data.cylinder,
+	root = hit_cylinder(l2int, &data->objs[i]->u_data.cylinder,
 			light.pos, l2cyl);
 	root_at = vec_add(light.pos, vec_scale(root, l2int));
 	if (!(root >= 0 && !is_first_light(light, point_at, root_at)))

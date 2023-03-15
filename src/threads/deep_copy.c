@@ -66,6 +66,7 @@ void	cylinder_deep_copy(t_object *new_node, const t_object *list)
 	new_node->u_data.cylinder.xpm.hgt = list->u_data.cylinder.xpm.hgt;
 	new_node->u_data.cylinder.flg = list->u_data.cylinder.flg;
 	new_node->u_data.cylinder.pix_arr = list->u_data.cylinder.pix_arr;
+	new_node->u_data.cylinder.lght_flg = list->u_data.cylinder.lght_flg;
 }
 
 void	hyperboloid_deep_copy(t_object *new_node, const t_object *list)

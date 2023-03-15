@@ -16,7 +16,8 @@ int	main(int ac, char **av)
 {
 	t_data	data;
 
-	(void)ac;
+	if (ac != 2)
+		exit_err(ERR_USAGE, 0);
 	data.changed = 1;
 	data.current = 0;
 	mrt_parsing(av, &data);

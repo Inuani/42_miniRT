@@ -68,7 +68,7 @@ void	is_cylinder(t_data *data, t_ray *ray, t_vec *point_at, int i)
 
 	cam = data->objs[1]->u_data.camera;
 	cylinder_init(data, &data->objs[i]->u_data.cylinder);
-	root = hit_cylinder(ray->direction, data->objs[i]->u_data.cylinder,
+	root = hit_cylinder(ray->direction, &data->objs[i]->u_data.cylinder,
 			cam.pos, data->objs[i]->u_data.cylinder.cam2cyl);
 	if (root > 0)
 	{

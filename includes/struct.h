@@ -60,8 +60,6 @@ typedef struct s_sphere {
 	int		flg;
 }				t_sphere;
 
-	// t_img	n_map;
-
 typedef struct s_hyperboloid {
 	t_vec	orient;
 	t_vec	center;
@@ -95,6 +93,7 @@ typedef struct s_cylinder {
 	t_img	xpm;
 	int		*pix_arr;
 	int		flg;
+	int		lght_flg;
 }				t_cylinder;
 
 typedef struct s_plane {

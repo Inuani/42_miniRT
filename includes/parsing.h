@@ -114,8 +114,9 @@ void		obj_array_create(t_data *d);
 // ----------------------------------------------
 
 void		exit_error(char *msg, int error);
+void		exit_err(char *msg, int error);
 
-# define ERR_OPEN "Open error "
+# define ERR_OPEN "Error "
 # define ERR_CLOSE "Close error "
 # define ERR_FILE "Error : file corrupted "
 # define ERR_MALLOC "Error : memory allocation."
@@ -123,5 +124,6 @@ void		exit_error(char *msg, int error);
 # define ERR_PROPERTIES "Error : incorrect properties of an object"
 # define ERR_XPM_IMG "Error : incorrect xpm file"
 # define ERR_OBJ_CAM_AMB "Error : Only one camera and one ambient light"
+# define ERR_USAGE "Usage : ./miniRT scenes/file.rt "
 
 #endif

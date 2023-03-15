@@ -22,13 +22,14 @@ float		hit_hyperboloid(t_vec vector,
 				t_hyperboloid hyperboloid, t_vec origin);
 t_vec		calculate_x_y_hcb(t_ray *ray, t_hyperboloid *cyl);
 t_vec		set_hy_xpm_color(t_ray *ray, t_hyperboloid *hy);
+int			is_inside_hyp(t_ray *ray, t_hyperboloid hyp);
 
 // ----------------------------------------------
 // cylinder
 // ----------------------------------------------
 
 float		cylinder_eman(t_data *data, t_ray *ray, t_cylinder cyl);
-float		hit_cylinder(t_vec ray_dir, t_cylinder cyl,
+float		hit_cylinder(t_vec ray_dir, t_cylinder *cyl,
 				t_vec origin, t_vec ori2cy);
 void		cylinder_init(t_data *d, t_cylinder *cyl);
 t_vec		set_cy_xpm_color(t_ray *ray, t_cylinder *cy);

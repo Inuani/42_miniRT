@@ -29,3 +29,13 @@ void	exit_error(char *msg, int error)
 	}
 	exit(error);
 }
+
+void	exit_err(char *msg, int error)
+{
+	if (msg)
+	{
+		write(STDERR_FILENO, msg, ft_strlen(msg));
+		write(STDERR_FILENO, "\n", 1);
+	}
+	exit(error);
+}
