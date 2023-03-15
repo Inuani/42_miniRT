@@ -1,0 +1,9 @@
+objs
+libs/libft/*.o
+libs/libft/src_get_next_line/*.o
+libs/libft/src_printf/*.o
+libs/libft/libft.a
+libs/mlx/*.o
+miniRT
+LICENSE
+.DS_Store
