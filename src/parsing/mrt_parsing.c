@@ -40,6 +40,7 @@ void	read_rt_file(char **av, t_data *d)
 {
 	int		fd;
 	char	*line;
+
 	if (!ft_strncmp(av[1], "scenes", 7) || !ft_strncmp(av[1], "scenes/", 8))
 		exit_error("miniRT error ", 1);
 	fd = open(av[1], O_RDONLY);

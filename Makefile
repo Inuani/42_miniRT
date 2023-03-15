@@ -23,6 +23,7 @@ INC = -I.includes/
 
 LIBFLAGS = -Llibs/libft -lft -Llibs/mlx -lmlx -framework OpenGL -framework AppKit
 #-fsanitize=thread -fno-omit-frame-pointer
+
 CFLAGS = -Wall -Wextra -Werror
 FSANI = -g3 -fsanitize=address
 

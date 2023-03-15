@@ -85,3 +85,20 @@ void	free_tok(t_data *d)
 	}
 	d->lst = NULL;
 }
+
+void	only_one_zero_type(t_tok *lst)
+{
+	t_tok	*tmp;
+	int		flg;
+
+	flg = 0;
+	tmp = lst;
+	while (tmp)
+	{
+		if (tmp->type == 0)
+			flg++;
+		tmp = tmp->next;
+	}
+	if (flg != 1)
+		exit_error(ERR_PROPERTIES, 1);
+}

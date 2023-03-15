@@ -47,12 +47,11 @@ int	get_color_pixel(t_data *d, int x, int y, t_img *xpm)
 // 	return (decimal_to_rgb(get_color_pixel(d, x, y, &hy->xpm)));
 // }
 
-t_vec	get_x_y_color_hy(t_data *d, t_hyperboloid *hy, float u, float v)
+t_vec	get_x_y_color_hy(t_hyperboloid *hy, float u, float v)
 {
 	int	x;
 	int	y;
 
-	(void)d;
 	x = u * hy->xpm.wdth;
 	y = (1 - v) * hy->xpm.hgt;
 	if ((y * hy->xpm.wdth + x) > hy->xpm.wdth * hy->xpm.hgt)
@@ -63,14 +62,14 @@ t_vec	get_x_y_color_hy(t_data *d, t_hyperboloid *hy, float u, float v)
 	return (decimal_to_rgb(hy->pix_arr[y * hy->xpm.wdth + x]));
 }
 
-t_vec	set_hy_xpm_color(t_data *d, t_ray *ray, t_hyperboloid *hy)
+t_vec	set_hy_xpm_color(t_ray *ray, t_hyperboloid *hy)
 {
 	t_vec	pixel_color;
 	float	u;
 	float	v;
 
 	get_u_v_hy(hy, ray, &u, &v);
-	pixel_color = get_x_y_color_hy(d, hy, u, v);
+	pixel_color = get_x_y_color_hy(hy, u, v);
 	return (pixel_color);
 }
 

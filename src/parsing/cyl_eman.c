@@ -109,6 +109,7 @@ int	add_cylinder(t_data *d, t_tok *lst)
 	nb = calc_nb_prop(lst);
 	if (nb != 11 && nb != 12)
 		exit_error(ERR_PROPERTIES, 1);
+	only_one_zero_type(lst);
 	set_cyl_prop(&lst, &inst);
 	if (nb == 12)
 	{

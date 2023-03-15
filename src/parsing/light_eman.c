@@ -57,6 +57,7 @@ int	add_light(t_data *d, t_tok *lst)
 	nb = calc_nb_prop(lst);
 	if (nb != 7)
 		exit_error(ERR_PROPERTIES, 1);
+	only_one_zero_type(lst);
 	set_light_prop(&lst, &inst);
 	new = create_object(LIGHT, &inst);
 	add_object_to_list(&d->chaos, new);

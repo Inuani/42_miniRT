@@ -79,6 +79,7 @@ int	add_plane(t_data *d, t_tok *lst)
 	nb = calc_nb_prop(lst);
 	if (nb != 9 && nb != 10)
 		exit_error(ERR_PROPERTIES, 1);
+	only_one_zero_type(lst);
 	inst.flg = 0;
 	set_plane_prop(&lst, &inst);
 	if (nb == 10)
