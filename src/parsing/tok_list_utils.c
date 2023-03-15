@@ -63,3 +63,22 @@ int	tok_lst_size(t_tok *lst)
 	}
 	return (i);
 }
+
+void	check_only_digits(const char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (ft_isdigit(str[i]) == 0)
+		{
+			if (str[i] == '-' || str[i] == '.')
+			{
+			}
+			else
+				exit_error(ERR_PROPERTIES, 1);
+		}
+		i++;
+	}
+}

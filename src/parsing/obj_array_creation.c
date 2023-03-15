@@ -72,8 +72,8 @@ void	obj_array_create(t_data *d)
 	flg_amb = 0;
 	d->count.total = calc_nb_obj(d->chaos);
 	d->objs = malloc(sizeof(t_object *) * (d->count.total + 1));
-	get_ambiant(d, &flg_cam);
-	get_camera(d, &flg_amb);
+	get_ambiant(d, &flg_amb);
+	get_camera(d, &flg_cam);
 	get_light(d);
 	get_sphere(d);
 	get_plane(d);
@@ -81,5 +81,5 @@ void	obj_array_create(t_data *d)
 	get_hyperboloid(d);
 	d->objs[d->count.total] = NULL;
 	if (flg_cam != 1 || flg_amb != 1)
-		exit_error(ERR_OBJ_CAM_AMB,1);
+		exit_error(ERR_OBJ_CAM_AMB, 1);
 }

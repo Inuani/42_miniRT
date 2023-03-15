@@ -88,7 +88,7 @@ float	it_hit_hy(t_data *data, t_ray *ray, t_hyperboloid hy)
 	ret = 0;
 	i = 0;
 	if (hy.flg == 2)
-		hy.colors = set_hy_xpm_color(data, ray, &hy);
+		hy.colors = set_hy_xpm_color(ray, &hy);
 	else if (hy.flg == 1)
 		hy.colors = calculate_x_y_hcb(ray, &hy);
 	while (i < data->count.l_count)

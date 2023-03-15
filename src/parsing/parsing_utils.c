@@ -29,6 +29,7 @@ float	ft_atof(const char *str)
 	float	neg;
 	float	div;
 
+	check_only_digits(str);
 	nb = 0.0;
 	neg = 1;
 	if (*str == '-')

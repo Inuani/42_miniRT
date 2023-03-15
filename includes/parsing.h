@@ -72,6 +72,8 @@ float		ft_atof(const char *str);
 void		set_xpm_path(char **xpm, char **img);
 int			calc_nb_prop(t_tok *lst);
 int			*set_pixel_color_array(t_data *d, t_img *xpm, int hgt, int wdt);
+void		only_one_zero_type(t_tok *lst);
+void		check_only_digits(const char *str);
 
 // ----------------------------------------------
 // tok_utils.c
@@ -117,9 +119,9 @@ void		exit_error(char *msg, int error);
 # define ERR_CLOSE "Close error "
 # define ERR_FILE "Error : file corrupted "
 # define ERR_MALLOC "Error : memory allocation."
-# define ERR_OBJ "Error : object included does not exist."
+# define ERR_OBJ "Error : object included does not exist "
 # define ERR_PROPERTIES "Error : incorrect properties of an object"
 # define ERR_XPM_IMG "Error : incorrect xpm file"
-# define ERR_OBJ_CAM_AMB "Error : Scene can have only one camera and one ambient light"
+# define ERR_OBJ_CAM_AMB "Error : Only one camera and one ambient light"
 
 #endif

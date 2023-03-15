@@ -21,6 +21,7 @@ void	add_ambiant(t_data *d, t_tok *lst)
 	nb = calc_nb_prop(lst);
 	if (nb != 4)
 		exit_error(ERR_PROPERTIES, 1);
+	only_one_zero_type(lst);
 	lst = lst->next;
 	inst.light_ratio = ft_atof(lst->s);
 	lst = lst->next;
@@ -69,6 +70,7 @@ void	add_camera(t_data *d, t_tok *lst)
 	nb = calc_nb_prop(lst);
 	if (nb != 7)
 		exit_error(ERR_PROPERTIES, 1);
+	only_one_zero_type(lst);
 	set_camera_prop(&lst, &inst);
 	new = create_object(CAMERA, &inst);
 	add_object_to_list(&d->chaos, new);

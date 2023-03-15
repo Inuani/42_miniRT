@@ -76,6 +76,7 @@ int	add_sphere(t_data *d, t_tok *lst)
 	nb = calc_nb_prop(lst);
 	if (nb != 7 && nb != 8)
 		exit_error(ERR_PROPERTIES, 1);
+	only_one_zero_type(lst);
 	inst.flg = 0;
 	set_sp_prop(&lst, &inst);
 	if (nb == 8)
