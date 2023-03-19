@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hyperbo_eman.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egauthey <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: lskraber <lskraber@student.42lausan>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 18:51:04 by egauthey          #+#    #+#             */
-/*   Updated: 2022/11/21 18:51:06 by egauthey         ###   ########.fr       */
+/*   Updated: 2023/03/19 17:48:16 by lskraber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	hyp_img_init(t_data *d, t_tok **lst, t_hyperboloid *cur)
 	set_xpm_path(&xpm, &(*lst)->s);
 	cur->xpm.img = mlx_xpm_file_to_image(d->mlx, xpm,
 			&cur->xpm.wdth, &cur->xpm.hgt);
+	if (cur->xpm.img == NULL)
+		exit_err(ERR_XPM_IMG, 1);
 	cur->xpm.addr = mlx_get_data_addr(cur->xpm.img,
 			&cur->xpm.bits_per_pixel, &cur->xpm.line_length, &cur->xpm.endian);
 	cur->pix_arr = set_pixel_color_array(d,
