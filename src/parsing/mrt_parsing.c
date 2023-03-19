@@ -30,7 +30,8 @@ void	parse_line(char *line, t_data *d)
 			create_xpm_tok(d, line, &i);
 		else if (line[i] && line[i] == ',')
 		{
-			if ((line[i + 1] && (!ft_isdigit(line[i + 1]) || line[i + 1] != '-')) && (line[i - 1] && !ft_isdigit(line[i - 1])))
+			if ((line[i + 1] && (!ft_isdigit(line[i + 1]) || line[i + 1]
+						!= '-')) && (line[i - 1] && !ft_isdigit(line[i - 1])))
 				exit_err(ERR_PROPERTIES, 1);
 			i++;
 		}

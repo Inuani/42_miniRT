@@ -123,7 +123,7 @@ void		exit_err(char *msg, int error);
 # define ERR_OBJ "Error : object included does not exist "
 # define ERR_PROPERTIES "Error : incorrect properties of an object"
 # define ERR_XPM_IMG "Error : incorrect xpm file"
-# define ERR_OBJ_CAM_AMB "Error : Only one camera and one ambient light"
+# define ERR_OBJ_CAM_AMB "Error : One camera and one ambient light"
 # define ERR_USAGE "Usage : ./miniRT scenes/file.rt "
 
 #endif
